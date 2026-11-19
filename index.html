@@ -3,53 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#090b10">
+<meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Stint Calculator by EG7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-dark: #090b10;
-    --card-bg: #121620;
-    --surface-bg: #191f2d;
-    --border-color: #262f42;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --orange: #ff6b00;
-    --orange-glow: rgba(255, 107, 0, 0.25);
-    --blue: #00a8ff;
-    --blue-glow: rgba(0, 168, 255, 0.25);
-    --purple: #a855f7;
-    --purple-glow: rgba(168, 85, 247, 0.25);
+    --bg-app: #f1f5f9;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --surface-bg: #f8fafc;
+    --surface-hover: #f1f5f9;
+    --border-color: #cbd5e1;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --accent-soft: rgba(37, 99, 235, 0.1);
+    --accent-glow: rgba(37, 99, 235, 0.22);
+
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.12);
     --warning: #f59e0b;
-    --warning-bg: rgba(245, 158, 11, 0.15);
+    --warning-bg: rgba(245, 158, 11, 0.14);
     --danger: #ef4444;
-    --danger-bg: rgba(239, 68, 68, 0.15);
+    --danger-bg: rgba(239, 68, 68, 0.14);
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
-  /* THÈME MODE NUIT (Vision nocturne muret des stands) */
   body.night-mode {
-    --bg-dark: #050202;
-    --card-bg: #0e0606;
-    --surface-bg: #180a0a;
-    --border-color: #361414;
-    --text-main: #ff6b6b;
-    --text-muted: #a85555;
-    --orange: #ff4500;
-    --orange-glow: rgba(255, 69, 0, 0.2);
-    --blue: #e05252;
-    --blue-glow: rgba(224, 82, 82, 0.2);
-    --purple: #d946ef;
-    --purple-glow: rgba(217, 70, 239, 0.2);
-    --success: #d97706;
-    --success-bg: rgba(217, 119, 6, 0.12);
-    --warning: #f59e0b;
-    --warning-bg: rgba(245, 158, 11, 0.14);
-    --danger: #ff2a2a;
-    --danger-bg: rgba(255, 42, 42, 0.18);
-    background-image: none;
+    --bg-app: #090d16;
+    --card-bg: #111827;
+    --card-border: #1f2937;
+    --surface-bg: #182234;
+    --surface-hover: #223049;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --accent: #3b82f6;
+    --accent-dark: #2563eb;
+    --accent-soft: rgba(59, 130, 246, 0.16);
+    --accent-glow: rgba(59, 130, 246, 0.28);
   }
 
   * {
@@ -57,2697 +58,1449 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  html {
-    scroll-behavior: smooth;
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-dark);
-    background-image: 
-      radial-gradient(circle at 15% 10%, rgba(255, 107, 0, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 85% 90%, rgba(0, 168, 255, 0.08) 0%, transparent 40%);
+    font-family: var(--font-sans);
+    background-color: var(--bg-app);
     color: var(--text-main);
-    margin: 0;
-    padding: 16px;
-    display: flex;
-    justify-content: center;
     min-height: 100dvh;
-    transition: background-color 0.25s, color 0.25s;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  .app-container {
+  /* SPLASH ÉPURÉ DARK SLATE */
+  #splash-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  #splash-overlay.splash-exit {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .start-lights-gantry {
+    display: flex;
+    gap: 10px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 10px 16px;
+    border-radius: 99px;
+    margin-bottom: 24px;
+  }
+
+  .race-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #334155;
+    transition: all 0.15s ease;
+  }
+
+  .race-light.lit-red {
+    background: #3b82f6;
+    box-shadow: 0 0 12px #3b82f6;
+  }
+
+  .race-light.lit-green {
+    background: #10b981;
+    box-shadow: 0 0 12px #10b981;
+  }
+
+  .splash-badge {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+    padding: 12px 20px;
+    border-radius: 16px;
+    margin-bottom: 14px;
+  }
+
+  .splash-title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #f8fafc;
+  }
+
+  .splash-subtitle {
+    margin: 6px 0 22px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .splash-bar {
+    width: 190px;
+    height: 4px;
+    background: #1e293b;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .splash-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #3b82f6;
+    transition: width 0.25s ease;
+  }
+
+  .app-shell {
     width: 100%;
-    max-width: 460px;
-    padding-bottom: 50vh;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 12px 10px 90px;
   }
 
-  /* Header & Brand */
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
-    padding: 4px 2px;
     gap: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    margin-bottom: 10px;
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
     min-width: 0;
+    flex: 1 1 auto;
   }
 
   .brand-badge {
-    background: linear-gradient(135deg, var(--orange), #d94e00);
-    color: #fff;
-    font-weight: 900;
-    font-style: italic;
-    font-size: 1rem;
-    padding: 8px 9px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px var(--orange-glow);
-    letter-spacing: -0.5px;
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: -0.02em;
+    padding: 7px 9px;
+    border-radius: 9px;
     flex-shrink: 0;
+  }
+
+  body.night-mode .brand-badge {
+    background: var(--accent);
   }
 
   .brand-text {
     min-width: 0;
+    overflow: hidden;
   }
 
   .brand-text h1 {
-    font-size: 0.98rem;
-    font-weight: 900;
-    font-style: italic;
     margin: 0;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
+    font-size: clamp(0.88rem, 3.5vw, 1rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .brand-text p {
     margin: 2px 0 0;
-    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
     color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .brand-text span {
-    color: var(--orange);
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     flex-shrink: 0;
   }
 
   .btn-header {
     background: var(--surface-bg);
     border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.7rem;
+    color: var(--text-main);
+    font-size: 0.72rem;
     font-weight: 700;
-    padding: 7px 8px;
-    border-radius: 10px;
+    padding: 7px 10px;
+    border-radius: 9px;
     cursor: pointer;
-    transition: all 0.2s;
     white-space: nowrap;
   }
 
   .btn-header.active {
-    border-color: var(--orange);
-    color: var(--text-main);
-    background: rgba(255, 107, 0, 0.16);
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
   }
 
-  .btn-header:active {
-    transform: scale(0.95);
-  }
-
-  /* Alert Banner */
-  #alert-banner {
-    border-radius: 14px;
-    padding: 13px 14px;
-    font-weight: 700;
-    font-size: 0.88rem;
-    text-align: center;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
-  }
-
-  .status-safe {
-    background: var(--success-bg);
-    color: var(--success);
-    border: 1px solid rgba(16, 185, 129, 0.4);
-  }
-
-  .status-warning {
-    background: var(--warning-bg);
-    color: var(--warning);
-    border: 1px solid rgba(245, 158, 11, 0.55);
-    box-shadow: 0 0 18px rgba(245, 158, 11, 0.15);
-  }
-
-  .status-danger {
-    background: var(--danger-bg);
-    color: var(--danger);
-    border: 1px solid rgba(239, 68, 68, 0.6);
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
-    animation: alertPulse 2s infinite;
-  }
-
-  @keyframes alertPulse {
-    0%, 100% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.15); }
-    50% { box-shadow: 0 0 24px rgba(239, 68, 68, 0.4); }
-  }
-
-  /* FULLSCREEN ALERT OVERLAY */
-  #fullscreen-alert {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 28px 24px;
-    text-align: center;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    animation: fsPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  #fullscreen-alert.fs-warning {
-    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.32) 0%, rgba(15, 12, 6, 0.96) 75%);
-    border: 4px solid var(--warning);
-  }
-
-  #fullscreen-alert.fs-danger {
-    background: radial-gradient(circle at center, rgba(239, 68, 68, 0.38) 0%, rgba(18, 6, 8, 0.97) 75%);
-    border: 4px solid var(--danger);
-    animation: fsPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1), fsBorderFlash 1.2s infinite;
-  }
-
-  @keyframes fsPopIn {
-    from { opacity: 0; transform: scale(1.06); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  @keyframes fsBorderFlash {
-    0%, 100% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.35); }
-    50% { box-shadow: inset 0 0 70px rgba(239, 68, 68, 0.75); }
-  }
-
-  .fs-badge {
-    font-size: 0.8rem;
-    font-weight: 900;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 99px;
-    margin-bottom: 20px;
-  }
-
-  .fs-warning .fs-badge {
-    background: rgba(245, 158, 11, 0.2);
-    color: var(--warning);
-    border: 1px solid var(--warning);
-  }
-
-  .fs-danger .fs-badge {
-    background: rgba(239, 68, 68, 0.25);
-    color: #ff6b6b;
-    border: 1px solid var(--danger);
-  }
-
-  .fs-icon {
-    font-size: 4.5rem;
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-
-  .fs-title {
-    font-size: 2.1rem;
-    font-weight: 900;
-    font-style: italic;
-    text-transform: uppercase;
-    margin: 0 0 12px;
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-  }
-
-  .fs-warning .fs-title { color: var(--warning); }
-  .fs-danger .fs-title { color: #ff4d4d; }
-
-  .fs-desc {
-    font-size: 1.05rem;
-    line-height: 1.5;
-    color: var(--text-main);
-    max-width: 340px;
-    margin: 0 0 24px;
-    font-weight: 500;
-  }
-
-  .fs-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    width: 100%;
-    max-width: 340px;
-    margin-bottom: 28px;
-  }
-
-  .fs-stat-box {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 14px;
-    padding: 12px 10px;
-  }
-
-  .fs-stat-box span {
-    display: block;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-    font-weight: 700;
-  }
-
-  .fs-stat-box strong {
-    font-size: 1.35rem;
-    font-weight: 900;
-    color: #fff;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .fs-dismiss-btn {
-    width: 100%;
-    max-width: 340px;
-    padding: 18px;
-    border-radius: 16px;
-    border: none;
-    font-size: 1.05rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: transform 0.15s;
-  }
-
-  .fs-warning .fs-dismiss-btn {
-    background: var(--warning);
-    color: #090b10;
-    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-  }
-
-  .fs-danger .fs-dismiss-btn {
-    background: var(--danger);
-    color: #fff;
-    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
-  }
-
-  .fs-dismiss-btn:active {
-    transform: scale(0.96);
-  }
-
-  /* CUSTOM MODAL DIALOG */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 9500;
-    background: rgba(5, 7, 12, 0.82);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .modal-card {
-    width: 100%;
-    max-width: 360px;
+  .view-tabs-wrap {
     background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: 20px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-  }
-
-  .modal-card h3 {
-    margin: 0 0 8px;
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-main);
-  }
-
-  .modal-card p {
-    margin: 0 0 14px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .modal-card input[type="text"],
-  .modal-card input[type="time"] {
-    width: 100%;
-    background: var(--surface-bg);
-    border: 1px solid var(--blue);
-    border-radius: 10px;
-    padding: 12px;
-    color: var(--text-main);
-    font-size: 1rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 14px;
-    color-scheme: dark;
-  }
-
-  .modal-card input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--blue-glow);
-  }
-
-  .modal-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .btn-modal {
-    padding: 11px;
-    border-radius: 10px;
-    border: none;
-    font-size: 0.84rem;
-    font-weight: 800;
-    cursor: pointer;
-    text-transform: uppercase;
-  }
-
-  .btn-modal.cancel {
-    background: var(--surface-bg);
-    color: var(--text-muted);
-    border: 1px solid var(--border-color);
-  }
-
-  .btn-modal.confirm {
-    background: linear-gradient(135deg, var(--orange), #e05600);
-    color: #fff;
-  }
-
-  /* Section Label Header for Dual Strategy View */
-  .strategy-section-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    padding: 0 2px;
-  }
-
-  .strategy-section-title {
-    font-size: 0.72rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .strategy-section-sub {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--text-muted);
-  }
-
-  /* Dashboard Metrics */
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .metric-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 13px 10px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.25s, background 0.25s;
-  }
-
-  .metric-card.primary {
-    border-color: rgba(255, 107, 0, 0.4);
-    background: linear-gradient(180deg, rgba(255, 107, 0, 0.08) 0%, var(--card-bg) 100%);
-  }
-
-  .metric-card.primary.joker-low {
-    border-color: rgba(245, 158, 11, 0.65);
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.16) 0%, var(--card-bg) 100%);
-  }
-
-  .metric-card.primary.joker-zero {
-    border-color: rgba(239, 68, 68, 0.7);
-    background: linear-gradient(180deg, rgba(239, 68, 68, 0.18) 0%, var(--card-bg) 100%);
-  }
-
-  .metric-card.secondary {
-    border-color: rgba(0, 168, 255, 0.35);
-    background: linear-gradient(180deg, rgba(0, 168, 255, 0.06) 0%, var(--card-bg) 100%);
-  }
-
-  .metric-label {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 5px;
-  }
-
-  .metric-value {
-    font-size: 1.5rem;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-main);
-  }
-
-  .metric-card.primary .metric-value { color: var(--orange); }
-  .metric-card.primary.joker-low .metric-value { color: var(--warning); }
-  .metric-card.primary.joker-zero .metric-value { color: var(--danger); }
-  .metric-card.secondary .metric-value { color: var(--blue); }
-
-  .metric-sub {
-    display: block;
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  /* BLOC STRATÉGIQUE TRANCHE HORAIRE / QUOTA INTERMÉDIAIRE */
-  .quota-block {
-    background: linear-gradient(180deg, rgba(168, 85, 247, 0.09) 0%, var(--card-bg) 100%);
-    border: 1px solid rgba(168, 85, 247, 0.45);
-    border-radius: 16px;
-    padding: 13px;
-    margin-bottom: 14px;
-    transition: border-color 0.25s, background 0.25s;
-  }
-
-  .quota-block.q-validated {
-    border-color: rgba(16, 185, 129, 0.55);
-    background: linear-gradient(180deg, rgba(16, 185, 129, 0.09) 0%, var(--card-bg) 100%);
-  }
-
-  .quota-block.q-warn {
-    border-color: rgba(245, 158, 11, 0.7);
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.12) 0%, var(--card-bg) 100%);
-  }
-
-  .quota-block.q-danger {
-    border-color: rgba(239, 68, 68, 0.8);
-    background: linear-gradient(180deg, rgba(239, 68, 68, 0.16) 0%, var(--card-bg) 100%);
-  }
-
-  .quota-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  .quota-title {
-    font-size: 0.76rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-main);
-  }
-
-  .quota-badge {
-    font-size: 0.7rem;
-    font-weight: 900;
-    padding: 3px 8px;
-    border-radius: 7px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .quota-badge.ok {
-    background: var(--success-bg);
-    color: var(--success);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-  }
-
-  .quota-badge.due {
-    background: var(--warning-bg);
-    color: var(--warning);
-    border: 1px solid rgba(245, 158, 11, 0.45);
-  }
-
-  .quota-badge.late {
-    background: var(--danger-bg);
-    color: var(--danger);
-    border: 1px solid rgba(239, 68, 68, 0.45);
-  }
-
-  .quota-subbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .quota-subbar strong {
-    color: var(--text-main);
-  }
-
-  .quota-metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .q-cell {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 11px;
-    padding: 9px 8px;
-    text-align: center;
-  }
-
-  .q-cell.q-joker-cell {
-    border-color: rgba(168, 85, 247, 0.45);
-  }
-
-  .q-cell.q-joker-cell.joker-low {
-    border-color: rgba(245, 158, 11, 0.7);
-  }
-
-  .q-cell.q-joker-cell.joker-zero {
-    border-color: rgba(239, 68, 68, 0.75);
-  }
-
-  .q-cell span.q-lbl {
-    display: block;
-    font-size: 0.64rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    margin-bottom: 3px;
-  }
-
-  .q-cell strong.q-val {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: var(--text-main);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .q-cell.q-joker-cell strong.q-val { color: var(--purple); }
-  .q-cell.q-joker-cell.joker-low strong.q-val { color: var(--warning); }
-  .q-cell.q-joker-cell.joker-zero strong.q-val { color: var(--danger); }
-
-  .q-cell span.q-hint {
-    display: block;
-    font-size: 0.64rem;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-
-  /* SIMULATEUR UNDERCUT ("ET SI ON RENTRE MAINTENANT ?") */
-  .undercut-card {
-    background: linear-gradient(135deg, rgba(0, 168, 255, 0.08) 0%, var(--card-bg) 100%);
-    border: 1px solid rgba(0, 168, 255, 0.32);
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin-bottom: 14px;
-  }
-
-  .undercut-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-
-  .undercut-title {
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--blue);
-  }
-
-  .undercut-badge {
-    font-size: 0.68rem;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 6px;
-    text-transform: uppercase;
-  }
-
-  .undercut-badge.ok {
-    background: var(--success-bg);
-    color: var(--success);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-  }
-
-  .undercut-badge.warn {
-    background: var(--warning-bg);
-    color: var(--warning);
-    border: 1px solid rgba(245, 158, 11, 0.45);
-  }
-
-  .undercut-badge.risk {
-    background: var(--danger-bg);
-    color: var(--danger);
-    border: 1px solid rgba(239, 68, 68, 0.45);
-  }
-
-  .undercut-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    text-align: center;
-  }
-
-  .uc-cell {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 7px 6px;
-  }
-
-  .uc-cell span {
-    display: block;
-    font-size: 0.64rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 2px;
-  }
-
-  .uc-cell strong {
-    font-size: 0.96rem;
-    font-weight: 900;
-    color: var(--text-main);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ACTIVE STINT TRACKER BAR */
-  .stint-tracker-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 13px 14px;
-    margin-bottom: 14px;
-    transition: border-color 0.25s, background 0.25s;
-  }
-
-  .stint-tracker-card.stint-warn {
-    border-color: rgba(245, 158, 11, 0.7);
-    background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, var(--card-bg) 100%);
-  }
-
-  .stint-tracker-card.stint-over {
-    border-color: rgba(239, 68, 68, 0.8);
-    background: linear-gradient(90deg, rgba(239, 68, 68, 0.16) 0%, var(--card-bg) 100%);
-  }
-
-  .stint-top-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-
-  .stint-title {
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-  }
-
-  .stint-box-deadline {
-    font-size: 0.76rem;
-    font-weight: 800;
-    color: var(--orange);
-    background: rgba(255, 107, 0, 0.12);
-    border: 1px solid rgba(255, 107, 0, 0.35);
-    padding: 3px 8px;
-    border-radius: 7px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .stint-numbers {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-  }
-
-  .stint-elapsed {
-    font-size: 1.45rem;
-    font-weight: 900;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-main);
-  }
-
-  .stint-remaining-max {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Cards & Accordions */
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .card-title {
-    font-size: 0.84rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-  }
-
-  .card-title .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--orange);
-  }
-
-  .card-title .dot.blue {
-    background: var(--blue);
-  }
-
-  .card-title .dot.green {
-    background: var(--success);
-  }
-
-  .toggle-icon {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    transition: transform 0.25s;
-  }
-
-  .card.collapsed .toggle-icon {
-    transform: rotate(-90deg);
-  }
-
-  .card-body {
-    margin-top: 16px;
-  }
-
-  .card.collapsed .card-body {
-    display: none;
-  }
-
-  /* Mode Switcher */
-  .mode-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    background: var(--bg-dark);
+    border: 1px solid var(--card-border);
+    border-radius: 13px;
     padding: 4px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
-  .mode-tab {
-    padding: 9px 8px;
-    border-radius: 9px;
+  .view-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .view-tab-btn {
     border: none;
     background: transparent;
     color: var(--text-muted);
     font-size: 0.78rem;
     font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .mode-tab.active {
-    background: var(--surface-bg);
-    color: var(--text-main);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  /* Preset Chips */
-  .preset-chips {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .chip-btn {
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
+    padding: 9px 8px;
     border-radius: 9px;
-    padding: 8px 2px;
-    font-size: 0.76rem;
-    font-weight: 800;
     cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .chip-btn.active {
-    background: rgba(0, 168, 255, 0.16);
-    border-color: var(--blue);
-    color: #fff;
-  }
-
-  .chip-btn:active {
-    transform: scale(0.94);
-  }
-
-  /* Calculated End Time Preview Banner */
-  .end-preview-box {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .end-preview-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .end-preview-value {
-    font-size: 1.05rem;
-    font-weight: 900;
-    color: var(--blue);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .btn-now-inline {
-    background: rgba(255, 107, 0, 0.15);
-    border: 1px solid rgba(255, 107, 0, 0.45);
-    color: var(--orange);
-    border-radius: 8px;
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    cursor: pointer;
-  }
-
-  .btn-now-inline:active {
-    transform: scale(0.95);
-  }
-
-  /* Live Clock Box */
-  .live-clock-display {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 15px 14px;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-
-  .live-clock-display.red-flag-paused {
-    border-color: var(--danger);
-    background: rgba(239, 68, 68, 0.08);
-  }
-
-  .live-clock-status {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--blue);
-    margin-bottom: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+    transition: all 0.15s ease;
   }
 
-  .pulse-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--success);
-    animation: pulse 1.5s infinite;
+  .view-tab-btn.active {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--accent-glow);
   }
 
-  @keyframes pulse {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .live-countdown {
-    font-size: 2.1rem;
-    font-weight: 900;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 1px;
-    color: var(--text-main);
-  }
-
-  .live-subinfo {
-    font-size: 0.74rem;
+  .swipe-hint {
+    text-align: center;
+    font-size: 0.66rem;
+    font-weight: 600;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 5px;
   }
 
-  .session-btn-row {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 8px;
-  }
-
-  .btn-session {
+  .pager-viewport {
     width: 100%;
-    padding: 13px 10px;
-    border-radius: 12px;
-    border: none;
-    font-size: 0.84rem;
-    font-weight: 900;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom;
   }
 
-  .btn-session.start {
-    background: linear-gradient(135deg, var(--blue), #0077cc);
-    color: #fff;
-    box-shadow: 0 4px 14px var(--blue-glow);
+  .pager-track {
+    display: flex;
+    width: 200%;
+    transform: translateX(0%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
 
-  .btn-session.redflag {
-    background: rgba(239, 68, 68, 0.18);
-    color: #ff6b6b;
-    border: 1px solid rgba(239, 68, 68, 0.55);
+  .pager-track.dragging {
+    transition: none;
   }
 
-  .btn-session.resume {
-    background: linear-gradient(135deg, var(--success), #059669);
-    color: #fff;
+  .pager-page {
+    width: 50%;
+    flex-shrink: 0;
+    padding-right: 2px;
   }
 
-  .btn-session.stop {
-    background: var(--surface-bg);
-    color: var(--text-muted);
-    border: 1px solid var(--border-color);
+  .module-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 13px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
   }
 
-  .btn-session:active {
-    transform: scale(0.97);
-  }
-
-  /* Pit Log History (Interactive editable tags) */
-  .pit-log-box {
-    margin-top: 12px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 11px;
-    padding: 10px 12px;
-  }
-
-  .pit-log-header {
+  .module-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.7rem;
+    gap: 8px;
+    margin-bottom: 11px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--card-border);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .module-title {
+    margin: 0;
+    font-size: 0.76rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
-
-  .pit-log-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .pit-tag {
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 6px 9px;
-    font-size: 0.74rem;
-    font-weight: 700;
+    letter-spacing: 0.05em;
     color: var(--text-main);
-    font-variant-numeric: tabular-nums;
-    cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 5px;
-    transition: border-color 0.15s, transform 0.1s;
-  }
-
-  .pit-tag:active {
-    transform: scale(0.94);
-    border-color: var(--blue);
-  }
-
-  .pit-tag span.num {
-    color: var(--orange);
-    font-weight: 900;
-  }
-
-  .pit-tag span.edit-ico {
-    color: var(--blue);
-    font-size: 0.7rem;
-  }
-
-  /* Rule Presets Bottom Card */
-  .rule-presets-grid {
-    display: grid;
-    grid-template-columns: 1fr;
     gap: 8px;
   }
 
-  .preset-slot {
+  .accent-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .collapse-arrow {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+  }
+
+  .module-card.collapsed .collapse-arrow { transform: rotate(-90deg); }
+  .module-card.collapsed .module-body { display: none; }
+
+  #alert-banner {
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .status-safe { background: var(--success-bg); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+  .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.35); }
+  .status-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.35); }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .metric-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 13px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  .metric-box.accent-highlight {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--card-bg) 75%);
+  }
+
+  .metric-box.joker-low { border-color: var(--warning); background: var(--warning-bg); }
+  .metric-box.joker-zero { border-color: var(--danger); background: var(--danger-bg); }
+
+  .metric-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .metric-val {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .metric-box.accent-highlight .metric-val { color: var(--accent); }
+
+  .metric-sub {
+    display: block;
+    font-size: 0.66rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .tranche-box-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 11px 13px;
+    margin-bottom: 12px;
+  }
+
+  .tranche-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .tranche-title { font-size: 0.76rem; font-weight: 800; color: var(--text-main); }
+
+  .tranche-pill {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .tranche-pill.ok { background: var(--success-bg); color: var(--success); }
+  .tranche-pill.warn { background: var(--warning-bg); color: var(--warning); }
+  .tranche-pill.late { background: var(--danger-bg); color: var(--danger); }
+
+  .tranche-sub {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .tranche-sub strong { font-family: var(--font-mono); color: var(--text-main); }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .input-group { margin-bottom: 11px; }
+  .input-group:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  input[type="number"],
+  input[type="time"],
+  input[type="text"],
+  select {
+    width: 100%;
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+    padding: 9px 10px;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  input[type="text"] { font-family: var(--font-sans); text-align: left; }
+  select { font-family: var(--font-sans); font-size: 0.8rem; text-align: left; }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .preset-chips { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+
+  .chip-btn {
+    font-family: var(--font-mono);
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 7px 2px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .chip-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .pit-stepper { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: center; }
+
+  .btn-step {
+    height: 40px;
+    border-radius: 9px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-bg);
+    color: var(--text-main);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .btn-step.plus {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .btn-primary-action {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--accent-glow);
+    transition: background 0.15s ease;
+  }
+
+  .btn-primary-action:hover {
+    background: var(--accent-dark);
+  }
+
+  .btn-secondary-light {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--surface-bg);
+    color: var(--text-main);
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .live-clock-box {
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    padding: 11px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .live-countdown {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .step-block {
     background: var(--surface-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 10px 12px;
+    padding: 11px;
+    margin-bottom: 10px;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .three-way-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+  .pos-btn {
+    padding: 11px 6px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .pos-btn.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--accent-glow);
+  }
+
+  .toggle-option-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    cursor: pointer;
+    user-select: none;
   }
 
-  .preset-slot-info {
+  .toggle-option-text strong { display: block; font-size: 0.78rem; font-weight: 700; }
+  .toggle-option-text span { display: block; font-size: 0.69rem; color: var(--text-muted); margin-top: 2px; }
+
+  .switch-pill {
+    position: relative;
+    width: 46px;
+    height: 25px;
+    background: var(--border-color);
+    border-radius: 99px;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+
+  .switch-pill::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: #ffffff;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  input[type="checkbox"].sr-switch { display: none; }
+  input[type="checkbox"].sr-switch:checked + .switch-pill { background: var(--accent); }
+  input[type="checkbox"].sr-switch:checked + .switch-pill::after { transform: translateX(21px); }
+
+  .exit-extra-panel {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+  }
+
+  .qc-summary-line {
+    background: var(--accent-soft);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    border-radius: 10px;
+    padding: 9px 12px;
+    margin-bottom: 10px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .qc-summary-line span { font-family: var(--font-mono); color: var(--accent); }
+
+  .qc-lanes-grid {
+    display: grid;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .qc-lane-col {
     min-width: 0;
-    flex: 1;
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 6px 5px;
+    transition: border-color 0.15s ease, background 0.15s ease;
   }
 
-  .preset-slot-title {
-    font-size: 0.84rem;
+  .qc-lane-col.drag-over-col {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .qc-lane-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 0.64rem;
     font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .qc-lane-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .qc-lane-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .qc-col-btn {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .qc-col-btn.plus {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .qc-kart-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+  }
+
+  .qc-kart-item:last-child { margin-bottom: 0; }
+  .qc-kart-item:active { cursor: grabbing; }
+
+  .qc-kart-item.dragging-kart {
+    opacity: 0.45;
+    transform: scale(0.97);
+  }
+
+  .qc-kart-item.drag-over-kart {
+    border-top: 2.5px solid var(--accent);
+  }
+
+  .qc-kart-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .qc-kart-pos {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
     color: var(--text-main);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .preset-slot-sub {
-    font-size: 0.7rem;
+  .qc-used-btn {
+    border: 1px solid var(--border-color);
+    background: var(--surface-bg);
     color: var(--text-muted);
-    margin-top: 2px;
-  }
-
-  .preset-slot-actions {
-    display: flex;
-    gap: 6px;
+    font-size: 0.54rem;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
     flex-shrink: 0;
   }
 
-  .btn-mini {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    border-radius: 8px;
-    padding: 7px 10px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    cursor: pointer;
-    text-transform: uppercase;
+  .qc-used-btn.used {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
   }
 
-  .btn-mini.load {
-    color: var(--blue);
-    border-color: rgba(0, 168, 255, 0.4);
+  .qc-avg-line {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    background: var(--surface-bg);
+    border-radius: 5px;
+    padding: 3px 4px;
+    margin-bottom: 4px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .btn-mini.save {
-    color: var(--orange);
-    border-color: rgba(255, 107, 0, 0.4);
-  }
-
-  .btn-mini:active {
-    transform: scale(0.94);
-  }
-
-  /* Inputs & Steppers */
-  .input-group {
-    margin-bottom: 14px;
-  }
-
-  .input-group:last-child {
-    margin-bottom: 0;
-  }
-
-  .row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  label {
-    display: block;
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    line-height: 1.25;
-  }
-
-  .label-row {
+  .qc-stint-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6px;
+    gap: 2px;
+    flex-wrap: wrap;
   }
 
-  .label-row label {
-    margin-bottom: 0;
-  }
-
-  input[type="number"],
-  input[type="time"] {
-    width: 100%;
+  .qc-pill {
+    font-family: var(--font-mono);
+    font-size: 0.54rem;
+    font-weight: 600;
     background: var(--surface-bg);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 11px 10px;
-    color: var(--text-main);
-    font-size: 1.02rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    text-align: center;
-    scroll-margin-top: 80px;
-    scroll-margin-bottom: 240px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    color-scheme: dark;
-  }
-
-  input[type="number"]:focus,
-  input[type="time"]:focus {
-    outline: none;
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px var(--blue-glow);
-  }
-
-  /* Time Inputs */
-  .time-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-  }
-
-  .time-inputs-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  .time-box span {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
+    padding: 1px 3px;
+    border-radius: 4px;
     color: var(--text-muted);
-    text-align: center;
-    margin-top: 4px;
-    text-transform: uppercase;
   }
 
-  /* Pit Counter with +/- Buttons */
-  .pit-stepper {
-    display: grid;
-    grid-template-columns: 52px 1fr 52px;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .btn-step {
-    height: 44px;
-    border-radius: 10px;
+  .qc-mini-btn {
     border: 1px solid var(--border-color);
     background: var(--surface-bg);
     color: var(--text-main);
-    font-size: 1.3rem;
+    font-size: 0.54rem;
     font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 4px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-
-  .btn-step.plus {
-    background: linear-gradient(135deg, var(--orange), #e05600);
-    border: none;
-    color: #fff;
-    box-shadow: 0 4px 12px var(--orange-glow);
-  }
-
-  .btn-step:active {
-    transform: scale(0.93);
-  }
-
-  /* Quick Action Copy Button */
-  .btn-copy {
     width: 100%;
-    padding: 13px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+    margin-top: 3px;
+  }
+
+  .qc-log-item {
+    font-size: 0.72rem;
+    padding: 7px 9px;
     background: var(--surface-bg);
-    color: var(--text-main);
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    margin-bottom: 6px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    margin-bottom: 14px;
-    transition: all 0.2s;
   }
 
-  .btn-copy:active {
-    background: var(--border-color);
-    transform: scale(0.98);
-  }
-
-  /* Progress Bar */
-  .progress-wrap {
-    margin-top: 12px;
-    background: var(--surface-bg);
-    height: 6px;
-    border-radius: 99px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--orange), var(--blue));
-    transition: width 0.3s ease;
-  }
-
-  .hidden {
-    display: none !important;
-  }
+  .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<!-- ALERTE PLEIN ÉCRAN (1 JOKER / 0 JOKER) -->
-<div id="fullscreen-alert" class="hidden" role="alertdialog" aria-modal="true">
-  <div class="fs-badge" id="fsBadge">ALERTE STRATÉGIE EG7</div>
-  <div class="fs-icon" id="fsIcon">⚠️</div>
-  <h2 class="fs-title" id="fsTitle">PLUS QUE 1 JOKER</h2>
-  <p class="fs-desc" id="fsDesc">Attention, il ne reste qu'un seul arrêt joker de marge avant d'être bloqué sur les temps minimums.</p>
-  <div class="fs-stats">
-    <div class="fs-stat-box">
-      <span>Stint Min. Immédiat</span>
-      <strong id="fsMinNext">0m 00s</strong>
-    </div>
-    <div class="fs-stat-box">
-      <span>Stint Moyen Requis</span>
-      <strong id="fsMinAvg">0m 00s</strong>
-    </div>
+<div id="splash-overlay" aria-hidden="true">
+  <div class="start-lights-gantry">
+    <div class="race-light" id="rl1"></div>
+    <div class="race-light" id="rl2"></div>
+    <div class="race-light" id="rl3"></div>
+    <div class="race-light" id="rl4"></div>
+    <div class="race-light" id="rl5"></div>
   </div>
-  <button type="button" class="fs-dismiss-btn" onclick="dismissFullscreenAlert()">J'AI COMPRIS</button>
-</div>
-
-<!-- MODALE NOM DU PRESET -->
-<div id="presetNameModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <h3>Nommer le préréglage</h3>
-    <p>Donne un nom à cette configuration de règlement pour la retrouver facilement.</p>
-    <input type="text" id="presetNameInput" maxlength="28" placeholder="Ex: 24H Brignoles, 6H SWS...">
-    <div class="modal-actions">
-      <button type="button" class="btn-modal cancel" onclick="closePresetModal()">Annuler</button>
-      <button type="button" class="btn-modal confirm" onclick="confirmSavePreset()">Enregistrer</button>
-    </div>
+  <div class="splash-badge">EG7</div>
+  <h2 class="splash-title">Stint Calculator</h2>
+  <p class="splash-subtitle">Endurance Pit-Wall Suite</p>
+  <div class="splash-bar">
+    <div class="splash-bar-fill" id="splashFill"></div>
   </div>
 </div>
 
-<!-- MODALE MODIFICATION HEURE D'UN PIT -->
-<div id="editPitModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <h3 id="editPitTitle">Modifier l'arrêt #1</h3>
-    <p>Choisis l'heure exacte à laquelle ce passage aux stands a été effectué.</p>
-    <input type="time" id="editPitTimeInput">
-    <div class="modal-actions">
-      <button type="button" class="btn-modal cancel" onclick="closeEditPitModal()">Annuler</button>
-      <button type="button" class="btn-modal confirm" onclick="confirmEditPitTime()">Valider l'heure</button>
-    </div>
-  </div>
-</div>
-
-<div class="app-container">
+<div class="app-shell">
   <header>
     <div class="brand">
       <div class="brand-badge">EG7</div>
       <div class="brand-text">
         <h1>Stint Calculator</h1>
-        <p><span id="headerClock">--:--:--</span></p>
+        <p id="headerClock">--:--:--</p>
       </div>
     </div>
     <div class="header-actions">
-      <button type="button" class="btn-header" id="nightModeBtn" onclick="toggleNightMode()">🌙 Nuit</button>
-      <button type="button" class="btn-header" onclick="resetAll()">Reset</button>
+      <button type="button" class="btn-header" id="nightBtn" onclick="toggleNightMode()">🌙 Nuit</button>
+      <button type="button" class="btn-header" onclick="resetCurrentTab()">Reset</button>
     </div>
   </header>
 
-  <!-- Bannière de statut -->
-  <div id="alert-banner"></div>
-
-  <!-- 1. VUE STRATÉGIE COURSE GLOBALE -->
-  <div class="strategy-section-bar">
-    <span class="strategy-section-title">🏁 Course Globale</span>
-    <span class="strategy-section-sub" id="globalSectionSub">Objectif total</span>
-  </div>
-  <div class="metrics-grid">
-    <div class="metric-card primary" id="jokerCard">
-      <span class="metric-label">Jokers Globaux</span>
-      <span class="metric-value" id="jokers">0</span>
-      <span class="metric-sub" id="pitsLeftText">0 arrêt restant</span>
+  <div class="view-tabs-wrap">
+    <div class="view-tabs">
+      <button type="button" class="view-tab-btn active" id="tabBtnStint" onclick="switchTab(0)">
+        🏁 Stratégie & Stints
+      </button>
+      <button type="button" class="view-tab-btn" id="tabBtnQuick" onclick="switchTab(1)">
+        ⚡ Quick Change Karts
+      </button>
     </div>
-    <div class="metric-card secondary">
-      <span class="metric-label">Marge Globale</span>
-      <span class="metric-value" id="margin">0m 00s</span>
-      <span class="metric-sub">Avant dépassement max</span>
-    </div>
-    <div class="metric-card">
-      <span class="metric-label">Stint Min. Immédiat</span>
-      <span class="metric-value" id="minNext">0m 00s</span>
-      <span class="metric-sub">Ce relais minimum</span>
-    </div>
-    <div class="metric-card">
-      <span class="metric-label">Stint Moyen Requis</span>
-      <span class="metric-value" id="minAvg">0m 00s</span>
-      <span class="metric-sub">Avant fermeture pits</span>
-    </div>
+    <div class="swipe-hint">← Glisse horizontalement (swipe) entre Stratégie et Quick Change →</div>
   </div>
 
-  <!-- 2. VUE STRATÉGIE TRANCHE HORAIRE / QUOTA INTERMÉDIAIRE -->
-  <div class="quota-block hidden" id="quotaBlock">
-    <div class="quota-header">
-      <span class="quota-title" id="qBlockTitle">🎯 Tranche : 3 arrêts avant 3h</span>
-      <span class="quota-badge ok" id="qBlockBadge">0 / 3 FAITS</span>
-    </div>
-    <div class="quota-subbar">
-      <span id="qDeadlineText">Échéance : 3h de course</span>
-      <strong id="qTimeLeftText">Reste 3h 00m</strong>
-    </div>
-    <div class="quota-metrics-grid">
-      <div class="q-cell q-joker-cell" id="qJokerCell">
-        <span class="q-lbl">Jokers Tranche</span>
-        <strong class="q-val" id="qJokersVal">0</strong>
-        <span class="q-hint" id="qPitsLeftHint">0 arrêt restant</span>
-      </div>
-      <div class="q-cell">
-        <span class="q-lbl">Marge Tranche</span>
-        <strong class="q-val" id="qMarginVal">0m 00s</strong>
-        <span class="q-hint">Avant fin tranche</span>
-      </div>
-      <div class="q-cell">
-        <span class="q-lbl">Stint Min. Tranche</span>
-        <strong class="q-val" id="qMinNextVal">0m 00s</strong>
-        <span class="q-hint">Relais min. immédiat</span>
-      </div>
-      <div class="q-cell">
-        <span class="q-lbl">Moy. Requis Tranche</span>
-        <strong class="q-val" id="qMinAvgVal">0m 00s</strong>
-        <span class="q-hint">Cadence avant limite</span>
-      </div>
-    </div>
-  </div>
+  <div class="pager-viewport" id="pagerViewport">
+    <div class="pager-track" id="pagerTrack">
 
-  <!-- SIMULATEUR UNDERCUT ("ET SI ON RENTRE MAINTENANT ?") -->
-  <div class="undercut-card hidden" id="undercutCard">
-    <div class="undercut-header">
-      <span class="undercut-title">⚡ Et si on rentre maintenant ?</span>
-      <span class="undercut-badge ok" id="ucBadge">Faisable</span>
-    </div>
-    <div class="undercut-grid">
-      <div class="uc-cell">
-        <span>Jokers après</span>
-        <strong id="ucJokersAfter">0</strong>
-      </div>
-      <div class="uc-cell">
-        <span>Moy. restante</span>
-        <strong id="ucAvgAfter">0m 00s</strong>
-      </div>
-      <div class="uc-cell">
-        <span>Relais actuel</span>
-        <strong id="ucCurrentStint">0m 00s</strong>
-      </div>
-    </div>
-  </div>
+      <!-- PAGE 0 : STINT CALCULATOR -->
+      <div class="pager-page" id="pageStint">
+        <div id="alert-banner" class="status-warning">
+          <span>⏱️</span> Renseigne les paramètres du règlement pour démarrer
+        </div>
 
-  <!-- SUIVI DU RELAIS EN COURS & HEURE LIMITE BOX -->
-  <div class="stint-tracker-card hidden" id="stintTrackerCard">
-    <div class="stint-top-row">
-      <span class="stint-title" id="currentStintLabel">⏱️ Relais #1 en cours</span>
-      <span class="stint-box-deadline" id="boxBeforeLabel">BOX avant --:--</span>
-    </div>
-    <div class="stint-numbers">
-      <span class="stint-elapsed" id="stintElapsedDisplay">00:00</span>
-      <span class="stint-remaining-max" id="stintMaxLeftDisplay">Max dans --m</span>
-    </div>
-  </div>
+        <div class="tranche-box-card hidden" id="trancheBoxCard">
+          <div class="tranche-top">
+            <span class="tranche-title" id="trancheTitle">🎯 Tranche box</span>
+            <span class="tranche-pill" id="trancheStatusPill">0 / 0</span>
+          </div>
+          <div class="tranche-sub">
+            <span id="trancheDeadlineTxt">Limite : —</span>
+            <strong id="trancheRemTxt">Reste —</strong>
+          </div>
+        </div>
 
-  <!-- Suivi Live -->
-  <div class="card">
-    <div class="card-header" onclick="toggleCard(this)">
-      <h2 class="card-title"><span class="dot blue"></span> Suivi Live Course</h2>
-      <span class="toggle-icon">▼</span>
-    </div>
-    <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric-box accent-highlight" id="jokerBox">
+            <span class="metric-label">Jokers Globaux</span>
+            <span class="metric-val" id="jokersVal">0</span>
+            <span class="metric-sub" id="pitsLeftSub">0 arrêt restant</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Marge Globale</span>
+            <span class="metric-val" id="marginVal">0m 00s</span>
+            <span class="metric-sub">Avant stint max</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Stint Min. Immédiat</span>
+            <span class="metric-val" id="minNextVal">0m 00s</span>
+            <span class="metric-sub">Relais actuel</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Stint Moyen Requis</span>
+            <span class="metric-val" id="minAvgVal">0m 00s</span>
+            <span class="metric-sub">Avant fermeture pits</span>
+          </div>
+        </div>
 
-      <!-- Sélecteur Mode Auto (Horloge téléphone) / Manuel -->
-      <div class="mode-tabs">
-        <button type="button" class="mode-tab active" id="tabAuto" onclick="setMode('auto')">🕒 Session Horloge</button>
-        <button type="button" class="mode-tab" id="tabManual" onclick="setMode('manual')">⌨️ Chrono Manuel</button>
-      </div>
-
-      <!-- MODE AUTO : Heure de départ + Durée de la course -->
-      <div id="panelAuto">
-        <div id="sessionSetup">
-          <div class="input-group row-2">
-            <div>
-              <div class="label-row">
-                <label for="startTime">Heure départ</label>
-                <button type="button" class="btn-now-inline" onclick="setStartNow()">Maintenant</button>
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Module Chrono & Arrêts</h2>
+            <span class="collapse-arrow">▼</span>
+          </div>
+          <div class="module-body">
+            <div class="input-group row-2">
+              <div>
+                <label for="startTime">Heure de départ</label>
+                <input type="time" id="startTime" onchange="calculateStint()">
               </div>
-              <input type="time" id="startTime" onchange="onScheduleChange()">
+              <div>
+                <label for="totalHours">Durée course (h)</label>
+                <input type="number" id="totalHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="syncHoursChips(this.value); calculateStint();">
+              </div>
             </div>
-            <div>
-              <label for="durationQuick">Durée (h)</label>
-              <input type="number" id="durationQuick" value="0" step="0.5" min="0" inputmode="decimal" onfocus="handleFocus(this)" oninput="syncDurationFromQuick(this.value)">
-            </div>
-          </div>
 
-          <!-- Raccourcis rapides de durée -->
-          <div class="input-group">
-            <div class="preset-chips">
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(1)">1h</button>
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(2)">2h</button>
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(4)">4h</button>
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(6)">6h</button>
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(12)">12h</button>
-              <button type="button" class="chip-btn" onclick="selectQuickDuration(24)">24h</button>
+            <div class="input-group">
+              <div class="preset-chips">
+                <button type="button" class="chip-btn" onclick="setHours(1)">1h</button>
+                <button type="button" class="chip-btn" onclick="setHours(2)">2h</button>
+                <button type="button" class="chip-btn" onclick="setHours(4)">4h</button>
+                <button type="button" class="chip-btn" onclick="setHours(6)">6h</button>
+                <button type="button" class="chip-btn" onclick="setHours(12)">12h</button>
+                <button type="button" class="chip-btn" onclick="setHours(24)">24h</button>
+              </div>
             </div>
-          </div>
 
-          <!-- Aperçu de la fin calculée automatiquement -->
-          <div class="end-preview-box">
-            <span class="end-preview-label">🏁 Fin calculée</span>
-            <span class="end-preview-value" id="calculatedEndPreview">--:--</span>
-          </div>
-
-          <button type="button" class="btn-session start" onclick="startSession()">▶ Lancer la session live</button>
-        </div>
-
-        <div id="sessionRunning" class="hidden">
-          <div class="live-clock-display" id="liveClockBox">
-            <div class="live-clock-status" id="sessionStatusLabel">
-              <span class="pulse-dot"></span> Synchronisé sur l'heure du téléphone
+            <div class="live-clock-box">
+              <div class="metric-label">Temps restant estimé</div>
+              <div class="live-countdown" id="liveRemClock">00:00:00</div>
             </div>
-            <div class="live-countdown" id="liveCountdown">00:00:00</div>
-            <div class="live-subinfo" id="liveScheduleSummary"></div>
-          </div>
-          <div class="session-btn-row">
-            <button type="button" class="btn-session redflag" id="redFlagBtn" onclick="toggleRedFlag()">🚩 Drapeau Rouge</button>
-            <button type="button" class="btn-session stop" onclick="stopSession()">⏹ Modifier</button>
-          </div>
-        </div>
-      </div>
 
-      <!-- MODE MANUEL -->
-      <div id="panelManual" class="hidden">
-        <div class="input-group">
-          <label>Temps restant au chrono</label>
-          <div class="time-inputs">
-            <div class="time-box">
-              <input type="number" id="remH" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-              <span>Heures</span>
-            </div>
-            <div class="time-box">
-              <input type="number" id="remM" value="0" min="0" max="59" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-              <span>Minutes</span>
-            </div>
-            <div class="time-box">
-              <input type="number" id="remS" value="0" min="0" max="59" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-              <span>Secondes</span>
+            <div class="input-group">
+              <label for="donePits">Arrêts déjà effectués</label>
+              <div class="pit-stepper">
+                <button type="button" class="btn-step" onclick="stepDonePits(-1)">−</button>
+                <input type="number" id="donePits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                <button type="button" class="btn-step plus" onclick="stepDonePits(1)">+</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Compteur d'arrêts (commun aux 2 modes) -->
-      <div class="input-group" style="margin-top: 16px;">
-        <label for="donePits">Arrêts déjà effectués</label>
-        <div class="pit-stepper">
-          <button type="button" class="btn-step" onclick="stepPits(-1)">−</button>
-          <input type="number" id="donePits" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="onDonePitsManualInput()">
-          <button type="button" class="btn-step plus" onclick="stepPits(1)">+</button>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-bar" id="pitProgress"></div>
-        </div>
-
-        <!-- Historique horodaté des arrêts (cliquable pour modifier l'heure) -->
-        <div class="pit-log-box hidden" id="pitLogBox">
-          <div class="pit-log-header">
-            <span>📋 Journal des passages (touche pour modifier)</span>
-            <span id="pitLogCount">0 arrêt</span>
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Module Règlement</h2>
+            <span class="collapse-arrow">▼</span>
           </div>
-          <div class="pit-log-list" id="pitLogList"></div>
-        </div>
-      </div>
+          <div class="module-body">
+            <div class="input-group row-3">
+              <div>
+                <label for="reqPits">Pits requis</label>
+                <input type="number" id="reqPits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="minStint">Min stint (m)</label>
+                <input type="number" id="minStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="maxStint">Max stint (m)</label>
+                <input type="number" id="maxStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+            </div>
 
-    </div>
-  </div>
+            <div class="input-group row-3">
+              <div>
+                <label for="pitMin">Arrêt pit (m)</label>
+                <input type="number" id="pitMin" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="pitSec">Arrêt pit (s)</label>
+                <input type="number" id="pitSec" value="0" min="0" max="59" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="pitOpen">Ouvert. après dép. (m)</label>
+                <input type="number" id="pitOpen" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+            </div>
 
-  <!-- Paramètres Règlement -->
-  <div class="card" id="rulesCard">
-    <div class="card-header" onclick="toggleCard(this)">
-      <h2 class="card-title"><span class="dot"></span> Paramètres Règlement</h2>
-      <span class="toggle-icon">▼</span>
-    </div>
-    <div class="card-body">
+            <div class="input-group row-3">
+              <div>
+                <label for="pitClose">Fermet. avant arr. (m)</label>
+                <input type="number" id="pitClose" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="tranchePits">Tranche : X box</label>
+                <input type="number" id="tranchePits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+              </div>
+              <div>
+                <label for="trancheHours">Dans X 1ères heures</label>
+                <input type="number" id="trancheHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="calculateStint()">
+              </div>
+            </div>
 
-      <div class="input-group row-2">
-        <div>
-          <label for="totalHours">Durée course (h)</label>
-          <input type="number" id="totalHours" value="0" step="0.5" min="0" inputmode="decimal" onfocus="handleFocus(this)" oninput="syncDurationFromRules(this.value)">
-        </div>
-        <div>
-          <label for="reqPits">Arrêts obligatoires</label>
-          <input type="number" id="reqPits" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-      </div>
-
-      <div class="input-group row-2">
-        <div>
-          <label for="minStint">Stint min (min)</label>
-          <input type="number" id="minStint" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-        <div>
-          <label for="maxStint">Stint max (min)</label>
-          <input type="number" id="maxStint" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-      </div>
-
-      <div class="input-group row-2">
-        <div>
-          <label for="pitOpen">Ouverture stands après départ (min)</label>
-          <input type="number" id="pitOpen" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-        <div>
-          <label for="pitClose">Fermeture stands avant arrivée (min)</label>
-          <input type="number" id="pitClose" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Durée immobilisation pit</label>
-        <div class="time-inputs-2">
-          <div class="time-box">
-            <input type="number" id="pitMin" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-            <span>Minutes</span>
-          </div>
-          <div class="time-box">
-            <input type="number" id="pitSec" value="0" min="0" max="59" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-            <span>Secondes</span>
+            <button type="button" class="btn-primary-action" id="copyBtn" onclick="copyStrategySummary()">
+              📋 Copier le point stratégie équipe
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Quota intermédiaire : X arrêts dans les X premières heures -->
-      <div class="input-group row-2">
-        <div>
-          <label for="quotaPits">Tranche : Arrêts min. requis (0 = aucun)</label>
-          <input type="number" id="quotaPits" value="0" min="0" inputmode="numeric" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-        <div>
-          <label for="quotaHours">Dans les X premières heures</label>
-          <input type="number" id="quotaHours" value="0" step="0.5" min="0" inputmode="decimal" onfocus="handleFocus(this)" oninput="calculate()">
-        </div>
-      </div>
+      <!-- PAGE 1 : QUICK CHANGE -->
+      <div class="pager-page" id="pageQuickChange">
 
-    </div>
-  </div>
-
-  <!-- Bouton partage rapide WhatsApp / équipe -->
-  <button class="btn-copy" onclick="copySummary()" id="copyBtn">
-    📋 Copier le point stratégie pour l'équipe
-  </button>
-
-  <!-- Préréglages de règlements tout en bas -->
-  <div class="card" id="presetsCard">
-    <div class="card-header" onclick="toggleCard(this)">
-      <h2 class="card-title"><span class="dot green"></span> Préréglages Règlements</h2>
-      <span class="toggle-icon">▼</span>
-    </div>
-    <div class="card-body">
-      <div class="rule-presets-grid">
-        <div class="preset-slot">
-          <div class="preset-slot-info">
-            <div class="preset-slot-title" id="presetName0">Emplacement 1 (vide)</div>
-            <div class="preset-slot-sub" id="presetSub0">Aucun paramètre enregistré</div>
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Flux Quick Change</h2>
+            <span class="collapse-arrow">▼</span>
           </div>
-          <div class="preset-slot-actions">
-            <button type="button" class="btn-mini load" onclick="loadRulePreset(0)">Charger</button>
-            <button type="button" class="btn-mini save" onclick="openSavePresetModal(0)">Sauver</button>
+          <div class="module-body">
+
+            <div class="step-block">
+              <div class="step-badge">1. Numéro de l'équipe qui rentre</div>
+              <input type="text" id="qcTeamInput" list="qcTeamSuggestions" placeholder="Ex: 7, 14, 22..." oninput="renderQuickChange()">
+              <datalist id="qcTeamSuggestions"></datalist>
+            </div>
+
+            <div class="step-block">
+              <div class="step-badge">2. Où elle box</div>
+              <div class="three-way-btns">
+                <button type="button" class="pos-btn selected" id="entryBtnLeft" onclick="setBoxSide('left')">
+                  ⬅️ Gauche
+                </button>
+                <button type="button" class="pos-btn" id="entryBtnMid" onclick="setBoxSide('mid')">
+                  ⏺️ Milieu
+                </button>
+                <button type="button" class="pos-btn" id="entryBtnRight" onclick="setBoxSide('right')">
+                  ➡️ Droite
+                </button>
+              </div>
+            </div>
+
+            <div class="step-block">
+              <div class="step-badge">3. Côté de sortie</div>
+              <label class="toggle-option-row" for="customExitToggle">
+                <div class="toggle-option-text">
+                  <strong>Choisir un côté de sortie différent</strong>
+                  <span id="exitModeHint">Désactivé : repart du même côté où elle box</span>
+                </div>
+                <input type="checkbox" id="customExitToggle" class="sr-switch" onchange="toggleCustomExitOption()">
+                <span class="switch-pill"></span>
+              </label>
+
+              <div class="exit-extra-panel hidden" id="customExitPanel">
+                <label style="margin-bottom:6px;">Côté où elle ressort :</label>
+                <div class="three-way-btns" style="margin-bottom:10px;">
+                  <button type="button" class="pos-btn selected" id="exitBtnLeft" onclick="setExitSide('left')">
+                    ⬅️ Gauche
+                  </button>
+                  <button type="button" class="pos-btn" id="exitBtnMid" onclick="setExitSide('mid')">
+                    ⏺️ Milieu
+                  </button>
+                  <button type="button" class="pos-btn" id="exitBtnRight" onclick="setExitSide('right')">
+                    ➡️ Droite
+                  </button>
+                </div>
+
+                <label for="qcExitRowSelect">Ligne (position) dans la colonne de sortie</label>
+                <select id="qcExitRowSelect" onchange="renderQuickChange()"></select>
+              </div>
+            </div>
+
+            <div class="qc-summary-line" id="qcFlowSummary"></div>
+
+            <button type="button" class="btn-primary-action" onclick="validateTeamQuickChange()">
+              ⚡ Valider le passage aux stands
+            </button>
           </div>
         </div>
 
-        <div class="preset-slot">
-          <div class="preset-slot-info">
-            <div class="preset-slot-title" id="presetName1">Emplacement 2 (vide)</div>
-            <div class="preset-slot-sub" id="presetSub1">Aucun paramètre enregistré</div>
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Colonnes & Karts</h2>
+            <span class="collapse-arrow">▼</span>
           </div>
-          <div class="preset-slot-actions">
-            <button type="button" class="btn-mini load" onclick="loadRulePreset(1)">Charger</button>
-            <button type="button" class="btn-mini save" onclick="openSavePresetModal(1)">Sauver</button>
+          <div class="module-body">
+            <div class="input-group row-2">
+              <div>
+                <label for="qcNumLanes">Nombre de colonnes</label>
+                <input type="number" id="qcNumLanes" value="3" min="1" max="6" inputmode="numeric" oninput="onQcSizeChange()">
+              </div>
+              <div>
+                <label for="qcKartsPerLane">Karts initiaux / col.</label>
+                <input type="number" id="qcKartsPerLane" value="3" min="0" max="15" inputmode="numeric" oninput="onQcSizeChange()">
+              </div>
+            </div>
+            <button type="button" class="btn-secondary-light" onclick="regenerateOffCodes()">
+              🎲 Régénérer IDs internes (en off)
+            </button>
           </div>
         </div>
 
-        <div class="preset-slot">
-          <div class="preset-slot-info">
-            <div class="preset-slot-title" id="presetName2">Emplacement 3 (vide)</div>
-            <div class="preset-slot-sub" id="presetSub2">Aucun paramètre enregistré</div>
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Karts (Drag & Drop)</h2>
+            <span class="collapse-arrow">▼</span>
           </div>
-          <div class="preset-slot-actions">
-            <button type="button" class="btn-mini load" onclick="loadRulePreset(2)">Charger</button>
-            <button type="button" class="btn-mini save" onclick="openSavePresetModal(2)">Sauver</button>
+          <div class="module-body">
+            <div class="qc-lanes-grid" id="qcLanesContainer"></div>
           </div>
         </div>
+
+        <div class="module-card">
+          <div class="module-header" onclick="toggleModule(this)">
+            <h2 class="module-title"><span class="accent-dot"></span> Historique Quick Change</h2>
+            <span class="collapse-arrow">▼</span>
+          </div>
+          <div class="module-body" id="qcActivityLog">
+            <div style="font-size:0.74rem;color:var(--text-muted);">Aucun passage enregistré.</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const NUM_FIELDS = [
-  'totalHours', 'reqPits', 'minStint', 'maxStint',
-  'pitOpen', 'pitMin', 'pitSec', 'pitClose',
-  'quotaPits', 'quotaHours', 'remH', 'remM', 'remS', 'donePits'
-];
-
-const RULE_FIELDS = [
-  'totalHours', 'reqPits', 'minStint', 'maxStint',
-  'pitOpen', 'pitMin', 'pitSec', 'pitClose',
-  'quotaPits', 'quotaHours'
-];
-
-let currentMode = 'auto';
-let sessionActive = false;
-let sessionStartMs = null;
-let sessionEndMs = null;
-
-// Drapeau rouge (gel du chrono)
-let isRedFlag = false;
-let redFlagStartedAtMs = null;
-let pausedRemainingMs = 0;
-
-// Suivi des relais et journal des arrêts
-let pitLogs = [];
-let editingPitIndex = null;
-let savingPresetSlot = null;
-
-let lastJokerCount = null;
-let acknowledgedLevel = null;
+let currentTab = 0;
 let nightMode = false;
-let wakeLockSentinel = null;
+const internalCodesSet = new Set();
 
-async function requestWakeLock() {
-  if ('wakeLock' in navigator && !wakeLockSentinel) {
-    try {
-      wakeLockSentinel = await navigator.wakeLock.request('screen');
-      wakeLockSentinel.addEventListener('release', () => {
-        wakeLockSentinel = null;
-      });
-    } catch (e) {}
-  }
+let dragSrc = null;
+let touchDragKart = null;
+
+let qcState = {
+  numLanes: 3,
+  kartsPerLane: 3,
+  boxSide: 'left',
+  customExitEnabled: false,
+  exitSide: 'left',
+  knownTeams: [],
+  lanes: [],
+  logs: []
+};
+
+function generateOffCode() {
+  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  let code = '';
+  let guard = 0;
+  do {
+    const l = letters[Math.floor(Math.random() * letters.length)];
+    const n = Math.floor(10 + Math.random() * 89);
+    code = `${l}${n}`;
+    guard++;
+  } while (internalCodesSet.has(code) && guard < 150);
+  internalCodesSet.add(code);
+  return code;
 }
 
-function releaseWakeLock() {
-  if (wakeLockSentinel) {
-    wakeLockSentinel.release().catch(() => {});
-    wakeLockSentinel = null;
-  }
+function createKartObj() {
+  return {
+    id: 'k_' + Math.random().toString(36).slice(2, 9),
+    offCode: generateOffCode(),
+    used: false,
+    teamNumber: '',
+    pickedAtMs: null,
+    stintDurationsMin: []
+  };
 }
 
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && sessionActive) {
-    requestWakeLock();
-  }
-});
+function runSplash() {
+  const lights = [1, 2, 3, 4, 5].map(i => document.getElementById('rl' + i));
+  const fill = document.getElementById('splashFill');
+  const overlay = document.getElementById('splash-overlay');
+
+  lights.forEach((el, idx) => {
+    setTimeout(() => {
+      if (el) el.classList.add('lit-red');
+      if (fill) fill.style.width = `${(idx + 1) * 18}%`;
+    }, 140 + idx * 130);
+  });
+
+  setTimeout(() => {
+    lights.forEach(el => {
+      if (el) { el.classList.remove('lit-red'); el.classList.add('lit-green'); }
+    });
+    if (fill) fill.style.width = '100%';
+  }, 900);
+
+  setTimeout(() => { if (overlay) overlay.classList.add('splash-exit'); }, 1200);
+  setTimeout(() => { if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 1650);
+}
+
+function switchTab(tabIndex) {
+  currentTab = Math.max(0, Math.min(1, tabIndex));
+  document.getElementById('pagerTrack').style.transform = `translateX(-${currentTab * 50}%)`;
+  document.getElementById('tabBtnStint').classList.toggle('active', currentTab === 0);
+  document.getElementById('tabBtnQuick').classList.toggle('active', currentTab === 1);
+  saveAll();
+}
+
+function initSwipe() {
+  const viewport = document.getElementById('pagerViewport');
+  const track = document.getElementById('pagerTrack');
+  let startX = 0, startY = 0, deltaX = 0, isHorizontalSwipe = false, tracking = false;
+
+  viewport.addEventListener('touchstart', (e) => {
+    if (touchDragKart || e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    deltaX = 0;
+    isHorizontalSwipe = false;
+    tracking = true;
+    track.classList.add('dragging');
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (touchDragKart || !tracking || e.touches.length !== 1) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+
+    if (!isHorizontalSwipe && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+      isHorizontalSwipe = Math.abs(dx) > Math.abs(dy) * 1.25;
+      if (!isHorizontalSwipe) {
+        tracking = false;
+        track.classList.remove('dragging');
+        return;
+      }
+    }
+
+    if (isHorizontalSwipe) {
+      deltaX = dx;
+      const basePercent = -currentTab * 50;
+      const dragPercent = (deltaX / viewport.clientWidth) * 50;
+      const clamped = Math.max(-58, Math.min(8, basePercent + dragPercent));
+      track.style.transform = `translateX(${clamped}%)`;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', () => {
+    if (!tracking) return;
+    tracking = false;
+    track.classList.remove('dragging');
+    if (isHorizontalSwipe && Math.abs(deltaX) > 65) {
+      if (deltaX < 0 && currentTab === 0) { switchTab(1); return; }
+      if (deltaX > 0 && currentTab === 1) { switchTab(0); return; }
+    }
+    switchTab(currentTab);
+  });
+}
+
+function toggleModule(headerEl) {
+  headerEl.parentElement.classList.toggle('collapsed');
+}
 
 function toggleNightMode() {
   nightMode = !nightMode;
   document.body.classList.toggle('night-mode', nightMode);
-  document.getElementById('nightModeBtn').classList.toggle('active', nightMode);
-  saveState();
+  document.getElementById('nightBtn').classList.toggle('active', nightMode);
+  saveAll();
 }
 
-function handleFocus(inputEl) {
-  inputEl.select();
-  setTimeout(() => {
-    inputEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 300);
+function resetCurrentTab() {
+  if (currentTab === 0) {
+    ['totalHours', 'reqPits', 'minStint', 'maxStint', 'pitMin', 'pitSec', 'pitOpen', 'pitClose', 'tranchePits', 'trancheHours', 'donePits'].forEach(id => {
+      document.getElementById(id).value = '0';
+    });
+    document.getElementById('startTime').value = '';
+    syncHoursChips(0);
+    calculateStint();
+  } else {
+    internalCodesSet.clear();
+    qcState.logs = [];
+    qcState.knownTeams = [];
+    buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+    renderQuickChange();
+    saveAll();
+  }
 }
 
-function setMode(mode) {
-  currentMode = mode;
-  document.getElementById('tabAuto').classList.toggle('active', mode === 'auto');
-  document.getElementById('tabManual').classList.toggle('active', mode === 'manual');
-  document.getElementById('panelAuto').classList.toggle('hidden', mode !== 'auto');
-  document.getElementById('panelManual').classList.toggle('hidden', mode !== 'manual');
-  saveState();
-  calculate();
+function setHours(h) {
+  document.getElementById('totalHours').value = h;
+  syncHoursChips(h);
+  calculateStint();
 }
 
-function setStartNow() {
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  document.getElementById('startTime').value = `${hh}:${mm}`;
-  onScheduleChange();
-}
-
-function selectQuickDuration(hours) {
-  document.getElementById('durationQuick').value = hours;
-  document.getElementById('totalHours').value = hours;
-  highlightDurationChip(hours);
-  onScheduleChange();
-}
-
-function syncDurationFromQuick(val) {
-  document.getElementById('totalHours').value = val;
-  highlightDurationChip(parseFloat(val || 0));
-  onScheduleChange();
-}
-
-function syncDurationFromRules(val) {
-  document.getElementById('durationQuick').value = val;
-  highlightDurationChip(parseFloat(val || 0));
-  onScheduleChange();
-}
-
-function highlightDurationChip(hours) {
+function syncHoursChips(val) {
+  const num = parseFloat(val || 0);
   document.querySelectorAll('.chip-btn').forEach(btn => {
-    const val = parseFloat(btn.innerText);
-    btn.classList.toggle('active', val === hours);
+    btn.classList.toggle('active', parseFloat(btn.innerText) === num);
   });
 }
 
-function computeScheduleBounds() {
-  const timeVal = document.getElementById('startTime').value;
-  const durHours = parseFloat(document.getElementById('totalHours').value || 0);
+function stepDonePits(delta) {
+  const el = document.getElementById('donePits');
+  el.value = Math.max(0, (parseInt(el.value || 0, 10) || 0) + delta);
+  calculateStint();
+}
 
-  if (!timeVal || durHours <= 0) return null;
+function fmtMinSec(mins) {
+  if (!isFinite(mins) || mins <= 0) return '0m 00s';
+  const m = Math.floor(mins);
+  const s = Math.round((mins - m) * 60);
+  if (s === 60) return `${m + 1}m 00s`;
+  return `${m}m ${String(s).padStart(2, '0')}s`;
+}
 
-  const [hh, mm] = timeVal.split(':').map(Number);
+function fmtHMS(secTotal) {
+  const s = Math.max(0, Math.floor(secTotal));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const r = s % 60;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+}
+
+function getCourseTiming() {
+  const totalH = parseFloat(document.getElementById('totalHours').value || 0);
+  const startVal = document.getElementById('startTime').value;
+  if (!startVal || totalH <= 0) {
+    return { totalMin: totalH * 60, remMin: totalH * 60, elapsedMin: 0, startDate: null };
+  }
+
+  const [hh, mm] = startVal.split(':').map(Number);
   const now = new Date();
   let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
-  let end = new Date(start.getTime() + durHours * 3600 * 1000);
+  let end = new Date(start.getTime() + totalH * 3600000);
 
-  if (end.getTime() < now.getTime() && (start.getTime() + 86400000 - now.getTime()) < 12 * 3600 * 1000) {
+  if (end.getTime() < now.getTime() && (start.getTime() + 86400000 - now.getTime()) < 12 * 3600000) {
     start = new Date(start.getTime() + 86400000);
-    end = new Date(start.getTime() + durHours * 3600 * 1000);
+    end = new Date(start.getTime() + totalH * 3600000);
   }
 
-  return { start, end, durHours };
-}
-
-function onScheduleChange() {
-  const bounds = computeScheduleBounds();
-  const previewEl = document.getElementById('calculatedEndPreview');
-
-  if (!bounds) {
-    previewEl.innerText = '--:--';
-  } else {
-    const { start, end } = bounds;
-    const endTimeStr = end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-    const crossesMidnight = end.getDate() !== start.getDate() || end.getMonth() !== start.getMonth();
-    previewEl.innerText = crossesMidnight ? `${endTimeStr} (+1 jour)` : endTimeStr;
+  const totalMin = totalH * 60;
+  if (now.getTime() < start.getTime()) {
+    return { totalMin, remMin: totalMin, elapsedMin: 0, startDate: start };
   }
-
-  saveState();
-  calculate();
+  const remMin = Math.max(0, (end.getTime() - now.getTime()) / 60000);
+  const elapsedMin = Math.max(0, Math.min(totalMin, (now.getTime() - start.getTime()) / 60000));
+  return { totalMin, remMin, elapsedMin, startDate: start };
 }
 
-function updateRunningSummaryText() {
-  if (!sessionStartMs || !sessionEndMs) return;
-  const sObj = new Date(sessionStartMs);
-  const eObj = new Date(sessionEndMs);
-  const sStr = sObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  const eStr = eObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  const nextDay = eObj.getDate() !== sObj.getDate() ? ' (+1j)' : '';
-  document.getElementById('liveScheduleSummary').innerText = `Départ : ${sStr} → Fin calculée : ${eStr}${nextDay}`;
-}
+function updateTrancheBoxUI(timing, P_done) {
+  const card = document.getElementById('trancheBoxCard');
+  const tPits = parseInt(document.getElementById('tranchePits').value || 0, 10);
+  const tHours = parseFloat(document.getElementById('trancheHours').value || 0);
 
-function startSession() {
-  const bounds = computeScheduleBounds();
-  if (!bounds) {
-    alert('Renseigne l\'heure de départ et la durée de la course avant de lancer.');
-    return;
-  }
-
-  sessionStartMs = bounds.start.getTime();
-  sessionEndMs = bounds.end.getTime();
-  sessionActive = true;
-  isRedFlag = false;
-  redFlagStartedAtMs = null;
-  pausedRemainingMs = 0;
-
-  document.getElementById('sessionSetup').classList.add('hidden');
-  document.getElementById('sessionRunning').classList.remove('hidden');
-  updateRedFlagUI();
-  updateRunningSummaryText();
-  requestWakeLock();
-  recalculatePitDurations();
-
-  saveState();
-  calculate();
-}
-
-function stopSession() {
-  sessionActive = false;
-  sessionStartMs = null;
-  sessionEndMs = null;
-  isRedFlag = false;
-  redFlagStartedAtMs = null;
-  pausedRemainingMs = 0;
-
-  document.getElementById('sessionSetup').classList.remove('hidden');
-  document.getElementById('sessionRunning').classList.add('hidden');
-  releaseWakeLock();
-
-  saveState();
-  calculate();
-}
-
-function toggleRedFlag() {
-  if (!sessionActive) return;
-  const nowMs = Date.now();
-
-  if (!isRedFlag) {
-    isRedFlag = true;
-    redFlagStartedAtMs = nowMs;
-    pausedRemainingMs = Math.max(0, sessionEndMs - nowMs);
-  } else {
-    const pauseDurationMs = nowMs - redFlagStartedAtMs;
-    sessionEndMs += pauseDurationMs;
-    isRedFlag = false;
-    redFlagStartedAtMs = null;
-    updateRunningSummaryText();
-  }
-
-  updateRedFlagUI();
-  saveState();
-  calculate();
-}
-
-function updateRedFlagUI() {
-  const btn = document.getElementById('redFlagBtn');
-  const box = document.getElementById('liveClockBox');
-  if (isRedFlag) {
-    btn.className = 'btn-session resume';
-    btn.innerText = '▶ Relancer course';
-    box.classList.add('red-flag-paused');
-  } else {
-    btn.className = 'btn-session redflag';
-    btn.innerText = '🚩 Drapeau Rouge';
-    box.classList.remove('red-flag-paused');
-  }
-}
-
-/* PRÉRÉGLAGES DE RÈGLEMENTS */
-function getSavedPresets() {
-  try {
-    return JSON.parse(localStorage.getItem('eg7_rule_presets_v2') || '[null, null, null]');
-  } catch (e) {
-    return [null, null, null];
-  }
-}
-
-function renderPresetNames() {
-  const presets = getSavedPresets();
-  for (let i = 0; i < 3; i++) {
-    const titleEl = document.getElementById(`presetName${i}`);
-    const subEl = document.getElementById(`presetSub${i}`);
-    if (presets[i]) {
-      titleEl.innerText = presets[i].name || `Préréglage ${i + 1}`;
-      subEl.innerText = `${presets[i].totalHours}h • ${presets[i].reqPits} pits • Min ${presets[i].minStint}m / Max ${presets[i].maxStint}m`;
-    } else {
-      titleEl.innerText = `Emplacement ${i + 1} (vide)`;
-      subEl.innerText = 'Aucun paramètre enregistré';
-    }
-  }
-}
-
-function openSavePresetModal(slotIdx) {
-  savingPresetSlot = slotIdx;
-  const presets = getSavedPresets();
-  const h = document.getElementById('totalHours').value || '0';
-  const p = document.getElementById('reqPits').value || '0';
-  const defaultName = presets[slotIdx]?.name || `Course ${h}H (${p} pits)`;
-
-  const input = document.getElementById('presetNameInput');
-  input.value = defaultName;
-  document.getElementById('presetNameModal').classList.remove('hidden');
-  setTimeout(() => {
-    input.focus();
-    input.select();
-  }, 80);
-}
-
-function closePresetModal() {
-  savingPresetSlot = null;
-  document.getElementById('presetNameModal').classList.add('hidden');
-}
-
-function confirmSavePreset() {
-  if (savingPresetSlot === null) return;
-  const rawName = document.getElementById('presetNameInput').value.trim();
-  const h = document.getElementById('totalHours').value || '0';
-  const finalName = rawName || `Course ${h}H`;
-
-  const presets = getSavedPresets();
-  const data = { name: finalName };
-  RULE_FIELDS.forEach(id => {
-    data[id] = document.getElementById(id).value;
-  });
-  presets[savingPresetSlot] = data;
-  localStorage.setItem('eg7_rule_presets_v2', JSON.stringify(presets));
-
-  renderPresetNames();
-  closePresetModal();
-}
-
-function loadRulePreset(slotIdx) {
-  const presets = getSavedPresets();
-  const data = presets[slotIdx];
-  if (!data) {
-    alert(`Aucun règlement enregistré dans l'emplacement ${slotIdx + 1}. Clique sur "Sauver" pour enregistrer les paramètres actuels.`);
-    return;
-  }
-  RULE_FIELDS.forEach(id => {
-    if (data[id] !== undefined) {
-      document.getElementById(id).value = data[id];
-    }
-  });
-  document.getElementById('durationQuick').value = data.totalHours || '0';
-  highlightDurationChip(parseFloat(data.totalHours || 0));
-  onScheduleChange();
-}
-
-/* COMPTEUR D'ARRÊTS, JOURNAL HORODATÉ & ÉDITION DES HEURES */
-function recalculatePitDurations() {
-  pitLogs.sort((a, b) => a.timestamp - b.timestamp);
-
-  for (let i = 0; i < pitLogs.length; i++) {
-    pitLogs[i].num = i + 1;
-    const prevTs = i === 0
-      ? (sessionStartMs || pitLogs[i].timestamp)
-      : pitLogs[i - 1].timestamp;
-    pitLogs[i].stintDurMin = Math.max(0, Math.round((pitLogs[i].timestamp - prevTs) / 60000));
-  }
-  renderPitLogs();
-}
-
-function stepPits(delta) {
-  const input = document.getElementById('donePits');
-  const current = parseInt(input.value || 0, 10);
-  const next = Math.max(0, current + delta);
-  input.value = next;
-
-  const now = new Date();
-  const nowMs = now.getTime();
-
-  if (delta > 0) {
-    const timeStr = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-    pitLogs.push({
-      num: next,
-      timeStr,
-      timestamp: nowMs,
-      stintDurMin: 0
-    });
-    recalculatePitDurations();
-  } else if (delta < 0 && pitLogs.length > 0) {
-    pitLogs.pop();
-    recalculatePitDurations();
-  }
-
-  calculate();
-}
-
-function onDonePitsManualInput() {
-  const target = Math.max(0, parseInt(document.getElementById('donePits').value || 0, 10));
-  const now = new Date();
-  const nowMs = now.getTime();
-  const timeStr = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-
-  while (pitLogs.length < target) {
-    pitLogs.push({
-      num: pitLogs.length + 1,
-      timeStr,
-      timestamp: nowMs,
-      stintDurMin: 0
-    });
-  }
-  while (pitLogs.length > target) {
-    pitLogs.pop();
-  }
-  recalculatePitDurations();
-  calculate();
-}
-
-function openEditPitModal(index) {
-  const item = pitLogs[index];
-  if (!item) return;
-  editingPitIndex = index;
-
-  document.getElementById('editPitTitle').innerText = `Modifier l'arrêt #${item.num}`;
-  const dt = new Date(item.timestamp);
-  const hh = String(dt.getHours()).padStart(2, '0');
-  const mm = String(dt.getMinutes()).padStart(2, '0');
-  document.getElementById('editPitTimeInput').value = `${hh}:${mm}`;
-
-  document.getElementById('editPitModal').classList.remove('hidden');
-}
-
-function closeEditPitModal() {
-  editingPitIndex = null;
-  document.getElementById('editPitModal').classList.add('hidden');
-}
-
-function confirmEditPitTime() {
-  if (editingPitIndex === null || !pitLogs[editingPitIndex]) return;
-  const timeVal = document.getElementById('editPitTimeInput').value;
-  if (!timeVal) return;
-
-  const [hh, mm] = timeVal.split(':').map(Number);
-  const baseDate = new Date(sessionStartMs || pitLogs[editingPitIndex].timestamp || Date.now());
-  let updatedDate = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), hh, mm, 0, 0);
-
-  if (sessionStartMs && updatedDate.getTime() < sessionStartMs - 15 * 60000) {
-    updatedDate = new Date(updatedDate.getTime() + 86400000);
-  }
-
-  pitLogs[editingPitIndex].timestamp = updatedDate.getTime();
-  pitLogs[editingPitIndex].timeStr = updatedDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-
-  recalculatePitDurations();
-  closeEditPitModal();
-  calculate();
-}
-
-function renderPitLogs() {
-  const box = document.getElementById('pitLogBox');
-  const list = document.getElementById('pitLogList');
-  const countEl = document.getElementById('pitLogCount');
-
-  if (pitLogs.length === 0) {
-    box.classList.add('hidden');
-    return;
-  }
-
-  box.classList.remove('hidden');
-  countEl.innerText = `${pitLogs.length} arrêt${pitLogs.length > 1 ? 's' : ''}`;
-  list.innerHTML = pitLogs.map((p, idx) =>
-    `<button type="button" class="pit-tag" onclick="openEditPitModal(${idx})">
-      <span class="num">#${p.num}</span> ${p.timeStr} (${p.stintDurMin}m) <span class="edit-ico">✎</span>
-    </button>`
-  ).join('');
-}
-
-/* SIMULATEUR UNDERCUT ("ET SI ON RENTRE MAINTENANT ?") */
-function updateUndercutSimulator(P_rem, T_rem, S_min, S_max, P_dur, T_close) {
-  const card = document.getElementById('undercutCard');
-  if (P_rem <= 0 || T_rem <= 0 || S_max <= 0) {
+  if (tPits <= 0 || tHours <= 0 || timing.totalMin <= 0) {
     card.classList.add('hidden');
     return;
   }
 
   card.classList.remove('hidden');
+  const limitMin = Math.min(timing.totalMin, tHours * 60);
+  const remTrancheMin = Math.max(0, limitMin - timing.elapsedMin);
+  const pitsMissing = Math.max(0, tPits - P_done);
 
-  const P_rem_after = P_rem - 1;
-  const T_rem_after = Math.max(0, T_rem - P_dur);
-  const N_stints_after = P_rem_after + 1;
-  const T_track_after = Math.max(0, T_rem_after - (P_rem_after * P_dur));
-  const T_cap_after = N_stints_after * S_max;
+  document.getElementById('trancheTitle').innerText = `🎯 Tranche box : ${tPits} box dans les ${tHours}h`;
+  document.getElementById('trancheDeadlineTxt').innerText = timing.startDate
+    ? `Avant ${new Date(timing.startDate.getTime() + limitMin * 60000).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`
+    : `Fenêtre : ${tHours}h`;
 
-  const nowMs = isRedFlag && redFlagStartedAtMs ? redFlagStartedAtMs : Date.now();
-  let curStintMin = 0;
-  if (sessionActive && sessionStartMs && nowMs >= sessionStartMs) {
-    const stintStartMs = pitLogs.length > 0 ? pitLogs[pitLogs.length - 1].timestamp : sessionStartMs;
-    curStintMin = Math.max(0, (nowMs - stintStartMs) / 60000);
-  }
-  document.getElementById('ucCurrentStint').innerText = sessionActive ? formatMinutes(curStintMin) : '--';
+  const pill = document.getElementById('trancheStatusPill');
+  pill.classList.remove('ok', 'warn', 'late');
 
-  let jokersAfter = 0;
-  if (P_rem_after > 0) {
-    const minPitsNeeded = Math.max(1, Math.ceil((T_rem_after - S_max) / (S_max + P_dur)));
-    jokersAfter = Math.max(0, P_rem_after - minPitsNeeded);
-  }
-
-  const avgAfter = N_stints_after > 0 ? (T_track_after / N_stints_after) : 0;
-
-  document.getElementById('ucJokersAfter').innerText = T_cap_after < T_track_after ? 'IMPOSSIBLE' : jokersAfter;
-  document.getElementById('ucAvgAfter').innerText = formatMinutes(avgAfter);
-
-  const badge = document.getElementById('ucBadge');
-  badge.classList.remove('ok', 'warn', 'risk');
-
-  if (T_cap_after < T_track_after || (P_rem_after > 0 && T_rem_after <= T_close)) {
-    badge.classList.add('risk');
-    badge.innerText = 'Trop tôt (dépasse max)';
-  } else if (sessionActive && S_min > 0 && curStintMin < S_min) {
-    badge.classList.add('risk');
-    badge.innerText = `Sous stint min (${S_min}m)`;
-  } else if (jokersAfter === 0) {
-    badge.classList.add('warn');
-    badge.innerText = '0 joker restant';
+  if (pitsMissing === 0) {
+    pill.classList.add('ok');
+    pill.innerText = `VALIDÉ (${P_done}/${tPits})`;
+    document.getElementById('trancheRemTxt').innerText = 'Quota atteint';
+  } else if (remTrancheMin <= 0) {
+    pill.classList.add('late');
+    pill.innerText = `RETARD (${P_done}/${tPits})`;
+    document.getElementById('trancheRemTxt').innerText = `Manque ${pitsMissing} box`;
   } else {
-    badge.classList.add('ok');
-    badge.innerText = `OK (${jokersAfter} joker${jokersAfter > 1 ? 's' : ''})`;
+    pill.classList.add('warn');
+    pill.innerText = `RESTE ${pitsMissing} BOX (${P_done}/${tPits})`;
+    const h = Math.floor(remTrancheMin / 60);
+    const m = Math.ceil(remTrancheMin % 60);
+    document.getElementById('trancheRemTxt').innerText = h > 0 ? `Reste ${h}h ${m}m` : `Reste ${m} min`;
   }
 }
 
-/* BLOC STRATÉGIQUE TRANCHE HORAIRE : X ARRÊTS DANS LES X PREMIÈRES HEURES */
-function updateIntermediateQuota(T_total, T_rem, P_done, S_min, S_max, P_dur) {
-  const block = document.getElementById('quotaBlock');
-  const qPits = parseInt(document.getElementById('quotaPits').value || 0, 10);
-  const qHours = parseFloat(document.getElementById('quotaHours').value || 0);
+function calculateStint() {
+  const timing = getCourseTiming();
+  const T_rem = timing.remMin;
+  document.getElementById('liveRemClock').innerText = fmtHMS(T_rem * 60);
 
-  if (qPits <= 0 || qHours <= 0 || T_total <= 0) {
-    block.classList.add('hidden');
-    return;
-  }
-
-  block.classList.remove('hidden', 'q-validated', 'q-warn', 'q-danger');
-
-  const qLimitMin = Math.min(T_total, qHours * 60);
-  const elapsedMin = Math.max(0, T_total - T_rem);
-  const qRemMin = Math.max(0, qLimitMin - elapsedMin);
-  const qPitsRem = Math.max(0, qPits - P_done);
-
-  document.getElementById('qBlockTitle').innerText = `🎯 Tranche : ${qPits} arrêt${qPits > 1 ? 's' : ''} avant ${qHours}h`;
-  document.getElementById('qPitsLeftHint').innerText = `${qPitsRem} arrêt${qPitsRem > 1 ? 's' : ''} restant${qPitsRem > 1 ? 's' : ''}`;
-
-  let deadlineLabel = `Limite : ${qHours}h de course`;
-  const bounds = sessionActive && sessionStartMs
-    ? { start: new Date(sessionStartMs) }
-    : computeScheduleBounds();
-
-  if (bounds && bounds.start) {
-    const deadlineDate = new Date(bounds.start.getTime() + qLimitMin * 60000);
-    const timeStr = deadlineDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-    deadlineLabel = `Avant ${timeStr} (${qHours}h)`;
-  }
-  document.getElementById('qDeadlineText').innerText = deadlineLabel;
-
-  const hLeft = Math.floor(qRemMin / 60);
-  const mLeft = Math.ceil(qRemMin % 60);
-  const timeLeftStr = qRemMin <= 0 ? 'Échéance atteinte' : (hLeft > 0 ? `Reste ${hLeft}h ${String(mLeft).padStart(2, '0')}m` : `Reste ${mLeft} min`);
-  document.getElementById('qTimeLeftText').innerText = timeLeftStr;
-
-  const badge = document.getElementById('qBlockBadge');
-  const jokerCell = document.getElementById('qJokerCell');
-  badge.classList.remove('ok', 'due', 'late');
-  jokerCell.classList.remove('joker-low', 'joker-zero');
-
-  if (qPitsRem === 0) {
-    block.classList.add('q-validated');
-    badge.classList.add('ok');
-    badge.innerText = `VALIDÉ (${P_done}/${qPits}) ✓`;
-    document.getElementById('qJokersVal').innerText = 'OK';
-    document.getElementById('qMarginVal').innerText = formatMinutes(qRemMin);
-    document.getElementById('qMinNextVal').innerText = 'Libre';
-    document.getElementById('qMinAvgVal').innerText = 'Validé';
-    return;
-  }
-
-  badge.innerText = `${P_done} / ${qPits} FAIT${P_done > 1 ? 'S' : ''}`;
-
-  if (qRemMin <= 0) {
-    block.classList.add('q-danger');
-    badge.classList.add('late');
-    jokerCell.classList.add('joker-zero');
-    document.getElementById('qJokersVal').innerText = '0';
-    document.getElementById('qMarginVal').innerText = 'DÉPASSÉ';
-    document.getElementById('qMinNextVal').innerText = 'BOX NOW';
-    document.getElementById('qMinAvgVal').innerText = 'BOX NOW';
-    return;
-  }
-
-  const N_q_stints = qPitsRem + 1;
-  const T_q_track_rem = Math.max(0, qRemMin - (qPitsRem * P_dur));
-  const T_q_cap_max = S_max > 0 ? N_q_stints * S_max : 0;
-
-  let qJokers = 0;
-  if (S_max > 0 && qPitsRem > 0) {
-    const minPitsNeededQ = Math.max(1, Math.ceil((qRemMin - S_max) / (S_max + P_dur)));
-    qJokers = Math.max(0, qPitsRem - minPitsNeededQ);
-  }
-
-  const qMargin = S_max > 0 ? (T_q_cap_max - T_q_track_rem) : 0;
-  const qMinNextCalc = S_max > 0 ? Math.max(0, T_q_track_rem - (qPitsRem * S_max)) : 0;
-  const qMinNext = Math.max(S_min, qMinNextCalc);
-  const qMinAvg = qPitsRem > 0 ? Math.max(S_min, T_q_track_rem / qPitsRem) : T_q_track_rem;
-
-  document.getElementById('qJokersVal').innerText = S_max > 0 ? qJokers : '-';
-  document.getElementById('qMarginVal').innerText = S_max > 0 ? (qMargin >= 0 ? formatMinutes(qMargin) : `-${formatMinutes(Math.abs(qMargin))}`) : '-';
-  document.getElementById('qMinNextVal').innerText = S_max > 0 ? formatMinutes(qMinNext) : '-';
-  document.getElementById('qMinAvgVal').innerText = S_max > 0 ? formatMinutes(qMinAvg) : '-';
-
-  const minTimeNeededForQuota = qPitsRem * (S_min + P_dur);
-  if ((S_max > 0 && qMargin < 0) || (S_min > 0 && minTimeNeededForQuota > qRemMin)) {
-    block.classList.add('q-danger');
-    badge.classList.add('late');
-    jokerCell.classList.add('joker-zero');
-  } else if (S_max > 0 && qJokers === 0) {
-    block.classList.add('q-danger');
-    badge.classList.add('late');
-    jokerCell.classList.add('joker-zero');
-  } else if (S_max > 0 && qJokers === 1) {
-    block.classList.add('q-warn');
-    badge.classList.add('due');
-    jokerCell.classList.add('joker-low');
-  } else {
-    badge.classList.add('ok');
-  }
-}
-
-/* SUIVI DU RELAIS EN COURS & HEURE LIMITE BOX */
-function updateStintTracker(S_max, T_rem_min, P_rem) {
-  const card = document.getElementById('stintTrackerCard');
-  if (!sessionActive || !sessionStartMs || S_max <= 0) {
-    card.classList.add('hidden');
-    return;
-  }
-
-  const nowMs = isRedFlag && redFlagStartedAtMs ? redFlagStartedAtMs : Date.now();
-  if (nowMs < sessionStartMs || T_rem_min <= 0) {
-    card.classList.add('hidden');
-    return;
-  }
-
-  card.classList.remove('hidden', 'stint-warn', 'stint-over');
-
-  const stintStartMs = pitLogs.length > 0
-    ? pitLogs[pitLogs.length - 1].timestamp
-    : sessionStartMs;
-
-  const elapsedSec = Math.max(0, Math.floor((nowMs - stintStartMs) / 1000));
-  const elapsedMin = elapsedSec / 60;
-  const maxRemMin = S_max - elapsedMin;
-
-  const stintNum = pitLogs.length + 1;
-  document.getElementById('currentStintLabel').innerText = `⏱️ Relais #${stintNum} en cours`;
-
-  const m = Math.floor(elapsedSec / 60);
-  const s = elapsedSec % 60;
-  document.getElementById('stintElapsedDisplay').innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-
-  const hardMaxMs = Math.min(stintStartMs + S_max * 60000, sessionEndMs);
-  const deadlineStr = new Date(hardMaxMs).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  document.getElementById('boxBeforeLabel').innerText = P_rem > 0 ? `BOX avant ${deadlineStr}` : `Fin à ${deadlineStr}`;
-
-  if (maxRemMin <= 0) {
-    card.classList.add('stint-over');
-    document.getElementById('stintMaxLeftDisplay').innerText = `⚠️ STINT MAX DÉPASSÉ (+${Math.abs(Math.floor(maxRemMin))}m)`;
-  } else if (maxRemMin <= 3 && P_rem > 0) {
-    card.classList.add('stint-warn');
-    document.getElementById('stintMaxLeftDisplay').innerText = `🟠 BOX DANS ${Math.ceil(maxRemMin)} MIN MAX`;
-  } else {
-    document.getElementById('stintMaxLeftDisplay').innerText = `Max (${S_max}m) dans ${Math.ceil(maxRemMin)}m`;
-  }
-}
-
-function saveState() {
-  const state = {
-    currentMode,
-    sessionActive,
-    sessionStartMs,
-    sessionEndMs,
-    isRedFlag,
-    redFlagStartedAtMs,
-    pausedRemainingMs,
-    pitLogs,
-    nightMode,
-    startTime: document.getElementById('startTime').value,
-    durationQuick: document.getElementById('durationQuick').value
-  };
-  NUM_FIELDS.forEach(id => {
-    state[id] = document.getElementById(id).value;
-  });
-  localStorage.setItem('eg7_stint_calc_v10', JSON.stringify(state));
-}
-
-function loadState() {
-  renderPresetNames();
-  const saved = localStorage.getItem('eg7_stint_calc_v10');
-  if (saved) {
-    try {
-      const state = JSON.parse(saved);
-      NUM_FIELDS.forEach(id => {
-        if (state[id] !== undefined) {
-          document.getElementById(id).value = state[id];
-        }
-      });
-      if (state.nightMode) {
-        nightMode = true;
-        document.body.classList.add('night-mode');
-        document.getElementById('nightModeBtn').classList.add('active');
-      }
-      if (Array.isArray(state.pitLogs)) {
-        pitLogs = state.pitLogs;
-        renderPitLogs();
-      }
-      if (state.startTime) document.getElementById('startTime').value = state.startTime;
-      if (state.durationQuick !== undefined) {
-        document.getElementById('durationQuick').value = state.durationQuick;
-      } else {
-        document.getElementById('durationQuick').value = document.getElementById('totalHours').value;
-      }
-      highlightDurationChip(parseFloat(document.getElementById('totalHours').value || 0));
-      onScheduleChange();
-
-      if (state.currentMode) setMode(state.currentMode);
-      if (state.sessionActive && state.sessionStartMs && state.sessionEndMs) {
-        sessionStartMs = state.sessionStartMs;
-        sessionEndMs = state.sessionEndMs;
-        sessionActive = true;
-        isRedFlag = !!state.isRedFlag;
-        redFlagStartedAtMs = state.redFlagStartedAtMs || null;
-        pausedRemainingMs = state.pausedRemainingMs || 0;
-
-        document.getElementById('sessionSetup').classList.add('hidden');
-        document.getElementById('sessionRunning').classList.remove('hidden');
-        updateRedFlagUI();
-        updateRunningSummaryText();
-        requestWakeLock();
-      }
-    } catch (e) {}
-  }
-}
-
-function resetAll() {
-  NUM_FIELDS.forEach(id => {
-    document.getElementById(id).value = '0';
-  });
-  document.getElementById('startTime').value = '';
-  document.getElementById('durationQuick').value = '0';
-  document.getElementById('calculatedEndPreview').innerText = '--:--';
-  sessionActive = false;
-  sessionStartMs = null;
-  sessionEndMs = null;
-  isRedFlag = false;
-  redFlagStartedAtMs = null;
-  pausedRemainingMs = 0;
-  pitLogs = [];
-  lastJokerCount = null;
-  acknowledgedLevel = null;
-
-  renderPitLogs();
-  highlightDurationChip(0);
-  releaseWakeLock();
-  document.getElementById('undercutCard').classList.add('hidden');
-  document.getElementById('quotaBlock').classList.add('hidden');
-  document.getElementById('stintTrackerCard').classList.add('hidden');
-  document.getElementById('fullscreen-alert').classList.add('hidden');
-  document.getElementById('sessionSetup').classList.remove('hidden');
-  document.getElementById('sessionRunning').classList.add('hidden');
-  localStorage.removeItem('eg7_stint_calc_v10');
-  calculate();
-}
-
-function toggleCard(headerEl) {
-  headerEl.parentElement.classList.toggle('collapsed');
-}
-
-function formatMinutes(totalMins) {
-  if (totalMins <= 0) return '0m 00s';
-  const mins = Math.floor(totalMins);
-  const secs = Math.round((totalMins - mins) * 60);
-  if (secs === 60) {
-    return `${mins + 1}m 00s`;
-  }
-  return `${mins}m ${secs.toString().padStart(2, '0')}s`;
-}
-
-function formatHMS(totalSeconds) {
-  const sec = Math.max(0, Math.floor(totalSeconds));
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = sec % 60;
-  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-}
-
-function getRemainingMinutes() {
-  const T_total = parseFloat(document.getElementById('totalHours').value || 0) * 60;
-
-  if (currentMode === 'auto') {
-    if (sessionActive && isRedFlag) {
-      const remSec = pausedRemainingMs / 1000;
-      document.getElementById('sessionStatusLabel').innerHTML = `🚩 DRAPEAU ROUGE — CHRONO GELÉ`;
-      document.getElementById('liveCountdown').innerText = formatHMS(remSec);
-      return remSec / 60;
-    }
-
-    let startMs = sessionStartMs;
-    let endMs = sessionEndMs;
-
-    if (!sessionActive || !startMs || !endMs) {
-      const bounds = computeScheduleBounds();
-      if (!bounds) return T_total;
-      startMs = bounds.start.getTime();
-      endMs = bounds.end.getTime();
-    }
-
-    const nowMs = Date.now();
-    const statusLabel = document.getElementById('sessionStatusLabel');
-    const countdownEl = document.getElementById('liveCountdown');
-
-    if (nowMs < startMs) {
-      const totalCourseSec = Math.max(0, (endMs - startMs) / 1000);
-      const waitSec = (startMs - nowMs) / 1000;
-      if (statusLabel) statusLabel.innerHTML = `<span class="pulse-dot" style="background:var(--warning)"></span> Départ dans ${formatHMS(waitSec)}`;
-      if (countdownEl) countdownEl.innerText = formatHMS(totalCourseSec);
-      return totalCourseSec / 60;
-    } else if (nowMs >= endMs) {
-      if (statusLabel) statusLabel.innerHTML = `🏁 Course terminée`;
-      if (countdownEl) countdownEl.innerText = '00:00:00';
-      return 0;
-    } else {
-      const remSec = (endMs - nowMs) / 1000;
-      if (statusLabel) statusLabel.innerHTML = `<span class="pulse-dot"></span> En cours • Horloge téléphone`;
-      if (countdownEl) countdownEl.innerText = formatHMS(remSec);
-      return remSec / 60;
-    }
-  } else {
-    const h = parseFloat(document.getElementById('remH').value || 0);
-    const m = parseFloat(document.getElementById('remM').value || 0);
-    const s = parseFloat(document.getElementById('remS').value || 0);
-    const T_rem_input = (h * 60) + m + (s / 60);
-    return T_total > 0 ? Math.min(T_total, Math.max(0, T_rem_input)) : Math.max(0, T_rem_input);
-  }
-}
-
-function showFullscreenAlert(level, minNextStr, minAvgStr) {
-  const fsEl = document.getElementById('fullscreen-alert');
-  const fsIcon = document.getElementById('fsIcon');
-  const fsTitle = document.getElementById('fsTitle');
-  const fsDesc = document.getElementById('fsDesc');
-
-  fsEl.classList.remove('fs-warning', 'fs-danger', 'hidden');
-  document.getElementById('fsMinNext').innerText = minNextStr;
-  document.getElementById('fsMinAvg').innerText = minAvgStr;
-
-  if (level === 'one') {
-    fsEl.classList.add('fs-warning');
-    fsIcon.innerText = '⚠️';
-    fsTitle.innerText = 'PLUS QUE 1 JOKER !';
-    fsDesc.innerText = 'Il ne te reste qu’un seul arrêt joker de sécurité. Surveille tes temps de relais avant d’être bloqué.';
-    if (navigator.vibrate) navigator.vibrate([250, 100, 250]);
-  } else if (level === 'zero') {
-    fsEl.classList.add('fs-danger');
-    fsIcon.innerText = '🚨';
-    fsTitle.innerText = '0 JOKER RESTANT !';
-    fsDesc.innerText = 'Plus aucune marge disponible ! Chaque relais restant doit impérativement respecter le temps minimum.';
-    if (navigator.vibrate) navigator.vibrate([500, 120, 500, 120, 500]);
-  }
-}
-
-function dismissFullscreenAlert() {
-  document.getElementById('fullscreen-alert').classList.add('hidden');
-}
-
-function handleJokerAlerts(jokers, P_rem, T_rem, minNextStr, minAvgStr) {
-  const jokerCard = document.getElementById('jokerCard');
-  jokerCard.classList.remove('joker-low', 'joker-zero');
-
-  if (P_rem <= 0 || T_rem <= 0) {
-    acknowledgedLevel = null;
-    lastJokerCount = jokers;
-    return;
-  }
-
-  if (jokers === 0) {
-    jokerCard.classList.add('joker-zero');
-    if (acknowledgedLevel !== 'zero' && (lastJokerCount === null || lastJokerCount >= 1)) {
-      acknowledgedLevel = 'zero';
-      showFullscreenAlert('zero', minNextStr, minAvgStr);
-    }
-  } else if (jokers === 1) {
-    jokerCard.classList.add('joker-low');
-    if (acknowledgedLevel !== 'one' && (lastJokerCount === null || lastJokerCount > 1)) {
-      acknowledgedLevel = 'one';
-      showFullscreenAlert('one', minNextStr, minAvgStr);
-    }
-  } else {
-    acknowledgedLevel = null;
-    dismissFullscreenAlert();
-  }
-
-  lastJokerCount = jokers;
-}
-
-function calculate() {
-  saveState();
-
-  const T_total = parseFloat(document.getElementById('totalHours').value || 0) * 60;
-  const P_req = parseInt(document.getElementById('reqPits').value || 0);
+  const P_req = parseInt(document.getElementById('reqPits').value || 0, 10);
+  const P_done = parseInt(document.getElementById('donePits').value || 0, 10);
   const S_min = parseFloat(document.getElementById('minStint').value || 0);
   const S_max = parseFloat(document.getElementById('maxStint').value || 0);
-  const T_open_start = parseFloat(document.getElementById('pitOpen').value || 0);
-
   const pitM = parseFloat(document.getElementById('pitMin').value || 0);
   const pitS = parseFloat(document.getElementById('pitSec').value || 0);
-  const P_dur = pitM + (pitS / 60);
-
-  const T_close = parseFloat(document.getElementById('pitClose').value || 0);
-  const T_rem = getRemainingMinutes();
-  const P_done = parseInt(document.getElementById('donePits').value || 0);
+  const P_dur = pitM + pitS / 60;
+  const T_open_after_start = parseFloat(document.getElementById('pitOpen').value || 0);
+  const T_close_before_end = parseFloat(document.getElementById('pitClose').value || 0);
 
   const P_rem = Math.max(0, P_req - P_done);
-  document.getElementById('pitsLeftText').innerText = `${P_rem} arrêt${P_rem > 1 ? 's' : ''} restant${P_rem > 1 ? 's' : ''}`;
-  document.getElementById('globalSectionSub').innerText = `${P_done}/${P_req} arrêts`;
+  document.getElementById('pitsLeftSub').innerText = `${P_rem} arrêt${P_rem > 1 ? 's' : ''} restant${P_rem > 1 ? 's' : ''}`;
 
-  const progress = P_req > 0 ? Math.min(100, (P_done / P_req) * 100) : 0;
-  document.getElementById('pitProgress').style.width = `${progress}%`;
+  updateTrancheBoxUI(timing, P_done);
 
-  updateStintTracker(S_max, T_rem, P_rem);
-  updateIntermediateQuota(T_total, T_rem, P_done, S_min, S_max, P_dur);
-  updateUndercutSimulator(P_rem, T_rem, S_min, S_max, P_dur, T_close);
-
-  const alertBanner = document.getElementById('alert-banner');
-  const jokerCard = document.getElementById('jokerCard');
+  const banner = document.getElementById('alert-banner');
+  const jokerBox = document.getElementById('jokerBox');
+  jokerBox.classList.remove('joker-low', 'joker-zero');
 
   if (S_max <= 0) {
-    jokerCard.classList.remove('joker-low', 'joker-zero');
-    alertBanner.className = 'status-warning';
-    alertBanner.innerHTML = `<span>⏱️</span> Renseigne les paramètres du règlement pour démarrer`;
-    document.getElementById('jokers').innerText = '0';
-    document.getElementById('margin').innerText = '0m 00s';
-    document.getElementById('minNext').innerText = '0m 00s';
-    document.getElementById('minAvg').innerText = '0m 00s';
+    banner.className = 'status-warning';
+    banner.innerHTML = '<span>⏱️</span> Renseigne le stint max pour calculer les jokers';
+    document.getElementById('jokersVal').innerText = '0';
+    document.getElementById('marginVal').innerText = '0m 00s';
+    document.getElementById('minNextVal').innerText = '0m 00s';
+    document.getElementById('minAvgVal').innerText = '0m 00s';
+    saveAll();
     return;
   }
 
-  const N_rem_stints = P_rem + 1;
-  const T_track_rem = Math.max(0, T_rem - (P_rem * P_dur));
-  const T_cap_max = N_rem_stints * S_max;
-  const T_open = Math.max(0, T_rem - T_close);
-
-  if (P_rem > 0 && T_rem <= T_close) {
-    jokerCard.classList.remove('joker-low');
-    jokerCard.classList.add('joker-zero');
-    alertBanner.className = 'status-danger';
-    alertBanner.innerHTML = `<span>🚫</span> STANDS FERMÉS : Il manque ${P_rem} arrêt(s) !`;
-    document.getElementById('jokers').innerText = '0';
-    document.getElementById('margin').innerText = '0m 00s';
-    document.getElementById('minNext').innerText = '0m 00s';
-    document.getElementById('minAvg').innerText = '0m 00s';
-    return;
-  }
-
-  if (P_rem > 0 && T_close > S_max) {
-    jokerCard.classList.remove('joker-low');
-    jokerCard.classList.add('joker-zero');
-    const excessLastStint = T_close - S_max;
-    alertBanner.className = 'status-danger';
-    alertBanner.innerHTML = `<span>⚠️</span> IMPOSSIBLE : Fermeture (${T_close}m) > Stint max (${S_max}m)`;
-    document.getElementById('jokers').innerText = '0';
-    document.getElementById('margin').innerText = `-${formatMinutes(excessLastStint)}`;
-    document.getElementById('minNext').innerText = formatMinutes(S_max);
-    document.getElementById('minAvg').innerText = formatMinutes(S_max);
-    return;
-  }
-
-  if (T_cap_max < T_track_rem) {
-    jokerCard.classList.remove('joker-low');
-    jokerCard.classList.add('joker-zero');
-    const deficit = T_rem - (T_cap_max + P_rem * P_dur);
-    const extraPits = Math.ceil(deficit / (S_max + P_dur));
-    alertBanner.className = 'status-danger';
-    alertBanner.innerHTML = `<span>⚠️</span> ALERTE : +${extraPits} arrêt(s) obligatoire(s) en plus !`;
-    
-    document.getElementById('jokers').innerText = '0';
-    document.getElementById('margin').innerText = `-${formatMinutes(deficit)}`;
-    document.getElementById('minNext').innerText = formatMinutes(S_max);
-    document.getElementById('minAvg').innerText = formatMinutes(S_max);
-    return;
-  }
-
-  const minTimeForRemainingStints = (P_rem * (S_min + P_dur)) + (P_rem > 0 ? Math.max(S_min, T_close) : S_min);
-  if (S_min > 0 && minTimeForRemainingStints > T_rem) {
-    jokerCard.classList.remove('joker-low');
-    jokerCard.classList.add('joker-zero');
-    const excessTime = minTimeForRemainingStints - T_rem;
-    alertBanner.className = 'status-danger';
-    alertBanner.innerHTML = `<span>⚠️</span> IMPOSSIBLE : Trop d'arrêts (${formatMinutes(excessTime)} de trop)`;
-    
-    document.getElementById('jokers').innerText = '0';
-    document.getElementById('margin').innerText = formatMinutes(T_cap_max - T_track_rem);
-    document.getElementById('minNext').innerText = formatMinutes(S_min);
-    document.getElementById('minAvg').innerText = formatMinutes(Math.max(0, (T_open - P_rem * P_dur)) / Math.max(1, P_rem));
-    return;
-  }
+  const N_stints = P_rem + 1;
+  const T_track = Math.max(0, T_rem - P_rem * P_dur);
+  const T_cap = N_stints * S_max;
+  const T_open_window = Math.max(0, T_rem - T_close_before_end);
 
   let jokers = 0;
   if (P_rem > 0) {
@@ -2755,87 +1508,567 @@ function calculate() {
     jokers = Math.max(0, P_rem - minPitsNeeded);
   }
 
-  const margin = T_cap_max - T_track_rem;
-  const minNext_calc = Math.max(0, T_track_rem - (P_rem * S_max));
-  const minNext = Math.max(S_min, minNext_calc);
+  const margin = T_cap - T_track;
+  const minNext = Math.max(S_min, Math.max(0, T_track - P_rem * S_max));
+  const minAvg = P_rem > 0 ? Math.max(S_min, Math.max(0, T_open_window - P_rem * P_dur) / P_rem) : T_track;
 
-  const T_track_before_close = Math.max(0, T_open - (P_rem * P_dur));
-  const minAvg = P_rem > 0 ? Math.max(S_min, T_track_before_close / P_rem) : T_track_rem;
+  document.getElementById('jokersVal').innerText = jokers;
+  document.getElementById('marginVal').innerText = fmtMinSec(margin);
+  document.getElementById('minNextVal').innerText = fmtMinSec(minNext);
+  document.getElementById('minAvgVal').innerText = fmtMinSec(minAvg);
 
-  const minNextStr = formatMinutes(minNext);
-  const minAvgStr = formatMinutes(minAvg);
-
-  handleJokerAlerts(jokers, P_rem, T_rem, minNextStr, minAvgStr);
-
-  const elapsedCourseMin = T_total > 0 ? Math.max(0, T_total - T_rem) : 9999;
-  const standsLockedStart = T_open_start > 0 && elapsedCourseMin < T_open_start && P_rem > 0;
+  const pitsClosedNow = P_rem > 0 && T_close_before_end > 0 && T_rem <= T_close_before_end;
+  const pitsNotOpenedYet = P_rem > 0 && T_open_after_start > 0 && timing.elapsedMin < T_open_after_start;
 
   if (P_rem === 0) {
-    alertBanner.className = 'status-safe';
-    alertBanner.innerHTML = `<span>🏁</span> DERNIER RELAIS : Tous les arrêts sont faits !`;
-  } else if (standsLockedStart) {
-    const openIn = Math.ceil(T_open_start - elapsedCourseMin);
-    alertBanner.className = 'status-warning';
-    alertBanner.innerHTML = `<span>🔒</span> STANDS FERMÉS (Départ) : Ouverture dans ${openIn} min`;
+    banner.className = 'status-safe';
+    banner.innerHTML = '<span>🏁</span> Tous les arrêts obligatoires sont effectués';
+  } else if (pitsClosedNow) {
+    banner.className = 'status-danger';
+    banner.innerHTML = `<span>🚫</span> STANDS FERMÉS (arrivée dans ≤ ${T_close_before_end}m)`;
+  } else if (pitsNotOpenedYet) {
+    const waitOpen = Math.ceil(T_open_after_start - timing.elapsedMin);
+    banner.className = 'status-warning';
+    banner.innerHTML = `<span>🔒</span> STANDS FERMÉS : Ouverture dans ${waitOpen} min`;
   } else if (jokers === 0) {
-    alertBanner.className = 'status-danger';
-    alertBanner.innerHTML = `<span>🚨</span> ALERTE 0 JOKER : Plus aucune marge ! Respecte les temps min.`;
+    jokerBox.classList.add('joker-zero');
+    banner.className = 'status-danger';
+    banner.innerHTML = '<span>🚨</span> 0 JOKER : Respecte strictement les temps minimums';
   } else if (jokers === 1) {
-    alertBanner.className = 'status-warning';
-    alertBanner.innerHTML = `<span>⚠️</span> ATTENTION : Il ne reste plus que 1 seul joker !`;
+    jokerBox.classList.add('joker-low');
+    banner.className = 'status-warning';
+    banner.innerHTML = '<span>⚠️</span> PLUS QUE 1 JOKER disponible';
   } else {
-    alertBanner.className = 'status-safe';
-    alertBanner.innerHTML = `<span>🟢</span> STRATÉGIE OK : ${jokers} jokers disponibles`;
+    banner.className = 'status-safe';
+    banner.innerHTML = `<span>🟢</span> STRATÉGIE OK : ${jokers} jokers disponibles`;
   }
 
-  document.getElementById('jokers').innerText = jokers;
-  document.getElementById('margin').innerText = formatMinutes(margin);
-  document.getElementById('minNext').innerText = minNextStr;
-  document.getElementById('minAvg').innerText = minAvgStr;
+  saveAll();
 }
 
-function copySummary() {
-  const T_rem_sec = getRemainingMinutes() * 60;
-  const remStr = formatHMS(T_rem_sec);
-  const done = document.getElementById('donePits').value;
-  const req = document.getElementById('reqPits').value;
-  const jokers = document.getElementById('jokers').innerText;
-  const minNext = document.getElementById('minNext').innerText;
-  const minAvg = document.getElementById('minAvg').innerText;
-  const boxDeadline = document.getElementById('boxBeforeLabel').innerText;
+function copyStrategySummary() {
+  const txt = [
+    `🏁 *Point Stratégie EG7*`,
+    `• Restant : ${document.getElementById('liveRemClock').innerText}`,
+    `• Jokers : *${document.getElementById('jokersVal').innerText}*`,
+    `• Stint min immédiat : *${document.getElementById('minNextVal').innerText}*`,
+    `• Stint moyen requis : *${document.getElementById('minAvgVal').innerText}*`
+  ].join('\n');
 
-  const qPits = parseInt(document.getElementById('quotaPits').value || 0, 10);
-  const qHours = parseFloat(document.getElementById('quotaHours').value || 0);
-  let quotaLine = '';
-  if (qPits > 0 && qHours > 0) {
-    const qJokers = document.getElementById('qJokersVal').innerText;
-    const qAvg = document.getElementById('qMinAvgVal').innerText;
-    quotaLine = `\n• Tranche (${qPits} pits / ${qHours}h) : *${qJokers} joker(s)* • Moy. ${qAvg}`;
-  }
-
-  const stintLine = sessionActive ? `\n• Relais en cours : *${boxDeadline}*` : '';
-  const text = `🏁 *Point Stratégie EG7* (${remStr} restants)\n• Pits : ${done}/${req}\n• Jokers globaux : *${jokers}*\n• Stint min immédiat : *${minNext}*\n• Stint moyen requis : *${minAvg}*${quotaLine}${stintLine}`;
-  
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard?.writeText(txt).then(() => {
     const btn = document.getElementById('copyBtn');
-    const oldText = btn.innerHTML;
-    btn.innerHTML = '✅ Copié ! Prêt à coller sur WhatsApp';
-    setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Copié dans le presse-papier';
+    setTimeout(() => { btn.innerHTML = orig; }, 1800);
   });
 }
 
-function tickClock() {
-  const now = new Date();
-  document.getElementById('headerClock').innerText = now.toLocaleTimeString('fr-FR');
-  if (currentMode === 'auto' && sessionActive) {
-    calculate();
+function buildInitialLanes(numLanes, kartsPerLane) {
+  qcState.lanes = [];
+  for (let l = 0; l < numLanes; l++) {
+    const col = [];
+    for (let k = 0; k < kartsPerLane; k++) {
+      col.push(createKartObj());
+    }
+    qcState.lanes.push(col);
   }
 }
 
-loadState();
-calculate();
-setInterval(tickClock, 1000);
-tickClock();
+function sideToLaneIndex(side) {
+  const maxIdx = Math.max(0, qcState.numLanes - 1);
+  if (side === 'left') return 0;
+  if (side === 'right') return maxIdx;
+  return Math.floor(maxIdx / 2);
+}
+
+function sideLabel(side) {
+  if (side === 'left') return 'Gauche';
+  if (side === 'right') return 'Droite';
+  return 'Milieu';
+}
+
+function setBoxSide(side) {
+  qcState.boxSide = side;
+  if (!qcState.customExitEnabled) {
+    qcState.exitSide = side;
+  }
+  updateSideButtonsUI();
+  renderQuickChange();
+  saveAll();
+}
+
+function setExitSide(side) {
+  qcState.exitSide = side;
+  updateSideButtonsUI();
+  renderQuickChange();
+  saveAll();
+}
+
+function toggleCustomExitOption() {
+  qcState.customExitEnabled = document.getElementById('customExitToggle').checked;
+  document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
+  document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
+    ? 'Activé : tu choisis le côté de sortie et la ligne'
+    : 'Désactivé : repart du même côté où elle box';
+
+  if (!qcState.customExitEnabled) {
+    qcState.exitSide = qcState.boxSide;
+  }
+  updateSideButtonsUI();
+  renderQuickChange();
+  saveAll();
+}
+
+function updateSideButtonsUI() {
+  document.getElementById('entryBtnLeft').classList.toggle('selected', qcState.boxSide === 'left');
+  document.getElementById('entryBtnMid').classList.toggle('selected', qcState.boxSide === 'mid');
+  document.getElementById('entryBtnRight').classList.toggle('selected', qcState.boxSide === 'right');
+
+  document.getElementById('exitBtnLeft').classList.toggle('selected', qcState.exitSide === 'left');
+  document.getElementById('exitBtnMid').classList.toggle('selected', qcState.exitSide === 'mid');
+  document.getElementById('exitBtnRight').classList.toggle('selected', qcState.exitSide === 'right');
+}
+
+function onQcSizeChange() {
+  const nLanes = Math.max(1, Math.min(6, parseInt(document.getElementById('qcNumLanes').value || 1, 10)));
+  const nKarts = Math.max(0, Math.min(15, parseInt(document.getElementById('qcKartsPerLane').value || 0, 10)));
+
+  qcState.numLanes = nLanes;
+  qcState.kartsPerLane = nKarts;
+
+  while (qcState.lanes.length < nLanes) {
+    const col = [];
+    for (let k = 0; k < nKarts; k++) col.push(createKartObj());
+    qcState.lanes.push(col);
+  }
+  while (qcState.lanes.length > nLanes) qcState.lanes.pop();
+
+  for (let l = 0; l < nLanes; l++) {
+    while (qcState.lanes[l].length < nKarts) qcState.lanes[l].push(createKartObj());
+    while (qcState.lanes[l].length > nKarts) qcState.lanes[l].pop();
+  }
+
+  renderQuickChange();
+  saveAll();
+}
+
+function addKartToCol(laneIdx) {
+  if (!qcState.lanes[laneIdx]) return;
+  qcState.lanes[laneIdx].push(createKartObj());
+  addQcLog(`+1 kart en Col. ${laneIdx + 1}`);
+  renderQuickChange();
+  saveAll();
+}
+
+function removeKartFromCol(laneIdx) {
+  if (!qcState.lanes[laneIdx] || qcState.lanes[laneIdx].length === 0) return;
+  qcState.lanes[laneIdx].pop();
+  addQcLog(`−1 kart en Col. ${laneIdx + 1}`);
+  renderQuickChange();
+  saveAll();
+}
+
+function performKartMove(fromLane, fromKart, toLane, toKartIndex = null) {
+  if (!qcState.lanes[fromLane] || !qcState.lanes[toLane]) return;
+  if (fromKart < 0 || fromKart >= qcState.lanes[fromLane].length) return;
+
+  const [moved] = qcState.lanes[fromLane].splice(fromKart, 1);
+  if (!moved) return;
+
+  let targetIdx = toKartIndex !== null ? toKartIndex : qcState.lanes[toLane].length;
+  if (fromLane === toLane && fromKart < targetIdx) {
+    targetIdx = Math.max(0, targetIdx - 1);
+  }
+  targetIdx = Math.max(0, Math.min(qcState.lanes[toLane].length, targetIdx));
+  qcState.lanes[toLane].splice(targetIdx, 0, moved);
+
+  if (fromLane !== toLane || fromKart !== targetIdx) {
+    addQcLog(`Kart : Col. ${fromLane + 1} → Col. ${toLane + 1} (L${targetIdx + 1})`);
+  }
+  renderQuickChange();
+  saveAll();
+}
+
+function onDragStartKart(e, laneIdx, kartIdx) {
+  dragSrc = { laneIdx, kartIdx };
+  e.currentTarget.classList.add('dragging-kart');
+  if (e.dataTransfer) {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', `${laneIdx}:${kartIdx}`);
+  }
+}
+
+function onDragEndKart(e) {
+  e.currentTarget.classList.remove('dragging-kart');
+  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
+  document.querySelectorAll('.drag-over-kart').forEach(el => el.classList.remove('drag-over-kart'));
+  dragSrc = null;
+}
+
+function onDragOverCol(e, laneIdx) {
+  e.preventDefault();
+  if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+  const colEl = document.querySelector(`.qc-lane-col[data-lane="${laneIdx}"]`);
+  if (colEl) colEl.classList.add('drag-over-col');
+}
+
+function onDragLeaveCol(e, laneIdx) {
+  const colEl = document.querySelector(`.qc-lane-col[data-lane="${laneIdx}"]`);
+  if (colEl && !colEl.contains(e.relatedTarget)) {
+    colEl.classList.remove('drag-over-col');
+  }
+}
+
+function onDropOnCol(e, toLaneIdx) {
+  e.preventDefault();
+  const colEl = document.querySelector(`.qc-lane-col[data-lane="${toLaneIdx}"]`);
+  if (colEl) colEl.classList.remove('drag-over-col');
+  if (!dragSrc) return;
+  performKartMove(dragSrc.laneIdx, dragSrc.kartIdx, toLaneIdx, qcState.lanes[toLaneIdx].length);
+  dragSrc = null;
+}
+
+function onDragOverKart(e, laneIdx, kartIdx) {
+  e.preventDefault();
+  e.stopPropagation();
+  if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.drag-over-kart').forEach(el => el.classList.remove('drag-over-kart'));
+  e.currentTarget.classList.add('drag-over-kart');
+}
+
+function onDropOnKart(e, toLaneIdx, toKartIdx) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drag-over-kart');
+  const colEl = document.querySelector(`.qc-lane-col[data-lane="${toLaneIdx}"]`);
+  if (colEl) colEl.classList.remove('drag-over-col');
+  if (!dragSrc) return;
+  performKartMove(dragSrc.laneIdx, dragSrc.kartIdx, toLaneIdx, toKartIdx);
+  dragSrc = null;
+}
+
+function onTouchStartKart(e, laneIdx, kartIdx) {
+  if (e.target.closest('button, select, input')) return;
+  if (e.touches.length !== 1) return;
+  touchDragKart = { laneIdx, kartIdx, el: e.currentTarget };
+  e.currentTarget.classList.add('dragging-kart');
+}
+
+function onTouchMoveKart(e) {
+  if (!touchDragKart || e.touches.length !== 1) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+
+  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
+  document.querySelectorAll('.drag-over-kart').forEach(el => el.classList.remove('drag-over-kart'));
+
+  const colEl = targetEl?.closest('.qc-lane-col');
+  const kartEl = targetEl?.closest('.qc-kart-item');
+  if (colEl) colEl.classList.add('drag-over-col');
+  if (kartEl && kartEl !== touchDragKart.el) kartEl.classList.add('drag-over-kart');
+}
+
+function onTouchEndKart(e) {
+  if (!touchDragKart) return;
+  const touch = e.changedTouches[0];
+  const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+  const colEl = targetEl?.closest('.qc-lane-col');
+  const kartEl = targetEl?.closest('.qc-kart-item');
+
+  touchDragKart.el.classList.remove('dragging-kart');
+  document.querySelectorAll('.drag-over-col').forEach(el => el.classList.remove('drag-over-col'));
+  document.querySelectorAll('.drag-over-kart').forEach(el => el.classList.remove('drag-over-kart'));
+
+  if (colEl) {
+    const toLane = parseInt(colEl.dataset.lane, 10);
+    let toKart = qcState.lanes[toLane]?.length || 0;
+    if (kartEl && kartEl.dataset.lane !== undefined && kartEl.dataset.kart !== undefined) {
+      toKart = parseInt(kartEl.dataset.kart, 10);
+    }
+    performKartMove(touchDragKart.laneIdx, touchDragKart.kartIdx, toLane, toKart);
+  }
+
+  touchDragKart = null;
+}
+
+function regenerateOffCodes() {
+  internalCodesSet.clear();
+  qcState.lanes.forEach(col => col.forEach(k => { k.offCode = generateOffCode(); }));
+  addQcLog('IDs internes régénérés en off');
+  renderQuickChange();
+  saveAll();
+}
+
+function syncExitRowOptions() {
+  const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
+  const exitColIdx = sideToLaneIndex(activeExitSide);
+  const exitCol = qcState.lanes[exitColIdx] || [];
+  const rowSel = document.getElementById('qcExitRowSelect');
+
+  if (exitCol.length === 0) {
+    rowSel.innerHTML = `<option value="0">Ligne 1 (colonne vide)</option>`;
+  } else {
+    const prevRow = Math.min(parseInt(rowSel.value || '0', 10) || 0, exitCol.length - 1);
+    rowSel.innerHTML = exitCol.map((k, idx) =>
+      `<option value="${idx}" ${idx === prevRow ? 'selected' : ''}>Ligne ${idx + 1}${k.teamNumber ? ' • #' + k.teamNumber : ''}</option>`
+    ).join('');
+  }
+}
+
+function addQcLog(msg) {
+  const timeStr = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  qcState.logs.unshift({ timeStr, msg });
+  if (qcState.logs.length > 25) qcState.logs.pop();
+}
+
+function validateTeamQuickChange() {
+  const teamNum = document.getElementById('qcTeamInput').value.trim();
+  const teamLabel = teamNum ? `#${teamNum.replace(/^#/, '')}` : `Équipe ${qcState.logs.length + 1}`;
+
+  if (teamNum && !qcState.knownTeams.includes(teamNum)) {
+    qcState.knownTeams.unshift(teamNum);
+    if (qcState.knownTeams.length > 20) qcState.knownTeams.pop();
+  }
+
+  const nowMs = Date.now();
+  const boxColIdx = sideToLaneIndex(qcState.boxSide);
+  const effectiveExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
+  const exitColIdx = sideToLaneIndex(effectiveExitSide);
+  const exitRowIdx = Math.max(0, parseInt(document.getElementById('qcExitRowSelect').value || '0', 10) || 0);
+
+  qcState.lanes.forEach(col => {
+    col.forEach(k => {
+      if (k.teamNumber === teamNum && teamNum !== '' && k.pickedAtMs) {
+        const durMin = Math.max(0.5, (nowMs - k.pickedAtMs) / 60000);
+        k.stintDurationsMin.push(Number(durMin.toFixed(1)));
+        k.pickedAtMs = null;
+      }
+    });
+  });
+
+  const exitCol = qcState.lanes[exitColIdx];
+  let exitInfo = '';
+  if (exitCol && exitCol.length > 0) {
+    const safeRow = Math.min(exitRowIdx, exitCol.length - 1);
+    const takenKart = exitCol[safeRow];
+    if (takenKart) {
+      takenKart.teamNumber = teamNum;
+      takenKart.used = true;
+      takenKart.pickedAtMs = nowMs;
+      exitInfo = ` → ${sideLabel(effectiveExitSide)} L${safeRow + 1}`;
+    }
+  }
+
+  if (!qcState.lanes[boxColIdx]) qcState.lanes[boxColIdx] = [];
+  const arrivedKart = createKartObj();
+  arrivedKart.teamNumber = teamNum;
+  arrivedKart.used = true;
+  qcState.lanes[boxColIdx].push(arrivedKart);
+
+  addQcLog(`<strong>${teamLabel}</strong> box <strong>${sideLabel(qcState.boxSide)}</strong>${exitInfo}`);
+  document.getElementById('qcTeamInput').value = '';
+  renderQuickChange();
+  saveAll();
+}
+
+function logManualStintDuration(laneIdx, kartIdx) {
+  const kart = qcState.lanes[laneIdx]?.[kartIdx];
+  if (!kart) return;
+  const input = prompt(`Durée du relais effectué (en minutes) :`, '15');
+  if (input === null) return;
+  const val = parseFloat(input.replace(',', '.'));
+  if (!isFinite(val) || val <= 0) return;
+  kart.stintDurationsMin.push(Number(val.toFixed(1)));
+  addQcLog(`Relais ${val.toFixed(1)}m (C${laneIdx + 1} L${kartIdx + 1})`);
+  renderQuickChange();
+  saveAll();
+}
+
+function getKartAvg(kart) {
+  const arr = kart.stintDurationsMin || [];
+  if (arr.length === 0) return null;
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+function toggleKartUsed(laneIdx, kartIdx) {
+  const kart = qcState.lanes[laneIdx]?.[kartIdx];
+  if (!kart) return;
+  kart.used = !kart.used;
+  renderQuickChange();
+  saveAll();
+}
+
+function renderQuickChange() {
+  syncExitRowOptions();
+  updateSideButtonsUI();
+
+  const dl = document.getElementById('qcTeamSuggestions');
+  dl.innerHTML = (qcState.knownTeams || []).map(t => `<option value="${t}">`).join('');
+
+  const teamVal = document.getElementById('qcTeamInput').value.trim();
+  const teamText = teamVal ? `Équipe #${teamVal.replace(/^#/, '')}` : 'Équipe';
+  const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
+  const exitRow = (parseInt(document.getElementById('qcExitRowSelect').value || '0', 10) || 0) + 1;
+
+  document.getElementById('qcFlowSummary').innerHTML = qcState.customExitEnabled
+    ? `${teamText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(activeExitSide)} (Ligne ${exitRow})</span>`
+    : `${teamText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(qcState.boxSide)}</span>`;
+
+  const gridEl = document.getElementById('qcLanesContainer');
+  gridEl.style.gridTemplateColumns = `repeat(${Math.max(1, qcState.lanes.length)}, minmax(0, 1fr))`;
+
+  let html = '';
+  qcState.lanes.forEach((col, lIdx) => {
+    html += `
+      <div class="qc-lane-col" data-lane="${lIdx}"
+        ondragover="onDragOverCol(event, ${lIdx})"
+        ondragleave="onDragLeaveCol(event, ${lIdx})"
+        ondrop="onDropOnCol(event, ${lIdx})">
+        <div class="qc-lane-header">
+          <span class="qc-lane-title">C${lIdx + 1} (${col.length})</span>
+          <div class="qc-lane-actions">
+            <button type="button" class="qc-col-btn" title="Retirer un kart" onclick="removeKartFromCol(${lIdx})">−</button>
+            <button type="button" class="qc-col-btn plus" title="Ajouter un kart" onclick="addKartToCol(${lIdx})">+</button>
+          </div>
+        </div>
+    `;
+
+    if (col.length === 0) {
+      html += `<div style="font-size:0.62rem;color:var(--text-muted);text-align:center;padding:10px 3px;border:1px dashed var(--border-color);border-radius:7px;">Vide</div>`;
+    }
+
+    col.forEach((kart, kIdx) => {
+      const avg = getKartAvg(kart);
+      const avgStr = avg !== null ? `Moy ${avg.toFixed(1)}m` : '—';
+
+      html += `
+        <div class="qc-kart-item"
+          draggable="true"
+          data-lane="${lIdx}"
+          data-kart="${kIdx}"
+          ondragstart="onDragStartKart(event, ${lIdx}, ${kIdx})"
+          ondragend="onDragEndKart(event)"
+          ondragover="onDragOverKart(event, ${lIdx}, ${kIdx})"
+          ondrop="onDropOnKart(event, ${lIdx}, ${kIdx})"
+          ontouchstart="onTouchStartKart(event, ${lIdx}, ${kIdx})"
+          ontouchmove="onTouchMoveKart(event)"
+          ontouchend="onTouchEndKart(event)">
+          <div class="qc-kart-top">
+            <span class="qc-kart-pos">⋮⋮ L${kIdx + 1}${kart.teamNumber ? ' #' + kart.teamNumber : ''}</span>
+            <button type="button" class="qc-used-btn ${kart.used ? 'used' : ''}" onclick="toggleKartUsed(${lIdx}, ${kIdx})">
+              ${kart.used ? '✓ Eu' : 'Eu?'}
+            </button>
+          </div>
+
+          <div class="qc-avg-line">${avgStr}</div>
+
+          <div class="qc-stint-row">
+            ${(kart.stintDurationsMin || []).map((d, i) => `<span class="qc-pill">R${i + 1}:${d}m</span>`).join('')}
+          </div>
+          <button type="button" class="qc-mini-btn" onclick="logManualStintDuration(${lIdx}, ${kIdx})">+ Relais</button>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
+
+  gridEl.innerHTML = html;
+
+  const logEl = document.getElementById('qcActivityLog');
+  if (!qcState.logs || qcState.logs.length === 0) {
+    logEl.innerHTML = `<div style="font-size:0.74rem;color:var(--text-muted);">Aucun passage enregistré.</div>`;
+  } else {
+    logEl.innerHTML = qcState.logs.map(l => `
+      <div class="qc-log-item">
+        <span>${l.msg}</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);">${l.timeStr}</span>
+      </div>
+    `).join('');
+  }
+}
+
+function saveAll() {
+  const payload = {
+    currentTab,
+    nightMode,
+    stint: {
+      startTime: document.getElementById('startTime').value,
+      totalHours: document.getElementById('totalHours').value,
+      reqPits: document.getElementById('reqPits').value,
+      donePits: document.getElementById('donePits').value,
+      minStint: document.getElementById('minStint').value,
+      maxStint: document.getElementById('maxStint').value,
+      pitMin: document.getElementById('pitMin').value,
+      pitSec: document.getElementById('pitSec').value,
+      pitOpen: document.getElementById('pitOpen').value,
+      pitClose: document.getElementById('pitClose').value,
+      tranchePits: document.getElementById('tranchePits').value,
+      trancheHours: document.getElementById('trancheHours').value
+    },
+    qc: qcState
+  };
+  localStorage.setItem('eg7_slate_pro_v8', JSON.stringify(payload));
+}
+
+function loadAll() {
+  try {
+    const raw = localStorage.getItem('eg7_slate_pro_v8');
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data.nightMode) {
+        nightMode = true;
+        document.body.classList.add('night-mode');
+        document.getElementById('nightBtn').classList.add('active');
+      }
+      if (data.stint) {
+        Object.entries(data.stint).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.value = val;
+        });
+        syncHoursChips(document.getElementById('totalHours').value);
+      }
+      if (data.qc && Array.isArray(data.qc.lanes) && data.qc.lanes.length > 0) {
+        qcState = Object.assign({}, qcState, data.qc);
+        qcState.lanes.forEach(col => col.forEach(k => {
+          if (k.offCode) internalCodesSet.add(k.offCode);
+          else k.offCode = generateOffCode();
+          if (!Array.isArray(k.stintDurationsMin)) k.stintDurationsMin = [];
+        }));
+        document.getElementById('qcNumLanes').value = qcState.numLanes;
+        document.getElementById('qcKartsPerLane').value = qcState.kartsPerLane;
+        document.getElementById('customExitToggle').checked = !!qcState.customExitEnabled;
+        document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
+        document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
+          ? 'Activé : tu choisis le côté de sortie et la ligne'
+          : 'Désactivé : repart du même côté où elle box';
+      } else {
+        buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+      }
+      if (typeof data.currentTab === 'number') {
+        switchTab(data.currentTab);
+      }
+    } else {
+      buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+    }
+  } catch (e) {
+    buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+  }
+}
+
+function tick() {
+  document.getElementById('headerClock').innerText = new Date().toLocaleTimeString('fr-FR');
+  calculateStint();
+}
+
+runSplash();
+loadAll();
+initSwipe();
+renderQuickChange();
+calculateStint();
+setInterval(tick, 1000);
+tick();
 </script>
 </body>
 </html>
