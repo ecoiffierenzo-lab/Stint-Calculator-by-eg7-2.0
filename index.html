@@ -474,7 +474,167 @@
   .fs-ack-btn:active { transform: scale(0.98); }
 
   /* =========================================================
-     SHELL & HEADER PRO
+     MODALE LIEN MULTIPLATEFORME (BRIDGE)
+     ========================================================= */
+  #bridge-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: rgba(3, 6, 12, 0.72);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .bridge-modal-card {
+    width: 100%;
+    max-width: 440px;
+    max-height: 88dvh;
+    overflow-y: auto;
+    background: #091120;
+    color: #f8fafc;
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: 24px;
+    padding: 20px 18px;
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.75);
+  }
+
+  .bridge-modal-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .bridge-modal-title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.96rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #38bdf8;
+    text-transform: uppercase;
+  }
+
+  .bridge-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    background: rgba(15, 23, 42, 0.9);
+    color: #e2e8f0;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .bridge-modal-desc {
+    margin: 0 0 14px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #cbd5e1;
+  }
+
+  .bridge-session-box {
+    background: rgba(6, 78, 59, 0.34);
+    border: 1.5px solid rgba(16, 185, 129, 0.55);
+    border-radius: 18px;
+    padding: 15px 14px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .bridge-live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #6ee7b7;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .bridge-session-code {
+    font-family: var(--font-mono);
+    font-size: 1.38rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    margin-bottom: 12px;
+    word-break: break-all;
+  }
+
+  .bridge-action-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .bridge-btn-dark {
+    padding: 10px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.92);
+    color: #f8fafc;
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .bridge-btn-dark:active { transform: scale(0.98); }
+
+  .bridge-import-box {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .bridge-import-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 6px;
+  }
+
+  .bridge-input {
+    width: 100%;
+    background: #050a14;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 11px;
+    padding: 9px 10px;
+    color: #f8fafc;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    margin-bottom: 8px;
+    outline: none;
+  }
+
+  .bridge-footer-note {
+    text-align: center;
+    font-size: 0.68rem;
+    color: #94a3b8;
+    line-height: 1.35;
+  }
+
+  /* =========================================================
+     SHELL & HEADER PRO + BOTTOM TAB BAR
      ========================================================= */
   .app-shell {
     position: relative;
@@ -482,7 +642,7 @@
     width: 100%;
     max-width: 640px;
     margin: 0 auto;
-    padding: 12px 12px 96px;
+    padding: 12px 12px 98px;
   }
 
   .top-header-panel {
@@ -567,8 +727,8 @@
 
   .utility-toolbar {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
     margin-top: 11px;
     padding-top: 11px;
     border-top: 1px solid var(--card-border);
@@ -580,15 +740,15 @@
     border: 1.5px solid var(--input-border);
     color: var(--text-main);
     font-family: var(--font-sans);
-    font-size: 0.76rem;
+    font-size: 0.73rem;
     font-weight: 800;
-    padding: 8px 10px;
+    padding: 8px 8px;
     border-radius: 13px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     white-space: nowrap;
     min-width: 0;
     transition: all 0.16s ease;
@@ -609,22 +769,33 @@
     box-shadow: 0 5px 14px var(--accent-glow);
   }
 
+  .btn-utility.bridge-btn {
+    border-color: rgba(16, 185, 129, 0.45);
+    background: rgba(16, 185, 129, 0.09);
+    color: #047857;
+  }
+
   .btn-utility.muted-state { opacity: 0.74; }
   .btn-utility.reset-btn:hover { border-color: var(--danger); color: var(--danger); }
   .btn-utility.reset-confirm { background: var(--danger); border-color: var(--danger); color: #ffffff; }
 
-  /* VIEW SWITCHER 5 ONGLETS (SANS SLIDE) */
-  .view-tabs-wrap {
-    background: var(--card-bg);
-    backdrop-filter: blur(14px);
-    border: 1px solid var(--card-border);
-    border-radius: 19px;
-    padding: 5px;
-    box-shadow: var(--card-shadow);
-    margin-bottom: 12px;
+  /* BARRE DE NAVIGATION FIXÉE EN BAS */
+  .bottom-nav-dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8000;
+    padding: 6px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: rgba(8, 14, 26, 0.94);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35);
   }
 
   .view-tabs {
+    max-width: 640px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4px;
@@ -633,25 +804,25 @@
   .view-tab-btn {
     border: none;
     background: transparent;
-    color: var(--text-muted);
-    font-size: 0.66rem;
+    color: #94a3b8;
+    font-size: 0.64rem;
     font-weight: 800;
-    padding: 9px 2px;
-    border-radius: 14px;
+    padding: 8px 2px;
+    border-radius: 13px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 3px;
-    transition: all 0.18s ease;
+    transition: all 0.16s ease;
     white-space: nowrap;
   }
 
   .view-tab-btn.active {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    color: #ffffff;
-    box-shadow: 0 6px 16px var(--accent-glow);
+    background: rgba(56, 189, 248, 0.16);
+    color: #38bdf8;
+    box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.35);
   }
 
   .tab-page {
@@ -1434,21 +1605,28 @@
   }
 
   .three-way-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .four-way-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 
-  .entry-click-btn, .pos-btn {
+  .entry-click-btn, .pos-btn, .num-choice-btn {
     padding: 10px 6px;
     border-radius: 12px;
     border: 1.5px solid var(--input-border);
     background: var(--card-bg);
     color: var(--text-main);
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     font-weight: 800;
     cursor: pointer;
     text-align: center;
     transition: all 0.14s ease;
   }
 
-  .entry-click-btn.selected, .pos-btn.selected {
+  .num-choice-btn {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    padding: 11px 4px;
+  }
+
+  .entry-click-btn.selected, .pos-btn.selected, .num-choice-btn.selected {
     background: var(--accent);
     border-color: var(--accent);
     color: #ffffff;
@@ -1513,30 +1691,102 @@
 
   .qc-summary-line span { font-family: var(--font-mono); color: var(--accent); }
 
-  .row-color-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .row-color-item {
+  .rule-callout-box {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
-    border-radius: 12px;
-    padding: 8px 10px;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .stand-config-card {
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 18px;
+    padding: 13px;
+    margin-bottom: 10px;
+  }
+
+  .stand-config-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 0 0 8px;
+  }
+
+  .stand-config-meta {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .stand-config-meta strong {
+    font-family: var(--font-mono);
+    color: var(--text-main);
+  }
+
+  .lane-color-row {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 15px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+
+  .lane-color-row:last-child { margin-bottom: 0; }
+
+  .lane-color-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    margin-bottom: 8px;
   }
 
-  .row-color-label {
+  .lane-color-name {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 800;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
+  }
+
+  .lane-color-val {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .swatch-palette {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .swatch-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid rgba(15, 23, 42, 0.22);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+  }
+
+  .swatch-btn.selected {
+    transform: scale(1.16);
+    border: 3px solid var(--text-main);
+    box-shadow: 0 0 0 2px #ffffff, 0 4px 10px rgba(0, 0, 0, 0.25);
   }
 
   .color-swatch-dot {
@@ -1545,17 +1795,6 @@
     border-radius: 50%;
     border: 1px solid rgba(15, 23, 42, 0.28);
     display: inline-block;
-  }
-
-  .row-color-select {
-    background: var(--card-bg);
-    border: 1px solid var(--input-border);
-    border-radius: 8px;
-    padding: 4px 6px;
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--text-main);
   }
 
   .stratkart-banner {
@@ -2040,7 +2279,57 @@
   </div>
 </div>
 
-<!-- ALERTE PLEIN ÉCRAN (1 JOKER / 0 JOKER) -->
+<!-- MODALE LIEN MULTIPLATEFORME (BRIDGE) -->
+<div id="bridge-modal-backdrop" class="hidden" role="dialog" aria-modal="true" onclick="handleBridgeBackdropClick(event)">
+  <div class="bridge-modal-card">
+    <div class="bridge-modal-top">
+      <h2 class="bridge-modal-title">Lien Multiplateforme</h2>
+      <button type="button" class="bridge-close-btn" onclick="closeBridgeModal()" aria-label="Fermer">✕</button>
+    </div>
+    <p class="bridge-modal-desc">
+      Partage tes saisies (G/M/D, config, tracking karts, classement &amp; stratégie) en temps réel entre ton ordi et tes tels. Le bridge live reste actif sur tes sessions ouvertes.
+    </p>
+
+    <div class="bridge-session-box">
+      <div class="bridge-live-pill">
+        <span class="live-dot connected"></span>
+        <span>SESSION ACTIVE</span>
+      </div>
+      <div class="bridge-session-code" id="bridgeSessionCodeDisplay">EG7-00000000</div>
+      <div class="bridge-action-pair">
+        <button type="button" class="bridge-btn-dark" id="copyBridgeLinkBtn" onclick="copyBridgeLink()">
+          🔗 Copier le lien
+        </button>
+        <button type="button" class="bridge-btn-dark" id="copyBridgeCodeBtn" onclick="copyBridgeCode()">
+          📋 Code
+        </button>
+      </div>
+    </div>
+
+    <div class="bridge-import-box">
+      <label class="bridge-import-label" for="bridgeJoinInput">Rejoindre depuis un autre appareil (Code ou Lien)</label>
+      <input type="text" id="bridgeJoinInput" class="bridge-input" placeholder="Ex: EG7-8DC35D84 ou https://...?session=...">
+      <button type="button" class="btn-primary-action" onclick="joinBridgeSession()">
+        ⚡ Connecter / Synchroniser cette session
+      </button>
+    </div>
+
+    <div class="bridge-import-box" style="margin-bottom:8px;">
+      <label class="bridge-import-label" for="bridgeSnapshotBox">Transfert d'état instantané (Code / JSON de session)</label>
+      <textarea id="bridgeSnapshotBox" class="bridge-input" style="min-height:56px;" placeholder="Colle un snapshot de session pour l'appliquer ici..."></textarea>
+      <div class="bridge-action-pair">
+        <button type="button" class="bridge-btn-dark" onclick="exportBridgeSnapshot()">📤 Générer snapshot</button>
+        <button type="button" class="bridge-btn-dark" onclick="importBridgeSnapshot()">📥 Appliquer snapshot</button>
+      </div>
+    </div>
+
+    <div class="bridge-footer-note" id="bridgeStatusMsg">
+      Le lien de ta course reste actif jusqu'à la fin du temps payé.
+    </div>
+  </div>
+</div>
+
+<!-- ALERTE PLEIN ÉCRAN : 1 JOKER & 0 JOKER -->
 <div id="fullscreen-joker-alert" class="mode-zero hidden" role="alertdialog" aria-modal="true">
   <div class="fs-alert-card">
     <div class="fs-code-tag" id="fsAlertTag">CRITICAL-00 // ZÉRO JOKER</div>
@@ -2078,6 +2367,10 @@
     </div>
 
     <div class="utility-toolbar">
+      <button type="button" class="btn-utility bridge-btn" id="bridgeBtn" onclick="openBridgeModal()" title="Lien Multiplateforme & Bridge">
+        <span>●</span>
+        <span>BRIDGE</span>
+      </button>
       <button type="button" class="btn-utility active" id="soundBtn" onclick="toggleSoundAlert()" title="Activer ou couper l'alerte sonore 0 Joker">
         <span id="soundIcon">🔔</span>
         <span id="soundLabel">Sonnerie ON</span>
@@ -2085,31 +2378,6 @@
       <button type="button" class="btn-utility reset-btn" id="resetBtn" onclick="handleResetClick()" title="Réinitialiser l'onglet actif">
         <span>↺</span>
         <span id="resetLabel">Reset</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="view-tabs-wrap">
-    <div class="view-tabs">
-      <button type="button" class="view-tab-btn active" id="tabBtnStint" onclick="switchTab(0)">
-        <span>🏁</span>
-        <span>Stratégie</span>
-      </button>
-      <button type="button" class="view-tab-btn" id="tabBtnQuick" onclick="switchTab(1)">
-        <span>⚡</span>
-        <span>Quick Chg</span>
-      </button>
-      <button type="button" class="view-tab-btn" id="tabBtnRank" onclick="switchTab(2)">
-        <span>📊</span>
-        <span>Classement</span>
-      </button>
-      <button type="button" class="view-tab-btn" id="tabBtnCompare" onclick="switchTab(3)">
-        <span>⚖️</span>
-        <span>Compare</span>
-      </button>
-      <button type="button" class="view-tab-btn" id="tabBtnTrack" onclick="switchTab(4)">
-        <span>🗺️</span>
-        <span>Track Map</span>
       </button>
     </div>
   </div>
@@ -2403,7 +2671,7 @@
       </div>
     </div>
 
-    <!-- PAGE 1 : QUICK CHANGE STRATKART + SEUILS VERDICT + COULEURS LIGNES -->
+    <!-- PAGE 1 : QUICK CHANGE STRATKART + LIGNES DU STAND + COULEUR DES LIGNES -->
     <div class="tab-page hidden" id="pageQuickChange">
 
       <div class="verdict-threshold-card">
@@ -2447,6 +2715,10 @@
         </div>
         <div class="module-body">
 
+          <div class="rule-callout-box">
+            Le kart entrant est posé à l'arrière de la file où tu tapes son numéro, mais le pilote repart avec la <strong>TÊTE</strong> d'une file. File de dépôt pleine → une case est ajoutée automatiquement.
+          </div>
+
           <div class="step-block">
             <div class="step-badge">1. Équipe & pilote qui rentrent</div>
             <div class="row-2" style="gap:8px;">
@@ -2470,7 +2742,7 @@
           </div>
 
           <div class="step-block">
-            <div class="step-badge">2. Clique sur la colonne où rentre le kart</div>
+            <div class="step-badge">2. Clique sur la file où rentre le kart</div>
             <div class="three-way-btns">
               <button type="button" class="entry-click-btn selected" id="entryBtnLeft" onclick="quickClickEntry('left')">
                 ⬅️ Entrée Gauche
@@ -2485,7 +2757,32 @@
           </div>
 
           <div class="step-block">
-            <div class="step-badge">3. Côté de sortie</div>
+            <div class="step-badge">3. Tirage au sort & côté de sortie</div>
+
+            <label class="toggle-option-row" for="randomDrawToggle" style="margin-bottom:10px;">
+              <div class="toggle-option-text">
+                <strong>Tirage au sort de la file de sortie</strong>
+                <span id="randomDrawHint">Désactivé : sortie directe sur la file choisie</span>
+              </div>
+              <input type="checkbox" id="randomDrawToggle" class="sr-switch" onchange="toggleRandomDrawOption()">
+              <span class="switch-pill"></span>
+            </label>
+
+            <div class="exit-extra-panel hidden" id="randomDrawPanel" style="margin-bottom:10px;">
+              <div class="row-2" style="gap:8px;align-items:center;">
+                <button type="button" class="btn-secondary-light" onclick="drawRandomLane()">
+                  🎲 Tirer une file au sort
+                </button>
+                <div class="input-box" style="background:var(--card-bg);margin-bottom:0;">
+                  <div class="input-box-top">
+                    <label for="qcDrawnLaneSelect">File tirée au sort</label>
+                    <span class="input-unit-pill">TIRAGE</span>
+                  </div>
+                  <select id="qcDrawnLaneSelect" onchange="renderQuickChange()"></select>
+                </div>
+              </div>
+            </div>
+
             <label class="toggle-option-row" for="customExitToggle">
               <div class="toggle-option-text">
                 <strong>Choisir un côté de sortie différent</strong>
@@ -2511,7 +2808,7 @@
 
               <div class="input-box" style="background:var(--card-bg);">
                 <div class="input-box-top">
-                  <label for="qcExitRowSelect">Ligne de sortie</label>
+                  <label for="qcExitRowSelect">Place dans la file (tête = 1)</label>
                   <span class="input-unit-pill">pos</span>
                 </div>
                 <select id="qcExitRowSelect" onchange="renderQuickChange()"></select>
@@ -2523,32 +2820,40 @@
         </div>
       </div>
 
+      <!-- LIGNES DU STAND & COULEUR DES LIGNES (STYLE STRATKART) -->
       <div class="module-card">
         <div class="module-header" onclick="toggleModule(this)">
-          <h2 class="module-title"><span class="accent-dot"></span> Colonnes, Karts & Couleurs des Lignes</h2>
+          <h2 class="module-title"><span class="accent-dot"></span> Lignes du Stand & Couleur des Lignes</h2>
           <span class="collapse-arrow">▼</span>
         </div>
         <div class="module-body">
-          <div class="input-group row-2">
-            <div class="input-box">
-              <div class="input-box-top">
-                <label for="qcNumLanes">Colonnes</label>
-                <span class="input-unit-pill">col</span>
-              </div>
-              <input type="number" id="qcNumLanes" value="3" min="1" max="6" inputmode="numeric" oninput="onQcSizeChange()">
+
+          <div class="stand-config-card">
+            <div class="stand-config-label">Lignes du stand</div>
+            <div class="four-way-btns" id="laneCountButtons">
+              <button type="button" class="num-choice-btn" data-lanes="1" onclick="selectLaneCount(1)">1</button>
+              <button type="button" class="num-choice-btn selected" data-lanes="2" onclick="selectLaneCount(2)">2</button>
+              <button type="button" class="num-choice-btn" data-lanes="3" onclick="selectLaneCount(3)">3</button>
+              <button type="button" class="num-choice-btn" data-lanes="4" onclick="selectLaneCount(4)">4</button>
             </div>
-            <div class="input-box">
-              <div class="input-box-top">
-                <label for="qcKartsPerLane">Lignes / col.</label>
-                <span class="input-unit-pill">lignes</span>
-              </div>
-              <input type="number" id="qcKartsPerLane" value="3" min="0" max="15" inputmode="numeric" oninput="onQcSizeChange()">
+
+            <div class="stand-config-label" style="margin-top:12px;">Capacité par ligne</div>
+            <div class="four-way-btns" id="capacityButtons">
+              <button type="button" class="num-choice-btn" data-cap="1" onclick="selectCapacityCount(1)">1</button>
+              <button type="button" class="num-choice-btn" data-cap="2" onclick="selectCapacityCount(2)">2</button>
+              <button type="button" class="num-choice-btn selected" data-cap="3" onclick="selectCapacityCount(3)">3</button>
+              <button type="button" class="num-choice-btn" data-cap="4" onclick="selectCapacityCount(4)">4</button>
+            </div>
+
+            <div class="stand-config-meta" id="standConfigSummary">
+              modifiable à tout moment — les karts déjà placés sont conservés<br>
+              <strong>Capacité : 6 karts</strong> (grille existante préservée)
             </div>
           </div>
 
-          <div class="input-group">
-            <div class="reg-section-label">Couleur par ligne (Bleu, Rouge, Blanc, Vert, Orange...)</div>
-            <div class="row-color-grid" id="rowColorConfigGrid"></div>
+          <div class="stand-config-card" style="margin-bottom:10px;">
+            <div class="stand-config-label">Couleur des lignes</div>
+            <div id="rowColorConfigGrid"></div>
           </div>
 
           <button type="button" class="btn-secondary-light" onclick="regenerateOffCodes()">
@@ -2642,7 +2947,7 @@
                 <label for="manualApexJson">Import JSON Apex / Télémétrie (optionnel)</label>
                 <span class="input-unit-pill">JSON</span>
               </div>
-              <textarea id="manualApexJson" placeholder='[{"kart":"7","driver":"Enzo","last_lap":62.45,"laps":[62.9,62.6,62.45]}]' oninput="importJsonFromTextarea()"></textarea>
+              <textarea id="manualApexJson" placeholder='[{"kart":"7","driver":"Enzo","last_lap":62.45,"progress":42,"laps":[62.9,62.6,62.45]}]' oninput="importJsonFromTextarea()"></textarea>
             </div>
           </div>
         </div>
@@ -2774,15 +3079,23 @@
 
     </div>
 
-    <!-- PAGE 4 : TRACK MAP & SUIVI KARTS PAR CIRCUIT -->
+    <!-- PAGE 4 : TRACK MAP CONNECTÉE AU LIVE TIMING -->
     <div class="tab-page hidden" id="pageTrackMap">
 
       <div class="module-card">
         <div class="module-header" onclick="toggleModule(this)">
-          <h2 class="module-title"><span class="accent-dot"></span> Choix du circuit & kart suivi</h2>
+          <h2 class="module-title"><span class="accent-dot"></span> Circuit, Live Timing & Kart Ciblé</h2>
           <span class="collapse-arrow">▼</span>
         </div>
         <div class="module-body">
+          <div class="live-status-bar">
+            <div>
+              <span class="live-dot" id="trackLiveDot"></span>
+              <span id="trackLiveStatusText">Live Timing : synchronisation active avec les chronos</span>
+            </div>
+            <span id="trackLiveTickBadge" style="font-family:var(--font-mono);color:var(--accent);">LIVE SYNC</span>
+          </div>
+
           <div class="input-group row-2">
             <div class="input-box">
               <div class="input-box-top">
@@ -2810,7 +3123,7 @@
           <div class="input-group">
             <div class="input-box">
               <div class="input-box-top">
-                <label for="trackProgressionSlider">Progression manuelle du kart ciblé sur le circuit</label>
+                <label for="trackProgressionSlider">Position manuelle / override du kart ciblé</label>
                 <span class="input-unit-pill" id="trackProgPctLabel">0%</span>
               </div>
               <input type="range" id="trackProgressionSlider" min="0" max="100" step="1" value="15" oninput="onManualTrackProgress(this.value)">
@@ -2818,9 +3131,15 @@
           </div>
 
           <div class="input-group row-2">
+            <button type="button" class="btn-secondary-light active" id="trackLiveAutoBtn" onclick="toggleLiveTimingTrackSync()">
+              📡 Live Timing : ON
+            </button>
             <button type="button" class="btn-secondary-light" id="trackSimBtn" onclick="toggleTrackSimulation()">
               ▶ Simulation piste : OFF
             </button>
+          </div>
+
+          <div class="input-group">
             <button type="button" class="btn-secondary-light" onclick="promptAddTrackedKart()">
               + Ajouter / positionner un kart
             </button>
@@ -2884,6 +3203,32 @@
   </div>
 </div>
 
+<!-- BARRE D'ONGLETS FIXÉE EN BAS -->
+<nav class="bottom-nav-dock" aria-label="Navigation principale">
+  <div class="view-tabs">
+    <button type="button" class="view-tab-btn active" id="tabBtnStint" onclick="switchTab(0)">
+      <span>🏁</span>
+      <span>Stratégie</span>
+    </button>
+    <button type="button" class="view-tab-btn" id="tabBtnQuick" onclick="switchTab(1)">
+      <span>⚡</span>
+      <span>Q&amp;C</span>
+    </button>
+    <button type="button" class="view-tab-btn" id="tabBtnRank" onclick="switchTab(2)">
+      <span>📊</span>
+      <span>Classement</span>
+    </button>
+    <button type="button" class="view-tab-btn" id="tabBtnCompare" onclick="switchTab(3)">
+      <span>⚖️</span>
+      <span>Compare</span>
+    </button>
+    <button type="button" class="view-tab-btn" id="tabBtnTrack" onclick="switchTab(4)">
+      <span>🗺️</span>
+      <span>Track Map</span>
+    </button>
+  </div>
+</nav>
+
 <script>
 const TOTAL_TABS = 5;
 let currentTab = 0;
@@ -2895,47 +3240,48 @@ let dismissedAlertState = null;
 let splashFinished = false;
 const internalCodesSet = new Set();
 
+const STORAGE_KEY = 'eg7_pro_v23';
+const bridgeChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('eg7_pitwall_bridge_v1') : null;
+const clientInstanceId = 'dev_' + Math.random().toString(36).slice(2, 9);
+let bridgeSessionCode = '';
+let lastLiveStepMs = Date.now();
+
 const ROW_COLOR_OPTIONS = [
-  { id: 'blue',   label: 'Bleu',   hex: '#2563eb' },
-  { id: 'red',    label: 'Rouge',  hex: '#dc2626' },
+  { id: 'red',    label: 'Rouge',  hex: '#ef4444' },
+  { id: 'blue',   label: 'Bleu',   hex: '#3b82f6' },
+  { id: 'yellow', label: 'Jaune',  hex: '#facc15' },
+  { id: 'green',  label: 'Vert',   hex: '#22c55e' },
+  { id: 'orange', label: 'Orange', hex: '#f97316' },
+  { id: 'purple', label: 'Violet', hex: '#a855f7' },
   { id: 'white',  label: 'Blanc',  hex: '#f8fafc' },
-  { id: 'green',  label: 'Vert',   hex: '#16a34a' },
-  { id: 'orange', label: 'Orange', hex: '#ea580c' },
-  { id: 'yellow', label: 'Jaune',  hex: '#eab308' },
-  { id: 'purple', label: 'Violet', hex: '#7c3aed' },
-  { id: 'cyan',   label: 'Cyan',   hex: '#0891b2' }
+  { id: 'pink',   label: 'Rose',   hex: '#ec4899' }
 ];
 
 const CIRCUITS_DATA = {
   brignoles: {
     name: 'Brignoles Karting Loisirs',
     meta: 'Provence • Tracé technique endurance • SWS',
-    pathD: 'M 95,165 C 55,165 50,95 95,70 L 185,55 C 225,48 235,95 275,92 C 325,88 335,45 395,52 C 455,58 465,125 425,155 C 385,185 335,135 285,155 C 245,172 215,185 165,172 Z',
-    startPos: { x: 145, y: 168, angle: 0 }
+    pathD: 'M 95,165 C 55,165 50,95 95,70 L 185,55 C 225,48 235,95 275,92 C 325,88 335,45 395,52 C 455,58 465,125 425,155 C 385,185 335,135 285,155 C 245,172 215,185 165,172 Z'
   },
   paul_ricard: {
     name: 'Karting Circuit Paul Ricard (964 m)',
     meta: 'Le Castellet • Configuration 964 m • Virages rapides',
-    pathD: 'M 80,150 L 190,150 C 230,150 235,70 285,62 L 415,48 C 455,45 468,105 435,135 L 365,175 C 325,195 285,130 230,175 C 185,205 110,192 80,150 Z',
-    startPos: { x: 135, y: 150, angle: 0 }
+    pathD: 'M 80,150 L 190,150 C 230,150 235,70 285,62 L 415,48 C 455,45 468,105 435,135 L 365,175 C 325,195 285,130 230,175 C 185,205 110,192 80,150 Z'
   },
   le_luc: {
     name: 'Circuit du Luc',
     meta: 'Var • Enchaînement fluide & freinages appuyés',
-    pathD: 'M 85,65 L 410,65 C 455,65 460,120 415,135 L 250,145 C 210,148 215,182 170,182 L 95,182 C 55,182 55,65 85,65 Z',
-    startPos: { x: 165, y: 65, angle: 0 }
+    pathD: 'M 85,65 L 410,65 C 455,65 460,120 415,135 L 250,145 C 210,148 215,182 170,182 L 95,182 C 55,182 55,65 85,65 Z'
   },
   ales: {
     name: 'Pôle Mécanique Alès',
     meta: 'Gard • Développé karting & relances',
-    pathD: 'M 90,170 L 140,65 C 155,42 205,45 220,75 L 265,165 C 280,188 330,185 345,155 L 415,65 C 445,42 475,90 445,145 L 395,188 L 90,170 Z',
-    startPos: { x: 150, y: 170, angle: 0 }
+    pathD: 'M 90,170 L 140,65 C 155,42 205,45 220,75 L 265,165 C 280,188 330,185 345,155 L 415,65 C 445,42 475,90 445,145 L 395,188 L 90,170 Z'
   },
   laval: {
     name: '12H de Laval',
     meta: 'Mayenne • Endurance • Épingles & courbes rapides',
-    pathD: 'M 85,160 C 50,155 52,55 115,52 L 245,52 C 285,52 275,115 320,115 L 420,115 C 460,115 462,175 415,180 L 210,180 C 175,180 175,130 135,160 Z',
-    startPos: { x: 140, y: 180, angle: 0 }
+    pathD: 'M 85,160 C 50,155 52,55 115,52 L 245,52 C 285,52 275,115 320,115 L 420,115 C 460,115 462,175 415,180 L 210,180 C 175,180 175,130 135,160 Z'
   }
 };
 
@@ -2947,38 +3293,228 @@ let apexLiveMap = {};
 let pitStops = [];
 let trackSimTimer = null;
 let trackSimActive = false;
+let liveTimingTrackSync = true;
 
 let qcState = {
-  numLanes: 3,
+  numLanes: 2,
   kartsPerLane: 3,
   boxSide: 'left',
+  randomDrawEnabled: false,
+  drawnLaneIdx: 0,
   customExitEnabled: false,
   exitSide: 'left',
   thresholds: { good: 0.5, mid: 1.5, bad: 3.0 },
-  rowColors: ['blue', 'red', 'white'],
+  rowColors: ['red', 'blue', 'yellow', 'green'],
   compareSlots: ['', '', '', '', ''],
   compareLapCount: 10,
   circuitId: 'brignoles',
   focusKart: '',
-  trackPositions: {}, // { [kartNum]: progress0To100 }
+  trackPositions: {},
   knownTeams: [],
   knownDrivers: [],
   lanes: [],
   logs: []
 };
 
-function generateOffCode() {
-  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-  let code = '';
-  let guard = 0;
-  do {
-    const l = letters[Math.floor(Math.random() * letters.length)];
-    const n = Math.floor(10 + Math.random() * 89);
-    code = `${l}${n}`;
-    guard++;
-  } while (internalCodesSet.has(code) && guard < 150);
-  internalCodesSet.add(code);
-  return code;
+/* =========================================================
+   BRIDGE MULTIPLATEFORME & SYNCHRO INTER-APPAREILS
+   ========================================================= */
+function generateSessionCode() {
+  const chars = '0123456789ABCDEF';
+  let part = '';
+  for (let i = 0; i < 8; i++) {
+    part += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return `EG7-${part}`;
+}
+
+function getBridgeShareUrl() {
+  try {
+    const u = new URL(window.location.href);
+    u.searchParams.set('session', bridgeSessionCode);
+    return u.toString();
+  } catch (e) {
+    return `${window.location.href.split('#')[0]}?session=${encodeURIComponent(bridgeSessionCode)}`;
+  }
+}
+
+function updateBridgeModalUI() {
+  const codeEl = document.getElementById('bridgeSessionCodeDisplay');
+  if (codeEl) codeEl.innerText = bridgeSessionCode;
+}
+
+function openBridgeModal() {
+  updateBridgeModalUI();
+  document.getElementById('bridge-modal-backdrop')?.classList.remove('hidden');
+}
+
+function closeBridgeModal() {
+  document.getElementById('bridge-modal-backdrop')?.classList.add('hidden');
+}
+
+function handleBridgeBackdropClick(e) {
+  if (e.target && e.target.id === 'bridge-modal-backdrop') {
+    closeBridgeModal();
+  }
+}
+
+function copyBridgeLink() {
+  const link = getBridgeShareUrl();
+  navigator.clipboard?.writeText(link).then(() => {
+    const btn = document.getElementById('copyBridgeLinkBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Lien copié';
+    setTimeout(() => { btn.innerHTML = orig; }, 1600);
+  });
+}
+
+function copyBridgeCode() {
+  navigator.clipboard?.writeText(bridgeSessionCode).then(() => {
+    const btn = document.getElementById('copyBridgeCodeBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Code copié';
+    setTimeout(() => { btn.innerHTML = orig; }, 1600);
+  });
+}
+
+function joinBridgeSession() {
+  const raw = (document.getElementById('bridgeJoinInput')?.value || '').trim();
+  const statusEl = document.getElementById('bridgeStatusMsg');
+  if (!raw) return;
+
+  let code = raw.toUpperCase();
+  if (raw.includes('session=')) {
+    try {
+      const parsedUrl = new URL(raw);
+      const paramCode = parsedUrl.searchParams.get('session');
+      if (paramCode) code = paramCode.trim().toUpperCase();
+    } catch (e) {
+      const m = raw.match(/session=([^&]+)/i);
+      if (m && m[1]) code = decodeURIComponent(m[1]).trim().toUpperCase();
+    }
+  }
+
+  bridgeSessionCode = code;
+  updateBridgeModalUI();
+  saveAll(true);
+
+  if (bridgeChannel) {
+    bridgeChannel.postMessage({
+      type: 'REQUEST_STATE',
+      senderId: clientInstanceId,
+      sessionCode: bridgeSessionCode
+    });
+  }
+
+  if (statusEl) {
+    statusEl.innerText = `Session ${bridgeSessionCode} active — synchronisation engagée.`;
+  }
+}
+
+function exportBridgeSnapshot() {
+  const snap = {
+    sessionCode: bridgeSessionCode,
+    exportedAt: new Date().toISOString(),
+    pitStops,
+    apexLiveMap,
+    stint: {
+      startTime: document.getElementById('startTime').value,
+      totalHours: document.getElementById('totalHours').value,
+      reqPits: document.getElementById('reqPits').value,
+      donePits: document.getElementById('donePits').value,
+      minStint: document.getElementById('minStint').value,
+      maxStint: document.getElementById('maxStint').value,
+      pitMin: document.getElementById('pitMin').value,
+      pitSec: document.getElementById('pitSec').value,
+      pitOpen: document.getElementById('pitOpen').value,
+      pitClose: document.getElementById('pitClose').value,
+      tranchePits: document.getElementById('tranchePits').value,
+      trancheHours: document.getElementById('trancheHours').value
+    },
+    qc: qcState
+  };
+  const box = document.getElementById('bridgeSnapshotBox');
+  if (box) {
+    box.value = JSON.stringify(snap);
+    navigator.clipboard?.writeText(box.value).catch(() => {});
+  }
+  const statusEl = document.getElementById('bridgeStatusMsg');
+  if (statusEl) statusEl.innerText = 'Snapshot généré et copié dans le presse-papier.';
+}
+
+function importBridgeSnapshot() {
+  const box = document.getElementById('bridgeSnapshotBox');
+  const statusEl = document.getElementById('bridgeStatusMsg');
+  if (!box || !box.value.trim()) return;
+  try {
+    const snap = JSON.parse(box.value.trim());
+    if (snap.sessionCode) bridgeSessionCode = String(snap.sessionCode);
+    applySyncedPayload(snap, false);
+    saveAll(true);
+    updateBridgeModalUI();
+    if (statusEl) statusEl.innerText = `Snapshot appliqué (${bridgeSessionCode}).`;
+  } catch (e) {
+    if (statusEl) statusEl.innerText = 'Format snapshot invalide.';
+  }
+}
+
+function applySyncedPayload(data, preserveTab = true) {
+  if (!data || typeof data !== 'object') return;
+  if (data.sessionCode) bridgeSessionCode = String(data.sessionCode);
+  if (typeof data.soundAlertEnabled === 'boolean') soundAlertEnabled = data.soundAlertEnabled;
+  if (Array.isArray(data.pitStops)) pitStops = data.pitStops;
+  if (data.apexLink !== undefined && document.getElementById('apexLinkInput')) {
+    document.getElementById('apexLinkInput').value = data.apexLink;
+  }
+  if (data.pollIntervalSec !== undefined && document.getElementById('pollIntervalSec')) {
+    document.getElementById('pollIntervalSec').value = data.pollIntervalSec;
+  }
+  if (data.activeDriverInput !== undefined && document.getElementById('qcDriverInput')) {
+    document.getElementById('qcDriverInput').value = data.activeDriverInput;
+  }
+  if (data.apexLiveMap && typeof data.apexLiveMap === 'object') {
+    apexLiveMap = data.apexLiveMap;
+  }
+  if (data.stint && typeof data.stint === 'object') {
+    Object.entries(data.stint).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el && val !== undefined) el.value = val;
+    });
+    syncHoursChips(document.getElementById('totalHours').value);
+  }
+  if (data.qc && Array.isArray(data.qc.lanes) && data.qc.lanes.length > 0) {
+    qcState = Object.assign({}, qcState, data.qc);
+  }
+
+  syncHeaderUtilityUI();
+  renderPitStopsHistory();
+  renderQuickChange();
+  renderStandingsTab();
+  renderCompareTab();
+  renderTrackMapTab();
+  calculateStint();
+  if (!preserveTab && typeof data.currentTab === 'number') {
+    switchTab(data.currentTab);
+  }
+}
+
+if (bridgeChannel) {
+  bridgeChannel.onmessage = (ev) => {
+    const msg = ev.data;
+    if (!msg || msg.senderId === clientInstanceId) return;
+    if (msg.sessionCode && msg.sessionCode !== bridgeSessionCode) return;
+
+    if (msg.type === 'STATE_UPDATE' && msg.payload) {
+      applySyncedPayload(msg.payload, true);
+    } else if (msg.type === 'REQUEST_STATE') {
+      bridgeChannel.postMessage({
+        type: 'STATE_UPDATE',
+        senderId: clientInstanceId,
+        sessionCode: bridgeSessionCode,
+        payload: buildStoragePayload()
+      });
+    }
+  };
 }
 
 function createKartObj() {
@@ -2994,6 +3530,20 @@ function createKartObj() {
     baselineLapSec: null,
     highPotential: false
   };
+}
+
+function generateOffCode() {
+  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  let code = '';
+  let guard = 0;
+  do {
+    const l = letters[Math.floor(Math.random() * letters.length)];
+    const n = Math.floor(10 + Math.random() * 89);
+    code = `${l}${n}`;
+    guard++;
+  } while (internalCodesSet.has(code) && guard < 150);
+  internalCodesSet.add(code);
+  return code;
 }
 
 function playJokerBeep(mode) {
@@ -3104,7 +3654,7 @@ function runSplash() {
     { delay: 140, lightIdx: 0, pct: 20, msg: 'Calibrage fenêtre des stands...' },
     { delay: 300, lightIdx: 1, pct: 42, msg: 'Chargement historique des box...' },
     { delay: 460, lightIdx: 2, pct: 64, msg: 'Initialisation Quick Change & Classement...' },
-    { delay: 620, lightIdx: 3, pct: 82, msg: 'Chargement Track Map & Comparateur...' },
+    { delay: 620, lightIdx: 3, pct: 82, msg: 'Connexion Track Map & Bridge multiplateforme...' },
     { delay: 780, lightIdx: 4, pct: 95, msg: 'Grille verrouillée — Prêt' }
   ];
 
@@ -3632,7 +4182,7 @@ function calculateStint() {
 
 function copyStrategySummary() {
   const txt = [
-    `🏁 *Point Stratégie EG7 PRO*`,
+    `🏁 *Point Stratégie EG7 PRO* (${bridgeSessionCode})`,
     `• Restant : ${document.getElementById('liveRemClock').innerText}`,
     `• Jokers : *${document.getElementById('jokersVal').innerText}*`,
     `• Stint min immédiat : *${document.getElementById('minNextVal').innerText}*`,
@@ -3648,7 +4198,7 @@ function copyStrategySummary() {
 }
 
 /* =========================================================
-   SEUILS DU VERDICT Q&C + COULEURS LIGNES
+   SEUILS DU VERDICT Q&C + LIGNES DU STAND & COULEURS
    ========================================================= */
 function fmtSecSigned(val) {
   return `+${Number(val).toFixed(1).replace('.', ',')} s`;
@@ -3696,7 +4246,7 @@ function onVerdictThresholdsChange() {
 }
 
 function ensureRowColorsLength() {
-  const rowsCount = Math.max(0, qcState.kartsPerLane);
+  const rowsCount = Math.max(0, qcState.numLanes);
   if (!Array.isArray(qcState.rowColors)) qcState.rowColors = [];
   const palette = ROW_COLOR_OPTIONS.map(c => c.id);
   while (qcState.rowColors.length < rowsCount) {
@@ -3704,49 +4254,127 @@ function ensureRowColorsLength() {
   }
 }
 
-function getRowColorObj(rowIdx) {
+function getLaneColorObj(laneIdx) {
   ensureRowColorsLength();
-  const id = qcState.rowColors[rowIdx] || ROW_COLOR_OPTIONS[rowIdx % ROW_COLOR_OPTIONS.length].id;
+  const id = qcState.rowColors[laneIdx] || ROW_COLOR_OPTIONS[laneIdx % ROW_COLOR_OPTIONS.length].id;
   return ROW_COLOR_OPTIONS.find(c => c.id === id) || ROW_COLOR_OPTIONS[0];
 }
 
-function setRowColor(rowIdx, colorId) {
+function setLaneColor(laneIdx, colorId) {
   ensureRowColorsLength();
-  qcState.rowColors[rowIdx] = colorId;
+  qcState.rowColors[laneIdx] = colorId;
   renderRowColorConfig();
   renderQuickChange();
   saveAll();
 }
 
+function getLaneShortName(idx, total) {
+  if (total === 1) return 'LIGNE 1';
+  if (total === 2) return idx === 0 ? 'GAUCHE' : 'MILIEU';
+  if (total === 3) return idx === 0 ? 'GAUCHE' : (idx === 1 ? 'MILIEU' : 'DROITE');
+  return `FILE ${idx + 1}`;
+}
+
 function renderRowColorConfig() {
   const grid = document.getElementById('rowColorConfigGrid');
   if (!grid) return;
-  const rowsCount = Math.max(0, qcState.kartsPerLane);
-  if (rowsCount === 0) {
-    grid.innerHTML = `<div style="font-size:0.7rem;color:var(--text-muted);">Aucune ligne active.</div>`;
-    return;
-  }
+  const total = Math.max(1, qcState.numLanes);
+  ensureRowColorsLength();
 
   let html = '';
-  for (let r = 0; r < rowsCount; r++) {
-    const colObj = getRowColorObj(r);
-    const optionsHtml = ROW_COLOR_OPTIONS.map(opt =>
-      `<option value="${opt.id}" ${opt.id === colObj.id ? 'selected' : ''}>${opt.label}</option>`
-    ).join('');
+  for (let l = 0; l < total; l++) {
+    const colObj = getLaneColorObj(l);
+    const labelName = getLaneShortName(l, total);
+    const swatches = ROW_COLOR_OPTIONS.map(opt => `
+      <button type="button"
+        class="swatch-btn ${opt.id === colObj.id ? 'selected' : ''}"
+        style="background:${opt.hex};"
+        title="${opt.label}"
+        aria-label="${opt.label}"
+        onclick="setLaneColor(${l}, '${opt.id}')">
+      </button>
+    `).join('');
 
     html += `
-      <div class="row-color-item">
-        <span class="row-color-label">
-          <span class="color-swatch-dot" style="background:${colObj.hex};"></span>
-          Ligne ${r + 1}
-        </span>
-        <select class="row-color-select" onchange="setRowColor(${r}, this.value)">
-          ${optionsHtml}
-        </select>
+      <div class="lane-color-row">
+        <div class="lane-color-top">
+          <span class="lane-color-name">
+            <span class="color-swatch-dot" style="background:${colObj.hex};width:12px;height:12px;"></span>
+            ${labelName}
+          </span>
+          <span class="lane-color-val">${colObj.label}</span>
+        </div>
+        <div class="swatch-palette">${swatches}</div>
       </div>
     `;
   }
   grid.innerHTML = html;
+}
+
+function syncStandButtonsUI() {
+  document.querySelectorAll('#laneCountButtons .num-choice-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.lanes, 10) === qcState.numLanes);
+  });
+  document.querySelectorAll('#capacityButtons .num-choice-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.cap, 10) === qcState.kartsPerLane);
+  });
+  const totalCap = qcState.numLanes * qcState.kartsPerLane;
+  const metaEl = document.getElementById('standConfigSummary');
+  if (metaEl) {
+    metaEl.innerHTML = `modifiable à tout moment — les karts déjà placés sont conservés<br><strong>Capacité : ${totalCap} kart${totalCap > 1 ? 's' : ''}</strong> (grille existante préservée)`;
+  }
+}
+
+function selectLaneCount(nLanes) {
+  qcState.numLanes = Math.max(1, Math.min(4, parseInt(nLanes, 10) || 2));
+  applyStandGridPreserveExisting();
+}
+
+function selectCapacityCount(nCap) {
+  qcState.kartsPerLane = Math.max(1, Math.min(4, parseInt(nCap, 10) || 3));
+  applyStandGridPreserveExisting();
+}
+
+function applyStandGridPreserveExisting() {
+  const nLanes = qcState.numLanes;
+  const nKarts = qcState.kartsPerLane;
+  ensureRowColorsLength();
+
+  while (qcState.lanes.length < nLanes) {
+    const col = [];
+    for (let k = 0; k < nKarts; k++) col.push(createKartObj());
+    qcState.lanes.push(col);
+  }
+  while (qcState.lanes.length > nLanes) {
+    const removed = qcState.lanes.pop();
+    if (Array.isArray(removed)) {
+      removed.forEach(item => {
+        if (item.teamNumber || item.driverName || item.used) {
+          qcState.lanes[qcState.lanes.length - 1]?.push(item);
+        }
+      });
+    }
+  }
+
+  for (let l = 0; l < nLanes; l++) {
+    while (qcState.lanes[l].length < nKarts) {
+      qcState.lanes[l].push(createKartObj());
+    }
+    while (qcState.lanes[l].length > nKarts && qcState.lanes[l].length > nKarts) {
+      const last = qcState.lanes[l][qcState.lanes[l].length - 1];
+      if (!last.teamNumber && !last.driverName && !last.used) {
+        qcState.lanes[l].pop();
+      } else {
+        break;
+      }
+    }
+  }
+
+  if (qcState.drawnLaneIdx >= nLanes) qcState.drawnLaneIdx = 0;
+  syncStandButtonsUI();
+  renderRowColorConfig();
+  renderQuickChange();
+  saveAll();
 }
 
 /* =========================================================
@@ -3793,11 +4421,44 @@ function setExitSide(side) {
   saveAll();
 }
 
+function toggleRandomDrawOption() {
+  qcState.randomDrawEnabled = document.getElementById('randomDrawToggle').checked;
+  document.getElementById('randomDrawPanel').classList.toggle('hidden', !qcState.randomDrawEnabled);
+  document.getElementById('randomDrawHint').innerText = qcState.randomDrawEnabled
+    ? 'Activé : tire ou choisis la file de sortie avant validation'
+    : 'Désactivé : sortie directe sur la file choisie';
+  populateDrawnLaneSelect();
+  renderQuickChange();
+  saveAll();
+}
+
+function populateDrawnLaneSelect() {
+  const sel = document.getElementById('qcDrawnLaneSelect');
+  if (!sel) return;
+  const total = Math.max(1, qcState.numLanes);
+  if (qcState.drawnLaneIdx >= total) qcState.drawnLaneIdx = 0;
+  let opts = '';
+  for (let i = 0; i < total; i++) {
+    const colObj = getLaneColorObj(i);
+    opts += `<option value="${i}" ${i === qcState.drawnLaneIdx ? 'selected' : ''}>${getLaneShortName(i, total)} (${colObj.label})</option>`;
+  }
+  sel.innerHTML = opts;
+}
+
+function drawRandomLane() {
+  const total = Math.max(1, qcState.numLanes);
+  qcState.drawnLaneIdx = Math.floor(Math.random() * total);
+  populateDrawnLaneSelect();
+  addQcLog(`🎲 Tirage au sort : <strong>${getLaneShortName(qcState.drawnLaneIdx, total)}</strong>`);
+  renderQuickChange();
+  saveAll();
+}
+
 function toggleCustomExitOption() {
   qcState.customExitEnabled = document.getElementById('customExitToggle').checked;
   document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
   document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
-    ? 'Activé : tu choisis le côté de sortie et la ligne'
+    ? 'Activé : tu choisis le côté de sortie et la place'
     : 'Désactivé : repart du même côté où elle box';
 
   if (!qcState.customExitEnabled) {
@@ -3816,31 +4477,6 @@ function updateSideButtonsUI() {
   document.getElementById('exitBtnLeft').classList.toggle('selected', qcState.exitSide === 'left');
   document.getElementById('exitBtnMid').classList.toggle('selected', qcState.exitSide === 'mid');
   document.getElementById('exitBtnRight').classList.toggle('selected', qcState.exitSide === 'right');
-}
-
-function onQcSizeChange() {
-  const nLanes = Math.max(1, Math.min(6, parseInt(document.getElementById('qcNumLanes').value || 1, 10)));
-  const nKarts = Math.max(0, Math.min(15, parseInt(document.getElementById('qcKartsPerLane').value || 0, 10)));
-
-  qcState.numLanes = nLanes;
-  qcState.kartsPerLane = nKarts;
-  ensureRowColorsLength();
-
-  while (qcState.lanes.length < nLanes) {
-    const col = [];
-    for (let k = 0; k < nKarts; k++) col.push(createKartObj());
-    qcState.lanes.push(col);
-  }
-  while (qcState.lanes.length > nLanes) qcState.lanes.pop();
-
-  for (let l = 0; l < nLanes; l++) {
-    while (qcState.lanes[l].length < nKarts) qcState.lanes[l].push(createKartObj());
-    while (qcState.lanes[l].length > nKarts) qcState.lanes[l].pop();
-  }
-
-  renderRowColorConfig();
-  renderQuickChange();
-  saveAll();
 }
 
 function addKartToCol(laneIdx) {
@@ -3992,17 +4628,25 @@ function regenerateOffCodes() {
 }
 
 function syncExitRowOptions() {
-  const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
-  const exitColIdx = sideToLaneIndex(activeExitSide);
+  let exitColIdx;
+  if (qcState.randomDrawEnabled) {
+    const drawnSel = document.getElementById('qcDrawnLaneSelect');
+    exitColIdx = Math.min(Math.max(0, parseInt(drawnSel?.value || qcState.drawnLaneIdx || '0', 10) || 0), Math.max(0, qcState.lanes.length - 1));
+    qcState.drawnLaneIdx = exitColIdx;
+  } else {
+    const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
+    exitColIdx = sideToLaneIndex(activeExitSide);
+  }
+
   const exitCol = qcState.lanes[exitColIdx] || [];
   const rowSel = document.getElementById('qcExitRowSelect');
 
   if (exitCol.length === 0) {
-    rowSel.innerHTML = `<option value="0">Ligne 1 (colonne vide)</option>`;
+    rowSel.innerHTML = `<option value="0">Tête (pos. 1)</option>`;
   } else {
     const prevRow = Math.min(parseInt(rowSel.value || '0', 10) || 0, exitCol.length - 1);
     rowSel.innerHTML = exitCol.map((k, idx) =>
-      `<option value="${idx}" ${idx === prevRow ? 'selected' : ''}>Ligne ${idx + 1}${k.teamNumber ? ' • #' + k.teamNumber : ''}</option>`
+      `<option value="${idx}" ${idx === prevRow ? 'selected' : ''}>${idx === 0 ? 'TÊTE' : 'Pos.' + (idx + 1)}${k.teamNumber ? ' • #' + k.teamNumber : ''}</option>`
     ).join('');
   }
 }
@@ -4032,7 +4676,9 @@ function validateTeamQuickChange() {
   const nowMs = Date.now();
   const boxColIdx = sideToLaneIndex(qcState.boxSide);
   const effectiveExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
-  const exitColIdx = sideToLaneIndex(effectiveExitSide);
+  const exitColIdx = qcState.randomDrawEnabled
+    ? Math.min(Math.max(0, qcState.drawnLaneIdx), Math.max(0, qcState.lanes.length - 1))
+    : sideToLaneIndex(effectiveExitSide);
   const exitRowIdx = Math.max(0, parseInt(document.getElementById('qcExitRowSelect').value || '0', 10) || 0);
 
   qcState.lanes.forEach(col => {
@@ -4062,7 +4708,7 @@ function validateTeamQuickChange() {
       if (cleanNum && qcState.trackPositions[cleanNum] === undefined) {
         qcState.trackPositions[cleanNum] = 10;
       }
-      exitInfo = ` → ${sideLabel(effectiveExitSide)} L${safeRow + 1}`;
+      exitInfo = ` → ${getLaneShortName(exitColIdx, qcState.lanes.length)} #${safeRow + 1}`;
     }
   }
 
@@ -4316,6 +4962,7 @@ async function syncFromApexLinkOnce() {
       renderStandingsTab();
       renderCompareTab();
       renderTrackMapTab();
+      saveAll();
     } else {
       dot.classList.remove('connected');
       txt.innerText = 'Page lue mais aucun chrono trouvé (CORS ou rendu JS)';
@@ -4429,6 +5076,8 @@ function computeVerdictsForAllKarts() {
 
 function renderQuickChange() {
   syncVerdictThresholdsUI();
+  syncStandButtonsUI();
+  populateDrawnLaneSelect();
   syncExitRowOptions();
   updateSideButtonsUI();
   renderRowColorConfig();
@@ -4450,9 +5099,15 @@ function renderQuickChange() {
   const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
   const exitRow = (parseInt(document.getElementById('qcExitRowSelect').value || '0', 10) || 0) + 1;
 
-  document.getElementById('qcFlowSummary').innerHTML = qcState.customExitEnabled
-    ? `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(activeExitSide)} (L${exitRow})</span>`
-    : `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(qcState.boxSide)}</span>`;
+  if (qcState.randomDrawEnabled) {
+    const drawnName = getLaneShortName(qcState.drawnLaneIdx, qcState.lanes.length);
+    document.getElementById('qcFlowSummary').innerHTML =
+      `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie tirée <span>${drawnName} (#${exitRow})</span>`;
+  } else {
+    document.getElementById('qcFlowSummary').innerHTML = qcState.customExitEnabled
+      ? `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(activeExitSide)} (#${exitRow})</span>`
+      : `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(qcState.boxSide)}</span>`;
+  }
 
   const verdictsGrid = computeVerdictsForAllKarts();
 
@@ -4461,13 +5116,17 @@ function renderQuickChange() {
 
   let html = '';
   qcState.lanes.forEach((col, lIdx) => {
+    const laneColor = getLaneColorObj(lIdx);
+    const laneName = getLaneShortName(lIdx, qcState.lanes.length);
+
     html += `
       <div class="qc-lane-col" data-lane="${lIdx}"
+        style="border-top: 3px solid ${laneColor.hex};"
         ondragover="onDragOverCol(event, ${lIdx})"
         ondragleave="onDragLeaveCol(event, ${lIdx})"
         ondrop="onDropOnCol(event, ${lIdx})">
         <div class="qc-lane-header">
-          <span class="qc-lane-title">C${lIdx + 1} (${col.length})</span>
+          <span class="qc-lane-title">${laneName} (${col.length})</span>
           <div class="qc-lane-actions">
             <button type="button" class="qc-col-btn" title="Retirer un kart" onclick="removeKartFromCol(${lIdx})">−</button>
             <button type="button" class="qc-col-btn plus" title="Ajouter un kart" onclick="addKartToCol(${lIdx})">+</button>
@@ -4484,11 +5143,11 @@ function renderQuickChange() {
       const avg = getKartAvg(kart);
       const stintInfo = avg !== null ? `Relais ${avg.toFixed(1)}m` : verdict.lapText;
       const driverLabel = kart.driverName ? `Pilote: <strong>${kart.driverName}</strong>` : `ID: <strong>${kart.offCode}</strong>`;
-      const rowColor = getRowColorObj(kIdx);
+      const posBadge = kIdx === 0 ? 'TÊTE' : `P${kIdx + 1}`;
 
       html += `
         <div class="qc-kart-item"
-          style="border-left: 4px solid ${rowColor.hex};"
+          style="border-left: 4px solid ${laneColor.hex};"
           draggable="true"
           data-lane="${lIdx}"
           data-kart="${kIdx}"
@@ -4500,7 +5159,7 @@ function renderQuickChange() {
           ontouchmove="onTouchMoveKart(event)"
           ontouchend="onTouchEndKart(event)">
           <div class="qc-kart-top">
-            <span class="qc-kart-pos">⋮⋮ L${kIdx + 1} (${rowColor.label})${kart.teamNumber ? ' #' + kart.teamNumber : ''}</span>
+            <span class="qc-kart-pos">⋮⋮ ${posBadge}${kart.teamNumber ? ' #' + kart.teamNumber : ''}</span>
             <span class="qc-score-chip">${verdict.score}</span>
             <button type="button" class="qc-used-btn ${kart.used ? 'used' : ''}" onclick="toggleKartUsed(${lIdx}, ${kIdx})">
               ${kart.used ? '✓ Eu' : 'Eu?'}
@@ -4634,7 +5293,7 @@ function renderStandingsTab() {
         <td class="mono-num" style="color:${gapText === 'RÉF' ? 'var(--success)' : 'var(--text-main)'};">${gapText}</td>
         <td>
           <button type="button" class="pick-qc-btn" onclick="selectKartIntoQuickChange('${r.kart}', '${safeDriver}')">
-            Box Q&C
+            Box Q&amp;C
           </button>
         </td>
       </tr>
@@ -4790,12 +5449,77 @@ function renderCompareTab() {
 }
 
 /* =========================================================
-   TRACK MAP & SUIVI KARTS PAR CIRCUIT
+   TRACK MAP CONNECTÉE AU LIVE TIMING
    ========================================================= */
 function getTrackedKartNumbers() {
   const set = new Set(Object.keys(qcState.trackPositions || {}));
   collectAllKartEntries().forEach(e => set.add(e.kart));
   return Array.from(set).filter(Boolean);
+}
+
+function toggleLiveTimingTrackSync() {
+  liveTimingTrackSync = !liveTimingTrackSync;
+  const btn = document.getElementById('trackLiveAutoBtn');
+  if (btn) {
+    btn.classList.toggle('active', liveTimingTrackSync);
+    btn.innerText = liveTimingTrackSync ? '📡 Live Timing : ON' : '📡 Live Timing : OFF';
+  }
+  updateTrackLiveIndicator();
+}
+
+function updateTrackLiveIndicator() {
+  const dot = document.getElementById('trackLiveDot');
+  const txt = document.getElementById('trackLiveStatusText');
+  const badge = document.getElementById('trackLiveTickBadge');
+  const entries = collectAllKartEntries();
+  const hasLiveLaps = entries.some(e => typeof e.lastLap === 'number' && e.lastLap > 0);
+
+  if (!dot || !txt || !badge) return;
+  if (liveTimingTrackSync && hasLiveLaps) {
+    dot.classList.add('connected');
+    txt.innerText = `Live Timing actif (${entries.length} karts chronométrés)`;
+    badge.innerText = 'LIVE TIMING';
+  } else if (liveTimingTrackSync) {
+    dot.classList.remove('connected');
+    txt.innerText = 'En attente de chronos Live Timing (ou ajoute un chrono)';
+    badge.innerText = 'STANDBY';
+  } else {
+    dot.classList.remove('connected');
+    txt.innerText = 'Synchro Live Timing en pause (mode manuel / simu)';
+    badge.innerText = 'MANUEL';
+  }
+}
+
+function advanceTrackPositionsFromLiveTiming(deltaSec) {
+  if (!liveTimingTrackSync || deltaSec <= 0) return false;
+  const allEntries = collectAllKartEntries();
+  const trackedNums = getTrackedKartNumbers();
+  let movedAny = false;
+
+  trackedNums.forEach((k, idx) => {
+    const entry = allEntries.find(e => e.kart === k);
+    const lapDurationSec = (entry && typeof entry.lastLap === 'number' && entry.lastLap > 5)
+      ? entry.lastLap
+      : (entry && typeof entry.avgLap === 'number' && entry.avgLap > 5 ? entry.avgLap : null);
+
+    if (!lapDurationSec) return;
+    if (qcState.trackPositions[k] === undefined) {
+      qcState.trackPositions[k] = (idx * 17) % 100;
+    }
+    const pctDelta = (deltaSec / lapDurationSec) * 100;
+    qcState.trackPositions[k] = Number(((qcState.trackPositions[k] + pctDelta) % 100).toFixed(2));
+    movedAny = true;
+  });
+
+  if (movedAny && qcState.focusKart && qcState.trackPositions[qcState.focusKart] !== undefined) {
+    const p = qcState.trackPositions[qcState.focusKart];
+    const slider = document.getElementById('trackProgressionSlider');
+    if (slider) slider.value = Math.round(p);
+    const lbl = document.getElementById('trackProgPctLabel');
+    if (lbl) lbl.innerText = `${Math.round(p)}%`;
+  }
+
+  return movedAny;
 }
 
 function onCircuitChange() {
@@ -4889,6 +5613,7 @@ function toggleTrackSimulation() {
 }
 
 function renderTrackMapTab() {
+  updateTrackLiveIndicator();
   const cData = CIRCUITS_DATA[qcState.circuitId] || CIRCUITS_DATA.brignoles;
   const cSel = document.getElementById('trackCircuitSelect');
   if (cSel) cSel.value = qcState.circuitId;
@@ -4936,90 +5661,104 @@ function renderTrackMapTab() {
 
   document.getElementById('trackActiveCountBadge').innerText = `${trackedNums.length} kart${trackedNums.length > 1 ? 's' : ''}`;
 
+  const paletteDots = ['#38bdf8', '#f97316', '#22c55e', '#facc15', '#ec4899', '#a855f7'];
   let svgMarkers = '';
-  const listHtml = [];
 
   trackedNums.forEach((k, idx) => {
-    if (qcState.trackPositions[k] === undefined) {
-      qcState.trackPositions[k] = (idx * 19) % 100;
-    }
-    const pct = qcState.trackPositions[k];
-    const dist = (pct / 100) * totalLen;
-    const pt = asphaltPath.getPointAtLength(dist);
+    const pct = Math.max(0, Math.min(100, qcState.trackPositions[k] ?? ((idx * 17) % 100)));
+    const pt = asphaltPath.getPointAtLength((pct / 100) * totalLen);
     const isTarget = k === qcState.focusKart;
-    const entry = allEntries.find(e => e.kart === k);
-    const fillCol = isTarget ? '#38bdf8' : (idx === 0 ? '#10b981' : '#f59e0b');
+    const fillCol = isTarget ? '#ef4444' : paletteDots[idx % paletteDots.length];
+    const rCircle = isTarget ? 11 : 8.5;
 
     svgMarkers += `
       <g transform="translate(${pt.x.toFixed(1)}, ${pt.y.toFixed(1)})">
-        ${isTarget ? `<circle r="14" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="1.5" />` : ''}
-        <circle r="8.5" fill="${fillCol}" stroke="#060b16" stroke-width="2" />
-        <text y="3" text-anchor="middle" fill="#060b16" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="800">${k}</text>
+        ${isTarget ? `<circle r="16" fill="rgba(239,68,68,0.28)" />` : ''}
+        <circle r="${rCircle}" fill="${fillCol}" stroke="#ffffff" stroke-width="2" />
+        <text y="3" text-anchor="middle" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="800">${k}</text>
       </g>
     `;
-
-    listHtml.push(`
-      <div class="tracked-kart-row ${isTarget ? 'is-target' : ''}">
-        <div class="tracked-kart-main">
-          <div class="tracked-kart-title">#${k} ${entry?.driver ? '• ' + entry.driver : ''} ${isTarget ? '(CIBLÉ)' : ''}</div>
-          <div class="tracked-kart-sub">
-            Position tour : <strong>${Math.round(pct)}%</strong> • Chrono : <strong>${entry?.lastLap ? entry.lastLap.toFixed(2) + 's' : '—'}</strong>
-          </div>
-        </div>
-        <div class="tracked-kart-actions">
-          <button type="button" class="qc-mini-btn" onclick="setKartTrackPos('${k}', -5)">−5%</button>
-          <button type="button" class="qc-mini-btn" onclick="setKartTrackPos('${k}', 5)">+5%</button>
-          <button type="button" class="pick-qc-btn" onclick="qcState.focusKart='${k}'; renderTrackMapTab(); saveAll();">Cibler</button>
-        </div>
-      </div>
-    `);
   });
 
   kartsLayer.innerHTML = svgMarkers;
 
-  const listEl = document.getElementById('trackedKartsList');
-  if (listEl) {
-    listEl.innerHTML = listHtml.length > 0
-      ? listHtml.join('')
-      : `<div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">Aucun kart positionné. Clique sur « + Ajouter / positionner un kart » ou ajoute un kart dans Quick Change / Classement.</div>`;
-  }
-
-  const targetEntry = allEntries.find(e => e.kart === qcState.focusKart);
-  const targetPos = qcState.trackPositions[qcState.focusKart];
+  const focusEntry = allEntries.find(e => e.kart === qcState.focusKart);
+  const focusPct = qcState.trackPositions[qcState.focusKart];
   document.getElementById('hudTargetKart').innerText = qcState.focusKart ? `#${qcState.focusKart}` : '—';
-  document.getElementById('hudTargetLap').innerText = targetEntry?.lastLap ? `${targetEntry.lastLap.toFixed(2)}s` : '—';
+  document.getElementById('hudTargetLap').innerText = focusEntry?.lastLap ? `${focusEntry.lastLap.toFixed(2)}s` : '—';
 
-  if (qcState.focusKart && typeof targetPos === 'number' && trackedNums.length > 1) {
-    let minAhead = 100;
-    let minBehind = 100;
-    trackedNums.forEach((other) => {
-      if (other === qcState.focusKart) return;
-      const oPos = qcState.trackPositions[other] ?? 0;
-      const ahead = (oPos - targetPos + 100) % 100;
-      const behind = (targetPos - oPos + 100) % 100;
-      if (ahead > 0 && ahead < minAhead) minAhead = ahead;
-      if (behind > 0 && behind < minBehind) minBehind = behind;
+  if (focusPct !== undefined && trackedNums.length > 1) {
+    let aheadDist = 101;
+    let behindDist = 101;
+    trackedNums.forEach((otherK) => {
+      if (otherK === qcState.focusKart) return;
+      const oPct = qcState.trackPositions[otherK] ?? 0;
+      const diffAhead = (oPct - focusPct + 100) % 100;
+      const diffBehind = (focusPct - oPct + 100) % 100;
+      if (diffAhead > 0 && diffAhead < aheadDist) aheadDist = diffAhead;
+      if (diffBehind > 0 && diffBehind < behindDist) behindDist = diffBehind;
     });
-    const secPerPct = (targetEntry?.lastLap || 65) / 100;
-    document.getElementById('hudTargetGap').innerText =
-      `+${(minAhead * secPerPct).toFixed(1)}s / -${(minBehind * secPerPct).toFixed(1)}s`;
+    const lapSec = focusEntry?.lastLap || 62.5;
+    const aheadSec = aheadDist <= 100 ? ((aheadDist / 100) * lapSec).toFixed(1) + 's' : '—';
+    const behindSec = behindDist <= 100 ? ((behindDist / 100) * lapSec).toFixed(1) + 's' : '—';
+    document.getElementById('hudTargetGap').innerText = `-${aheadSec} / +${behindSec}`;
   } else {
     document.getElementById('hudTargetGap').innerText = '—';
   }
+
+  const slider = document.getElementById('trackProgressionSlider');
+  const lbl = document.getElementById('trackProgPctLabel');
+  if (focusPct !== undefined) {
+    if (slider) slider.value = Math.round(focusPct);
+    if (lbl) lbl.innerText = `${Math.round(focusPct)}%`;
+  }
+
+  const listEl = document.getElementById('trackedKartsList');
+  if (!listEl) return;
+
+  if (trackedNums.length === 0) {
+    listEl.innerHTML = `
+      <div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">
+        Aucun kart positionné. Clique sur « + Ajouter / positionner un kart » ou ajoute un kart dans Quick Change / Classement.
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = trackedNums.map((k) => {
+    const pct = Math.round(qcState.trackPositions[k] ?? 0);
+    const entry = allEntries.find(e => e.kart === k);
+    const isTarget = k === qcState.focusKart;
+    const lapStr = entry?.lastLap ? `${entry.lastLap.toFixed(2)}s` : 'Chrono —';
+    return `
+      <div class="tracked-kart-row ${isTarget ? 'is-target' : ''}">
+        <div class="tracked-kart-main">
+          <div class="tracked-kart-title">#${k}${entry?.driver ? ' • ' + entry.driver : ''} ${isTarget ? '(Ciblé)' : ''}</div>
+          <div class="tracked-kart-sub">Position piste : ${pct}% • ${lapStr}</div>
+        </div>
+        <div class="tracked-kart-actions">
+          <button type="button" class="pit-adj-btn" onclick="setKartTrackPos('${k}', -5)">−5%</button>
+          <button type="button" class="pit-adj-btn" onclick="setKartTrackPos('${k}', 5)">+5%</button>
+          <button type="button" class="pick-qc-btn" onclick="qcState.focusKart='${k}'; renderTrackMapTab(); saveAll();">Cibler</button>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 function teamNumClean(val) {
   return String(val || '').replace(/^#/, '').trim();
 }
 
-function saveAll() {
-  const payload = {
+function buildStoragePayload() {
+  return {
+    sessionCode: bridgeSessionCode,
     currentTab,
     soundAlertEnabled,
     pitStops,
     apexLink: document.getElementById('apexLinkInput')?.value || '',
     pollIntervalSec: document.getElementById('pollIntervalSec')?.value || '3',
     activeDriverInput: document.getElementById('qcDriverInput')?.value || '',
+    apexLiveMap,
     stint: {
       startTime: document.getElementById('startTime').value,
       totalHours: document.getElementById('totalHours').value,
@@ -5034,110 +5773,133 @@ function saveAll() {
       tranchePits: document.getElementById('tranchePits').value,
       trancheHours: document.getElementById('trancheHours').value
     },
-    qc: qcState,
-    apexLiveMap
+    qc: qcState
   };
-  localStorage.setItem('eg7_pro_v21', JSON.stringify(payload));
+}
+
+function saveAll(forceBroadcast = false) {
+  const payload = buildStoragePayload();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {}
+
+  if (bridgeChannel) {
+    bridgeChannel.postMessage({
+      type: 'STATE_UPDATE',
+      senderId: clientInstanceId,
+      sessionCode: bridgeSessionCode,
+      payload
+    });
+  }
 }
 
 function loadAll() {
   try {
-    const raw = localStorage.getItem('eg7_pro_v21') || localStorage.getItem('eg7_pro_v20') || localStorage.getItem('eg7_pro_v19');
-    if (raw) {
-      const data = JSON.parse(raw);
-      if (typeof data.soundAlertEnabled === 'boolean') {
-        soundAlertEnabled = data.soundAlertEnabled;
-      }
-      syncHeaderUtilityUI();
-      if (Array.isArray(data.pitStops)) {
-        pitStops = data.pitStops;
-      }
-      if (data.apexLink && document.getElementById('apexLinkInput')) {
-        document.getElementById('apexLinkInput').value = data.apexLink;
-      }
-      if (data.pollIntervalSec && document.getElementById('pollIntervalSec')) {
-        document.getElementById('pollIntervalSec').value = data.pollIntervalSec;
-      }
-      if (data.activeDriverInput && document.getElementById('qcDriverInput')) {
-        document.getElementById('qcDriverInput').value = data.activeDriverInput;
-      }
-      if (data.apexLiveMap && typeof data.apexLiveMap === 'object') {
-        apexLiveMap = data.apexLiveMap;
-      }
-      if (data.stint) {
-        Object.entries(data.stint).forEach(([id, val]) => {
-          const el = document.getElementById(id);
-          if (el && val !== undefined) el.value = val;
-        });
-        syncHoursChips(document.getElementById('totalHours').value);
-      }
-      const doneCount = parseInt(document.getElementById('donePits').value || 0, 10) || 0;
-      if (pitStops.length !== doneCount) {
-        syncDonePitsCount(doneCount);
-      } else {
-        renderPitStopsHistory();
-      }
-      if (data.qc && Array.isArray(data.qc.lanes) && data.qc.lanes.length > 0) {
-        qcState = Object.assign({}, qcState, data.qc);
-        if (!Array.isArray(qcState.knownDrivers)) qcState.knownDrivers = [];
-        if (!qcState.thresholds) qcState.thresholds = { good: 0.5, mid: 1.5, bad: 3.0 };
-        if (!Array.isArray(qcState.rowColors)) qcState.rowColors = ['blue', 'red', 'white'];
-        if (!Array.isArray(qcState.compareSlots)) qcState.compareSlots = ['', '', '', '', ''];
-        if (!qcState.compareLapCount) qcState.compareLapCount = 10;
-        if (!qcState.circuitId) qcState.circuitId = 'brignoles';
-        if (!qcState.trackPositions || typeof qcState.trackPositions !== 'object') qcState.trackPositions = {};
-        if (qcState.focusKart === undefined) qcState.focusKart = '';
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramSession = (urlParams.get('session') || '').trim().toUpperCase();
 
-        qcState.lanes.forEach(col => col.forEach(k => {
-          if (k.offCode) internalCodesSet.add(k.offCode);
-          else k.offCode = generateOffCode();
-          if (!Array.isArray(k.stintDurationsMin)) k.stintDurationsMin = [];
-          if (k.driverName === undefined) k.driverName = '';
-          if (k.baselineLapSec === undefined) k.baselineLapSec = null;
-          if (k.highPotential === undefined) k.highPotential = false;
-        }));
-        document.getElementById('qcNumLanes').value = qcState.numLanes;
-        document.getElementById('qcKartsPerLane').value = qcState.kartsPerLane;
-        document.getElementById('compareLapCountInput').value = qcState.compareLapCount;
-        document.getElementById('trackCircuitSelect').value = qcState.circuitId;
-        document.getElementById('customExitToggle').checked = !!qcState.customExitEnabled;
-        document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
-        document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
-          ? 'Activé : tu choisis le côté de sortie et la ligne'
-          : 'Désactivé : repart du même côté où elle box';
-      } else {
-        buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
-      }
-      if (typeof data.currentTab === 'number') {
-        switchTab(data.currentTab);
-      }
-    } else {
-      syncHeaderUtilityUI();
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      bridgeSessionCode = paramSession || generateSessionCode();
       buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
-      renderPitStopsHistory();
+      updateBridgeModalUI();
+      return;
     }
+
+    const data = JSON.parse(raw);
+    bridgeSessionCode = paramSession || data.sessionCode || generateSessionCode();
+    if (typeof data.soundAlertEnabled === 'boolean') soundAlertEnabled = data.soundAlertEnabled;
+    if (Array.isArray(data.pitStops)) pitStops = data.pitStops;
+    if (data.apexLink && document.getElementById('apexLinkInput')) {
+      document.getElementById('apexLinkInput').value = data.apexLink;
+    }
+    if (data.pollIntervalSec && document.getElementById('pollIntervalSec')) {
+      document.getElementById('pollIntervalSec').value = data.pollIntervalSec;
+    }
+    if (data.activeDriverInput && document.getElementById('qcDriverInput')) {
+      document.getElementById('qcDriverInput').value = data.activeDriverInput;
+    }
+    if (data.apexLiveMap && typeof data.apexLiveMap === 'object') {
+      apexLiveMap = data.apexLiveMap;
+    }
+    if (data.stint) {
+      Object.entries(data.stint).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el && val !== undefined) el.value = val;
+      });
+      syncHoursChips(document.getElementById('totalHours').value);
+    }
+    if (data.qc && Array.isArray(data.qc.lanes) && data.qc.lanes.length > 0) {
+      qcState = Object.assign({}, qcState, data.qc);
+      qcState.lanes.forEach(col => col.forEach(k => {
+        if (!k.offCode) k.offCode = generateOffCode();
+        else internalCodesSet.add(k.offCode);
+        if (k.highPotential === undefined) k.highPotential = false;
+      }));
+      if (!qcState.thresholds) qcState.thresholds = { good: 0.5, mid: 1.5, bad: 3.0 };
+      if (!Array.isArray(qcState.rowColors)) qcState.rowColors = ['red', 'blue', 'yellow', 'green'];
+      if (!Array.isArray(qcState.compareSlots)) qcState.compareSlots = ['', '', '', '', ''];
+      if (!qcState.compareLapCount) qcState.compareLapCount = 10;
+      if (!qcState.circuitId) qcState.circuitId = 'brignoles';
+      if (!qcState.trackPositions || typeof qcState.trackPositions !== 'object') qcState.trackPositions = {};
+      if (!Array.isArray(qcState.knownTeams)) qcState.knownTeams = [];
+      if (!Array.isArray(qcState.knownDrivers)) qcState.knownDrivers = [];
+    } else {
+      buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+    }
+
+    if (typeof data.currentTab === 'number') {
+      currentTab = data.currentTab;
+    }
+    updateBridgeModalUI();
   } catch (e) {
-    syncHeaderUtilityUI();
+    bridgeSessionCode = generateSessionCode();
     buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
-    renderPitStopsHistory();
+    updateBridgeModalUI();
   }
 }
 
-function tick() {
-  document.getElementById('headerClock').innerText = new Date().toLocaleTimeString('fr-FR');
-  renderPitStopsHistory();
-  calculateStint();
-}
+setInterval(() => {
+  const now = new Date();
+  const hhmmss = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const hClock = document.getElementById('headerClock');
+  if (hClock) hClock.innerText = hhmmss;
 
-runSplash();
-loadAll();
-renderQuickChange();
-renderStandingsTab();
-renderCompareTab();
-renderTrackMapTab();
-calculateStint();
-setInterval(tick, 1000);
-tick();
+  const elapsedSec = Math.max(0, (Date.now() - lastLiveStepMs) / 1000);
+  lastLiveStepMs = Date.now();
+  const movedFromLive = advanceTrackPositionsFromLiveTiming(elapsedSec);
+
+  calculateStint();
+  if (currentTab === 4 && (movedFromLive || trackSimActive)) {
+    renderTrackMapTab();
+  }
+}, 1000);
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  syncHeaderUtilityUI();
+
+  document.getElementById('randomDrawToggle').checked = !!qcState.randomDrawEnabled;
+  document.getElementById('randomDrawPanel').classList.toggle('hidden', !qcState.randomDrawEnabled);
+  document.getElementById('randomDrawHint').innerText = qcState.randomDrawEnabled
+    ? 'Activé : tire ou choisis la file de sortie avant validation'
+    : 'Désactivé : sortie directe sur la file choisie';
+
+  document.getElementById('customExitToggle').checked = !!qcState.customExitEnabled;
+  document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
+  document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
+    ? 'Activé : tu choisis le côté de sortie et la place'
+    : 'Désactivé : repart du même côté où elle box';
+
+  renderPitStopsHistory();
+  renderQuickChange();
+  renderStandingsTab();
+  renderCompareTab();
+  renderTrackMapTab();
+  calculateStint();
+  switchTab(currentTab);
+  runSplash();
+});
 </script>
 </body>
 </html>
