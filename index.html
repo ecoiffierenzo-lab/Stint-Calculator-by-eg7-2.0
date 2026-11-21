@@ -3,54 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#e9eef5">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Stint Calculator by EG7</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Stint Calculator by EG7 — Pit-Wall Pro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-app: #f1f5f9;
-    --card-bg: #ffffff;
-    --card-border: #e2e8f0;
-    --surface-bg: #f8fafc;
-    --surface-hover: #f1f5f9;
-    --border-color: #cbd5e1;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
+    --bg-app: #e9eef5;
+    --bg-mesh:
+      radial-gradient(ellipse 85% 45% at 15% -5%, rgba(37, 99, 235, 0.16), transparent 55%),
+      radial-gradient(ellipse 75% 40% at 88% 4%, rgba(14, 165, 233, 0.13), transparent 52%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(233, 238, 245, 0.92) 100%);
+    --card-bg: rgba(255, 255, 255, 0.94);
+    --card-border: rgba(15, 23, 42, 0.09);
+    --card-shadow:
+      0 16px 34px -12px rgba(15, 23, 42, 0.11),
+      0 3px 8px -2px rgba(15, 23, 42, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    --input-bg: #f4f7fb;
+    --input-bg-hover: #ebf0f7;
+    --input-bg-focus: #ffffff;
+    --input-border: #cfd9e6;
+    --input-ring: rgba(37, 99, 235, 0.2);
+
+    --text-main: #0b1220;
+    --text-muted: #5b6b82;
 
     --accent: #2563eb;
     --accent-dark: #1d4ed8;
-    --accent-soft: rgba(37, 99, 235, 0.1);
-    --accent-glow: rgba(37, 99, 235, 0.22);
+    --accent-soft: rgba(37, 99, 235, 0.12);
+    --accent-glow: rgba(37, 99, 235, 0.3);
 
-    --success: #10b981;
-    --success-bg: rgba(16, 185, 129, 0.12);
-    --warning: #f59e0b;
-    --warning-bg: rgba(245, 158, 11, 0.14);
-    --danger: #ef4444;
-    --danger-bg: rgba(239, 68, 68, 0.14);
+    --success: #059669;
+    --success-bg: rgba(5, 150, 105, 0.13);
+    --warning: #d97706;
+    --warning-bg: rgba(217, 119, 6, 0.15);
+    --danger: #dc2626;
+    --danger-bg: rgba(220, 38, 38, 0.15);
 
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-
-  body.night-mode {
-    --bg-app: #090d16;
-    --card-bg: #111827;
-    --card-border: #1f2937;
-    --surface-bg: #182234;
-    --surface-hover: #223049;
-    --border-color: #334155;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-
-    --accent: #3b82f6;
-    --accent-dark: #2563eb;
-    --accent-soft: rgba(59, 130, 246, 0.16);
-    --accent-glow: rgba(59, 130, 246, 0.28);
   }
 
   * {
@@ -68,93 +64,208 @@
   body {
     font-family: var(--font-sans);
     background-color: var(--bg-app);
+    background-image: var(--bg-mesh);
     color: var(--text-main);
     min-height: 100dvh;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
   }
 
-  /* SPLASH ÉPURÉ DARK SLATE */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* =========================================================
+     SÉQUENCE D'OUVERTURE PRO : RACE CONTROL BOOT
+     ========================================================= */
   #splash-overlay {
     position: fixed;
     inset: 0;
     z-index: 10000;
-    background: #0f172a;
+    background:
+      radial-gradient(circle at 50% 24%, rgba(37, 99, 235, 0.24), transparent 58%),
+      radial-gradient(circle at 80% 78%, rgba(16, 185, 129, 0.12), transparent 50%),
+      linear-gradient(180deg, #060a13 0%, #03060c 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 24px;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
+    padding: 28px 20px;
+    overflow: hidden;
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0.55s ease;
+  }
+
+  #splash-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at 50% 50%, #000 32%, transparent 82%);
+    pointer-events: none;
+  }
+
+  .splash-ring {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    border: 1px solid rgba(59, 130, 246, 0.16);
+    animation: radarPulse 2.8s ease-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes radarPulse {
+    0% { transform: scale(0.75); opacity: 0.65; }
+    100% { transform: scale(1.45); opacity: 0; }
+  }
+
+  .splash-scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.8), rgba(16, 185, 129, 0.8), transparent);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+    animation: scanSweep 2.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes scanSweep {
+    0% { top: 10%; opacity: 0; }
+    20% { opacity: 0.9; }
+    80% { opacity: 0.9; }
+    100% { top: 90%; opacity: 0; }
   }
 
   #splash-overlay.splash-exit {
     opacity: 0;
+    transform: scale(1.04);
     visibility: hidden;
     pointer-events: none;
   }
 
+  .boot-tag {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #93c5fd;
+    background: rgba(37, 99, 235, 0.16);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
   .start-lights-gantry {
+    position: relative;
+    z-index: 2;
     display: flex;
-    gap: 10px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    padding: 10px 16px;
-    border-radius: 99px;
+    gap: 13px;
+    background: rgba(15, 23, 42, 0.94);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 13px 22px;
+    border-radius: 999px;
     margin-bottom: 24px;
   }
 
   .race-light {
-    width: 12px;
-    height: 12px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    background: #334155;
-    transition: all 0.15s ease;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.16s ease;
   }
 
   .race-light.lit-red {
-    background: #3b82f6;
-    box-shadow: 0 0 12px #3b82f6;
+    background: #ef4444;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.95), 0 0 5px #fecaca;
   }
 
   .race-light.lit-green {
     background: #10b981;
-    box-shadow: 0 0 12px #10b981;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 1), 0 0 5px #a7f3d0;
+  }
+
+  .splash-hero {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
   }
 
   .splash-badge {
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #f8fafc;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 55%, #0ea5e9 100%);
+    border: 1px solid rgba(147, 197, 253, 0.42);
+    box-shadow: 0 14px 32px rgba(37, 99, 235, 0.48);
+    color: #ffffff;
+    font-family: var(--font-mono);
     font-weight: 800;
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     letter-spacing: -0.03em;
-    padding: 12px 20px;
-    border-radius: 16px;
-    margin-bottom: 14px;
+    padding: 12px 18px;
+    border-radius: 18px;
   }
+
+  .splash-title-wrap { text-align: left; }
 
   .splash-title {
     margin: 0;
-    font-size: 1.35rem;
+    font-size: 1.6rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     color: #f8fafc;
+    line-height: 1.1;
   }
 
   .splash-subtitle {
-    margin: 6px 0 22px;
+    margin: 5px 0 0;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 700;
     color: #94a3b8;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
+  .splash-status-line {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 20px 0 10px;
+    min-height: 18px;
+    text-align: center;
+  }
+
+  .splash-progress-wrap { position: relative; z-index: 2; width: 260px; }
+
   .splash-bar {
-    width: 190px;
-    height: 4px;
-    background: #1e293b;
+    width: 100%;
+    height: 6px;
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.16);
     border-radius: 99px;
     overflow: hidden;
   }
@@ -162,112 +273,360 @@
   .splash-bar-fill {
     height: 100%;
     width: 0%;
-    background: #3b82f6;
-    transition: width 0.25s ease;
+    background: linear-gradient(90deg, #3b82f6, #0ea5e9, #10b981);
+    box-shadow: 0 0 14px rgba(59, 130, 246, 0.75);
+    transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .app-shell {
+  .splash-pct {
+    margin-top: 6px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  /* =========================================================
+     ALERTE PLEIN ÉCRAN : 1 JOKER & 0 JOKER
+     ========================================================= */
+  @keyframes alertFlashRed {
+    0%, 100% {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(239, 68, 68, 0.34), transparent 62%),
+        linear-gradient(180deg, rgba(20, 6, 10, 0.97) 0%, rgba(10, 3, 6, 0.99) 100%);
+    }
+    50% {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(220, 38, 38, 0.52), transparent 65%),
+        linear-gradient(180deg, rgba(42, 7, 13, 0.98) 0%, rgba(15, 3, 7, 0.99) 100%);
+    }
+  }
+
+  @keyframes alertPulseAmber {
+    0%, 100% {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(245, 158, 11, 0.28), transparent 62%),
+        linear-gradient(180deg, rgba(22, 15, 4, 0.97) 0%, rgba(10, 7, 2, 0.99) 100%);
+    }
+    50% {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(217, 119, 6, 0.42), transparent 65%),
+        linear-gradient(180deg, rgba(36, 23, 5, 0.98) 0%, rgba(12, 8, 2, 0.99) 100%);
+    }
+  }
+
+  @keyframes badgeBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  #fullscreen-joker-alert {
+    position: fixed;
+    inset: 0;
+    z-index: 9900;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+    text-align: center;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  #fullscreen-joker-alert.mode-zero { animation: alertFlashRed 1.15s ease-in-out infinite; }
+  #fullscreen-joker-alert.mode-one { animation: alertPulseAmber 1.7s ease-in-out infinite; }
+
+  .fs-alert-card {
     width: 100%;
-    max-width: 540px;
-    margin: 0 auto;
-    padding: 12px 10px 90px;
+    max-width: 440px;
+    background: rgba(15, 23, 42, 0.78);
+    border-radius: 26px;
+    padding: 26px 20px;
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.75);
   }
 
-  header {
+  #fullscreen-joker-alert.mode-zero .fs-alert-card {
+    border: 2px solid rgba(248, 113, 113, 0.75);
+    box-shadow: 0 0 50px rgba(220, 38, 38, 0.35), 0 28px 65px rgba(0, 0, 0, 0.8);
+  }
+
+  #fullscreen-joker-alert.mode-one .fs-alert-card {
+    border: 2px solid rgba(251, 191, 36, 0.7);
+    box-shadow: 0 0 42px rgba(217, 119, 6, 0.28), 0 28px 65px rgba(0, 0, 0, 0.75);
+  }
+
+  .fs-code-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  #fullscreen-joker-alert.mode-zero .fs-code-tag {
+    background: rgba(239, 68, 68, 0.22);
+    color: #fca5a5;
+    border: 1px solid rgba(248, 113, 113, 0.45);
+  }
+
+  #fullscreen-joker-alert.mode-one .fs-code-tag {
+    background: rgba(245, 158, 11, 0.22);
+    color: #fde68a;
+    border: 1px solid rgba(251, 191, 36, 0.45);
+  }
+
+  .fs-giant-count {
+    font-family: var(--font-mono);
+    font-size: 4.4rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 4px 0 10px;
+    animation: badgeBounce 1.4s ease-in-out infinite;
+  }
+
+  #fullscreen-joker-alert.mode-zero .fs-giant-count {
+    color: #f87171;
+    text-shadow: 0 0 28px rgba(239, 68, 68, 0.75);
+  }
+
+  #fullscreen-joker-alert.mode-one .fs-giant-count {
+    color: #fbbf24;
+    text-shadow: 0 0 24px rgba(245, 158, 11, 0.65);
+  }
+
+  .fs-alert-title {
+    margin: 0 0 8px;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .fs-alert-desc {
+    margin: 0 0 18px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+
+  .fs-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .fs-stat-box {
+    background: rgba(2, 6, 23, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 15px;
+    padding: 11px 10px;
+  }
+
+  .fs-stat-box span {
+    display: block;
+    font-size: 0.63rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+    margin-bottom: 4px;
+  }
+
+  .fs-stat-box strong {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .fs-ack-btn {
+    width: 100%;
+    padding: 15px 18px;
+    border: none;
+    border-radius: 16px;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    color: #ffffff;
+    transition: transform 0.14s ease, filter 0.14s ease;
+  }
+
+  #fullscreen-joker-alert.mode-zero .fs-ack-btn {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    box-shadow: 0 10px 26px rgba(220, 38, 38, 0.5);
+  }
+
+  #fullscreen-joker-alert.mode-one .fs-ack-btn {
+    background: linear-gradient(135deg, #f59e0b, #b45309);
+    box-shadow: 0 10px 26px rgba(217, 119, 6, 0.45);
+  }
+
+  .fs-ack-btn:active { transform: scale(0.98); }
+
+  /* =========================================================
+     SHELL & HEADER PRO
+     ========================================================= */
+  .app-shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12px 12px 96px;
+  }
+
+  .top-header-panel {
+    background: var(--card-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 13px 15px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .header-top-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 10px 12px;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    margin-bottom: 10px;
+    gap: 10px;
+    min-width: 0;
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
     min-width: 0;
     flex: 1 1 auto;
   }
 
   .brand-badge {
-    background: #0f172a;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8 60%, #0ea5e9 100%);
     color: #ffffff;
+    font-family: var(--font-mono);
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 0.86rem;
     letter-spacing: -0.02em;
-    padding: 7px 9px;
-    border-radius: 9px;
+    padding: 9px 11px;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     flex-shrink: 0;
   }
 
-  body.night-mode .brand-badge {
-    background: var(--accent);
-  }
-
-  .brand-text {
-    min-width: 0;
-    overflow: hidden;
-  }
+  .brand-text { min-width: 0; flex: 1 1 auto; }
 
   .brand-text h1 {
     margin: 0;
-    font-size: clamp(0.88rem, 3.5vw, 1rem);
+    font-size: 1.02rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .brand-text p {
-    margin: 2px 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--text-muted);
-  }
-
-  .header-actions {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
+    line-height: 1.2;
+  }
+
+  .pro-pill {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(37, 99, 235, 0.28);
+    padding: 2px 6px;
+    border-radius: 6px;
     flex-shrink: 0;
   }
 
-  .btn-header {
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    font-size: 0.72rem;
+  .live-clock-badge {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
     font-weight: 700;
-    padding: 7px 10px;
-    border-radius: 9px;
-    cursor: pointer;
+    color: var(--text-main);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 6px 10px;
+    border-radius: 11px;
+    flex-shrink: 0;
     white-space: nowrap;
   }
 
-  .btn-header.active {
-    background: var(--accent);
-    color: #ffffff;
-    border-color: var(--accent);
+  .utility-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 11px;
+    padding-top: 11px;
+    border-top: 1px solid var(--card-border);
   }
 
+  .btn-utility {
+    min-height: 40px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 8px 10px;
+    border-radius: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    min-width: 0;
+    transition: all 0.16s ease;
+  }
+
+  .btn-utility:hover {
+    border-color: var(--accent);
+    background: var(--input-bg-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-utility:active { transform: translateY(0); }
+
+  .btn-utility.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #ffffff;
+    border-color: var(--accent);
+    box-shadow: 0 5px 14px var(--accent-glow);
+  }
+
+  .btn-utility.muted-state { opacity: 0.74; }
+  .btn-utility.reset-btn:hover { border-color: var(--danger); color: var(--danger); }
+  .btn-utility.reset-confirm { background: var(--danger); border-color: var(--danger); color: #ffffff; }
+
+  /* VIEW SWITCHER 5 ONGLETS (SANS SLIDE) */
   .view-tabs-wrap {
     background: var(--card-bg);
+    backdrop-filter: blur(14px);
     border: 1px solid var(--card-border);
-    border-radius: 13px;
-    padding: 4px;
+    border-radius: 19px;
+    padding: 5px;
+    box-shadow: var(--card-shadow);
     margin-bottom: 12px;
   }
 
   .view-tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4px;
   }
 
@@ -275,63 +634,41 @@
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 9px 8px;
-    border-radius: 9px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    padding: 9px 2px;
+    border-radius: 14px;
     cursor: pointer;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    transition: all 0.15s ease;
+    gap: 3px;
+    transition: all 0.18s ease;
+    white-space: nowrap;
   }
 
   .view-tab-btn.active {
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     color: #ffffff;
-    box-shadow: 0 2px 8px var(--accent-glow);
+    box-shadow: 0 6px 16px var(--accent-glow);
   }
 
-  .swipe-hint {
-    text-align: center;
-    font-size: 0.66rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-top: 5px;
-  }
-
-  .pager-viewport {
+  .tab-page {
+    display: block;
     width: 100%;
-    overflow: hidden;
-    touch-action: pan-y pinch-zoom;
   }
 
-  .pager-track {
-    display: flex;
-    width: 200%;
-    transform: translateX(0%);
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-
-  .pager-track.dragging {
-    transition: none;
-  }
-
-  .pager-page {
-    width: 50%;
-    flex-shrink: 0;
-    padding-right: 2px;
-  }
-
+  /* CARDS */
   .module-card {
     background: var(--card-bg);
+    backdrop-filter: blur(14px);
     border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 13px;
+    border-radius: 23px;
+    padding: 16px;
     margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
   .module-header {
@@ -339,8 +676,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 11px;
-    padding-bottom: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--card-border);
     cursor: pointer;
     user-select: none;
@@ -348,10 +685,10 @@
 
   .module-title {
     margin: 0;
-    font-size: 0.76rem;
+    font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.07em;
     color: var(--text-main);
     display: flex;
     align-items: center;
@@ -359,10 +696,11 @@
   }
 
   .accent-dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
     display: inline-block;
   }
 
@@ -375,60 +713,220 @@
   .module-card.collapsed .collapse-arrow { transform: rotate(-90deg); }
   .module-card.collapsed .module-body { display: none; }
 
-  #alert-banner {
+  /* RÈGLEMENT DÉVELOPPÉ & LISIBLE */
+  .reg-section-block { margin-bottom: 16px; }
+  .reg-section-block:last-of-type { margin-bottom: 14px; }
+
+  .reg-section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 8px 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .reg-stack { display: flex; flex-direction: column; gap: 8px; }
+
+  .reg-row-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 16px;
+    padding: 11px 13px;
+    transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .reg-row-card:hover { background: var(--input-bg-hover); }
+
+  .reg-row-card:focus-within {
+    background: var(--input-bg-focus);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--input-ring);
+  }
+
+  .reg-row-info { flex: 1; min-width: 0; }
+
+  .reg-row-title {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.25;
+  }
+
+  .reg-row-desc {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  .reg-control-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  .reg-input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1.5px solid var(--input-border);
     border-radius: 12px;
-    padding: 11px 14px;
+    padding: 6px 9px;
+    min-width: 96px;
+  }
+
+  .reg-row-card:focus-within .reg-input-wrap { border-color: var(--accent); }
+
+  .reg-input-wrap input[type="number"] {
+    width: 54px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    outline: none;
+  }
+
+  .reg-unit-tag {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
     font-weight: 700;
-    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 5px;
+    user-select: none;
+  }
+
+  .reg-split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .reg-split-card {
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 16px;
+    padding: 11px 12px;
+    transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .reg-split-card:focus-within {
+    background: var(--input-bg-focus);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--input-ring);
+  }
+
+  .reg-split-card .reg-row-title { font-size: 0.78rem; }
+  .reg-split-card .reg-row-desc { font-size: 0.66rem; margin-bottom: 8px; }
+
+  .reg-split-input-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 11px;
+    padding: 6px 9px;
+  }
+
+  .reg-split-input-box input[type="number"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.98rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+  }
+
+  @keyframes pulseCritical {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.38);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+    }
+  }
+
+  #alert-banner {
+    border-radius: 18px;
+    padding: 13px 15px;
+    font-weight: 800;
+    font-size: 0.82rem;
     text-align: center;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
   }
 
-  .status-safe { background: var(--success-bg); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
-  .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.35); }
-  .status-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.35); }
+  .status-safe { background: var(--success-bg); color: var(--success); border: 1px solid rgba(5, 150, 105, 0.35); }
+  .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(217, 119, 6, 0.42); }
+  .status-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1.5px solid rgba(220, 38, 38, 0.55);
+    animation: pulseCritical 1.7s infinite;
+  }
 
   .metrics-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 12px;
   }
 
   .metric-box {
     background: var(--card-bg);
+    backdrop-filter: blur(14px);
     border: 1px solid var(--card-border);
-    border-radius: 13px;
-    padding: 12px 10px;
+    border-radius: 20px;
+    padding: 14px 10px;
     text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
   }
 
   .metric-box.accent-highlight {
-    border-color: var(--accent);
-    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--card-bg) 75%);
+    border-color: rgba(37, 99, 235, 0.38);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--card-bg) 85%);
   }
 
   .metric-box.joker-low { border-color: var(--warning); background: var(--warning-bg); }
-  .metric-box.joker-zero { border-color: var(--danger); background: var(--danger-bg); }
+  .metric-box.joker-zero { border: 2px solid var(--danger); background: var(--danger-bg); animation: pulseCritical 1.7s infinite; }
+  .metric-box.joker-zero .metric-val { color: var(--danger) !important; }
 
   .metric-label {
     display: block;
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     color: var(--text-muted);
     margin-bottom: 4px;
   }
 
   .metric-val {
     font-family: var(--font-mono);
-    font-size: 1.35rem;
-    font-weight: 700;
+    font-size: 1.44rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
     color: var(--text-main);
   }
 
@@ -437,6 +935,7 @@
   .metric-sub {
     display: block;
     font-size: 0.66rem;
+    font-weight: 600;
     color: var(--text-muted);
     margin-top: 3px;
   }
@@ -445,9 +944,10 @@
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-left: 4px solid var(--accent);
-    border-radius: 12px;
-    padding: 11px 13px;
+    border-radius: 17px;
+    padding: 12px 14px;
     margin-bottom: 12px;
+    box-shadow: var(--card-shadow);
   }
 
   .tranche-top {
@@ -458,14 +958,14 @@
     margin-bottom: 6px;
   }
 
-  .tranche-title { font-size: 0.76rem; font-weight: 800; color: var(--text-main); }
+  .tranche-title { font-size: 0.77rem; font-weight: 800; color: var(--text-main); }
 
   .tranche-pill {
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 700;
     padding: 3px 8px;
-    border-radius: 6px;
+    border-radius: 7px;
     background: var(--accent-soft);
     color: var(--accent);
   }
@@ -486,72 +986,147 @@
   .tranche-sub strong { font-family: var(--font-mono); color: var(--text-main); }
 
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .input-group { margin-bottom: 11px; }
+  .input-group { margin-bottom: 12px; }
   .input-group:last-child { margin-bottom: 0; }
 
-  label {
-    display: block;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 5px;
+  .input-box {
+    position: relative;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 15px;
+    padding: 8px 11px;
+    transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
 
-  input[type="number"],
-  input[type="time"],
-  input[type="text"],
-  select {
+  .input-box:hover { background: var(--input-bg-hover); }
+
+  .input-box:focus-within {
+    background: var(--input-bg-focus);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--input-ring);
+  }
+
+  .input-box-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .input-box label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0;
+    transition: color 0.15s ease;
+  }
+
+  .input-box:focus-within label { color: var(--accent); }
+
+  .input-unit-pill {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1px 6px;
+    border-radius: 6px;
+  }
+
+  .input-box input[type="number"],
+  .input-box input[type="time"],
+  .input-box input[type="text"],
+  .input-box input[type="url"],
+  .input-box input[type="range"],
+  .input-box select,
+  .input-box textarea {
     width: 100%;
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 9px;
-    padding: 9px 10px;
+    background: transparent;
+    border: none;
+    padding: 2px 0;
     color: var(--text-main);
     font-family: var(--font-mono);
-    font-size: 0.88rem;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  input[type="text"] { font-family: var(--font-sans); text-align: left; }
-  select { font-family: var(--font-sans); font-size: 0.8rem; text-align: left; }
-
-  input:focus, select:focus {
+    font-size: 1.02rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
+    box-shadow: none;
   }
+
+  .input-box input[type="text"],
+  .input-box input[type="url"],
+  .input-box select {
+    font-family: var(--font-sans);
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .input-box textarea {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    min-height: 64px;
+    resize: vertical;
+  }
+
+  .btn-launch-now {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(5, 150, 105, 0.35);
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.16), rgba(5, 150, 105, 0.07));
+    color: var(--success);
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.12s ease;
+  }
+
+  .btn-launch-now:active { transform: scale(0.98); }
 
   .preset-chips { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
 
   .chip-btn {
     font-family: var(--font-mono);
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
     color: var(--text-main);
-    border-radius: 8px;
-    padding: 7px 2px;
+    border-radius: 11px;
+    padding: 8px 2px;
     font-size: 0.74rem;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.15s ease;
   }
 
   .chip-btn.active {
     background: var(--accent);
     border-color: var(--accent);
     color: #ffffff;
+    box-shadow: 0 3px 10px var(--accent-glow);
   }
 
-  .pit-stepper { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: center; }
+  .pit-stepper {
+    display: grid;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 8px;
+    align-items: stretch;
+  }
 
   .btn-step {
-    height: 40px;
-    border-radius: 9px;
-    border: 1px solid var(--border-color);
-    background: var(--surface-bg);
+    border-radius: 15px;
+    border: 1.5px solid var(--input-border);
+    background: var(--input-bg);
     color: var(--text-main);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     cursor: pointer;
   }
@@ -564,63 +1139,291 @@
 
   .btn-primary-action {
     width: 100%;
-    padding: 12px 14px;
+    padding: 13px 14px;
     border: none;
-    border-radius: 10px;
-    background: var(--accent);
+    border-radius: 15px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     color: #ffffff;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
     cursor: pointer;
-    box-shadow: 0 2px 8px var(--accent-glow);
-    transition: background 0.15s ease;
+    box-shadow: 0 6px 18px var(--accent-glow);
+    transition: transform 0.12s ease;
   }
 
-  .btn-primary-action:hover {
-    background: var(--accent-dark);
-  }
+  .btn-primary-action:active { transform: scale(0.99); }
 
   .btn-secondary-light {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--surface-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 13px;
+    background: var(--input-bg);
     color: var(--text-main);
-    font-size: 0.76rem;
+    font-size: 0.75rem;
     font-weight: 700;
     cursor: pointer;
   }
 
+  .btn-secondary-light.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+  }
+
   .live-clock-box {
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 11px;
-    padding: 11px;
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 12px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .live-countdown {
     font-family: var(--font-mono);
-    font-size: 1.8rem;
+    font-size: 1.95rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-main);
+  }
+
+  .whatif-card {
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--card-bg) 42%);
+    border: 1.5px solid rgba(37, 99, 235, 0.28);
+  }
+
+  .whatif-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .whatif-tile {
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 13px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .whatif-tile span {
+    display: block;
+    font-size: 0.63rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+
+  .whatif-tile strong {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .whatif-verdict {
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .pit-history-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .pit-stop-card {
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 16px;
+    padding: 10px 12px;
+  }
+
+  .pit-stop-card.latest-pit {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--input-bg) 75%);
+  }
+
+  .pit-stop-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .pit-stop-left { display: flex; align-items: center; gap: 8px; }
+
+  .pit-stop-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+
+  .pit-stop-clock-pill {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-main);
+    background: var(--card-bg);
+    border: 1px solid var(--input-border);
+    padding: 3px 9px;
+    border-radius: 9px;
+  }
+
+  .pit-stop-dur {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .pit-stop-controls {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto auto;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .pit-adj-btn {
+    border: 1px solid var(--input-border);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 6px 4px;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+
+  .pit-adj-btn:active {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+  }
+
+  .pit-now-btn {
+    border: 1px solid rgba(5, 150, 105, 0.35);
+    background: var(--success-bg);
+    color: var(--success);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 6px 8px;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+
+  .pit-del-btn {
+    border: 1px solid var(--input-border);
+    background: var(--card-bg);
+    color: var(--danger);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 6px 8px;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+
+  .pit-exact-row {
+    margin-top: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .pit-exact-input {
+    background: var(--card-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 3px 7px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--text-main);
   }
 
+  /* SEUILS DU VERDICT Q&C */
+  .verdict-threshold-card {
+    background: #0c1220;
+    color: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 14px 30px rgba(11, 18, 32, 0.22);
+  }
+
+  .vt-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .vt-title { margin: 0; font-size: 0.92rem; font-weight: 800; color: #ffffff; }
+  .vt-summary { font-family: var(--font-mono); font-size: 0.64rem; font-weight: 700; color: #94a3b8; margin-top: 3px; }
+  .vt-sub { font-size: 0.72rem; color: #94a3b8; margin: 0 0 14px; line-height: 1.35; }
+
+  .vt-row {
+    display: grid;
+    grid-template-columns: 76px 1fr 84px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .vt-label-good { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #22c55e; }
+  .vt-label-mid  { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #eab308; }
+  .vt-label-bad  { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #f97316; }
+
+  .vt-slider { width: 100%; accent-color: #22c55e; cursor: pointer; height: 6px; }
+  .vt-slider.mid { accent-color: #eab308; }
+  .vt-slider.bad { accent-color: #f97316; }
+
+  .vt-pill-val {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 6px 6px;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.9);
+  }
+
+  .vt-pill-val.good { color: #4ade80; border: 1.5px solid rgba(74, 222, 128, 0.55); }
+  .vt-pill-val.mid  { color: #facc15; border: 1.5px solid rgba(250, 204, 21, 0.55); }
+  .vt-pill-val.bad  { color: #fb923c; border: 1.5px solid rgba(251, 146, 60, 0.6); }
+
+  .vt-poor-line {
+    padding-top: 10px;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .step-block {
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 11px;
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    padding: 12px;
     margin-bottom: 10px;
   }
 
   .step-badge {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--accent);
@@ -630,25 +1433,26 @@
     margin-bottom: 8px;
   }
 
-  .three-way-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .three-way-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
 
-  .pos-btn {
-    padding: 11px 6px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
+  .entry-click-btn, .pos-btn {
+    padding: 10px 6px;
+    border-radius: 12px;
+    border: 1.5px solid var(--input-border);
     background: var(--card-bg);
     color: var(--text-main);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: 0.74rem;
+    font-weight: 800;
     cursor: pointer;
     text-align: center;
+    transition: all 0.14s ease;
   }
 
-  .pos-btn.selected {
+  .entry-click-btn.selected, .pos-btn.selected {
     background: var(--accent);
     border-color: var(--accent);
     color: #ffffff;
-    box-shadow: 0 2px 8px var(--accent-glow);
+    box-shadow: 0 3px 10px var(--accent-glow);
   }
 
   .toggle-option-row {
@@ -667,7 +1471,7 @@
     position: relative;
     width: 46px;
     height: 25px;
-    background: var(--border-color);
+    background: var(--input-border);
     border-radius: 99px;
     flex-shrink: 0;
     transition: background 0.2s ease;
@@ -693,41 +1497,129 @@
   .exit-extra-panel {
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px dashed var(--border-color);
+    border-top: 1px dashed var(--input-border);
   }
 
   .qc-summary-line {
     background: var(--accent-soft);
     border: 1px solid rgba(37, 99, 235, 0.25);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 9px 12px;
-    margin-bottom: 10px;
-    font-size: 0.76rem;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-main);
   }
 
   .qc-summary-line span { font-family: var(--font-mono); color: var(--accent); }
 
-  .qc-lanes-grid {
+  .row-color-grid {
     display: grid;
-    gap: 6px;
-    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
+
+  .row-color-item {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .row-color-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .color-swatch-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1px solid rgba(15, 23, 42, 0.28);
+    display: inline-block;
+  }
+
+  .row-color-select {
+    background: var(--card-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 4px 6px;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .stratkart-banner {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(14, 165, 233, 0.08));
+    border: 1px solid rgba(37, 99, 235, 0.28);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .stratkart-pill {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 800;
+    background: var(--card-bg);
+    color: var(--accent);
+    border: 1px solid rgba(37, 99, 235, 0.28);
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .live-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 9px 11px;
+    margin-bottom: 10px;
+    font-size: 0.71rem;
+    font-weight: 700;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .live-dot.connected { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+  .qc-lanes-grid { display: grid; gap: 6px; width: 100%; }
 
   .qc-lane-col {
     min-width: 0;
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 13px;
     padding: 6px 5px;
-    transition: border-color 0.15s ease, background 0.15s ease;
   }
 
-  .qc-lane-col.drag-over-col {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
+  .qc-lane-col.drag-over-col { border-color: var(--accent); background: var(--accent-soft); }
 
   .qc-lane-header {
     display: flex;
@@ -742,30 +1634,18 @@
     text-transform: uppercase;
   }
 
-  .qc-lane-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .qc-lane-actions {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    flex-shrink: 0;
-  }
+  .qc-lane-actions { display: flex; align-items: center; gap: 2px; }
 
   .qc-col-btn {
     width: 18px;
     height: 18px;
     border-radius: 5px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--input-border);
     background: var(--card-bg);
     color: var(--text-main);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 700;
-    line-height: 1;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -773,124 +1653,152 @@
     padding: 0;
   }
 
-  .qc-col-btn.plus {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #ffffff;
-  }
+  .qc-col-btn.plus { background: var(--accent); border-color: var(--accent); color: #ffffff; }
 
   .qc-kart-item {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 5px;
-    margin-bottom: 5px;
+    border-radius: 11px;
+    padding: 6px;
+    margin-bottom: 6px;
     cursor: grab;
     user-select: none;
-    transition: transform 0.12s ease, opacity 0.12s ease;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   }
 
   .qc-kart-item:last-child { margin-bottom: 0; }
-  .qc-kart-item:active { cursor: grabbing; }
-
-  .qc-kart-item.dragging-kart {
-    opacity: 0.45;
-    transform: scale(0.97);
-  }
-
-  .qc-kart-item.drag-over-kart {
-    border-top: 2.5px solid var(--accent);
-  }
+  .qc-kart-item.dragging-kart { opacity: 0.45; }
+  .qc-kart-item.drag-over-kart { border-top: 2.5px solid var(--accent); }
 
   .qc-kart-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 2px;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
 
   .qc-kart-pos {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 700;
-    color: var(--text-main);
+    font-size: 0.6rem;
+    font-weight: 800;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .qc-used-btn {
-    border: 1px solid var(--border-color);
-    background: var(--surface-bg);
-    color: var(--text-muted);
+  .qc-score-chip {
+    font-family: var(--font-mono);
     font-size: 0.54rem;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 5px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .qc-used-btn {
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-muted);
+    font-size: 0.52rem;
     font-weight: 700;
     padding: 2px 4px;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
-  .qc-used-btn.used {
-    background: var(--accent);
-    color: #ffffff;
-    border-color: var(--accent);
-  }
+  .qc-used-btn.used { background: var(--accent); color: #ffffff; border-color: var(--accent); }
 
-  .qc-avg-line {
+  .qc-verdict-badge {
+    display: block;
     font-family: var(--font-mono);
-    font-size: 0.58rem;
-    font-weight: 700;
-    background: var(--surface-bg);
-    border-radius: 5px;
-    padding: 3px 4px;
-    margin-bottom: 4px;
+    font-size: 0.55rem;
+    font-weight: 800;
     text-align: center;
+    border-radius: 5px;
+    padding: 2px 3px;
+    margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .qc-stint-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2px;
-    flex-wrap: wrap;
+  .verdict-badge-good { background: var(--success-bg); color: var(--success); }
+  .verdict-badge-mid  { background: var(--warning-bg); color: var(--warning); }
+  .verdict-badge-bad  { background: rgba(249, 115, 22, 0.16); color: #ea580c; }
+  .verdict-badge-poor { background: var(--danger-bg); color: var(--danger); }
+  .verdict-badge-none { background: var(--input-bg); color: var(--text-muted); }
+
+  .qc-avg-line {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 700;
+    background: var(--input-bg);
+    border-radius: 5px;
+    padding: 2px 4px;
+    margin-bottom: 3px;
+    text-align: center;
   }
+
+  .qc-driver-meta {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .qc-driver-meta strong { color: var(--text-main); }
+
+  .qc-potential-tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--success);
+    background: var(--success-bg);
+    border-radius: 4px;
+    padding: 1px 3px;
+    margin-bottom: 3px;
+  }
+
+  .qc-stint-row { display: flex; flex-wrap: wrap; gap: 2px; }
 
   .qc-pill {
     font-family: var(--font-mono);
-    font-size: 0.54rem;
+    font-size: 0.52rem;
     font-weight: 600;
-    background: var(--surface-bg);
-    border: 1px solid var(--border-color);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     padding: 1px 3px;
     border-radius: 4px;
     color: var(--text-muted);
   }
 
+  .qc-btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 3px; }
+
   .qc-mini-btn {
-    border: 1px solid var(--border-color);
-    background: var(--surface-bg);
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
     color: var(--text-main);
-    font-size: 0.54rem;
+    font-size: 0.53rem;
     font-weight: 700;
-    padding: 2px 4px;
-    border-radius: 4px;
+    padding: 3px 3px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 3px;
+    text-align: center;
   }
 
   .qc-log-item {
     font-size: 0.72rem;
     padding: 7px 9px;
-    background: var(--surface-bg);
+    background: var(--input-bg);
     border: 1px solid var(--card-border);
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 6px;
     display: flex;
     justify-content: space-between;
@@ -898,12 +1806,217 @@
     gap: 8px;
   }
 
+  /* TABLES CLASSEMENT & COMPARE */
+  .standings-table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+  }
+
+  table.standings-table { width: 100%; border-collapse: collapse; font-size: 0.74rem; }
+
+  table.standings-table th {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 8px 8px;
+    border-bottom: 1px solid var(--input-border);
+    background: var(--card-bg);
+  }
+
+  table.standings-table td {
+    padding: 8px 8px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  table.standings-table tr:last-child td { border-bottom: none; }
+  .mono-num { font-family: var(--font-mono); }
+
+  .pick-qc-btn {
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 4px 7px;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+
+  .compare-slots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .compare-slot-5 { grid-column: 1 / -1; }
+
+  .lap-count-chips {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .lap-chip-btn {
+    font-family: var(--font-mono);
+    background: var(--card-bg);
+    border: 1.5px solid var(--input-border);
+    color: var(--text-main);
+    border-radius: 10px;
+    padding: 7px 4px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .lap-chip-btn.active { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+  .compare-rule-note { font-size: 0.69rem; color: var(--text-muted); line-height: 1.35; margin: 0; }
+
+  /* =========================================================
+     TRACK MAP & SUIVI KARTS PAR CIRCUIT
+     ========================================================= */
+  .track-stage-card {
+    background: linear-gradient(180deg, #0b1324 0%, #060b16 100%);
+    color: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 20px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 18px 36px rgba(11, 18, 32, 0.26);
+  }
+
+  .track-stage-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .track-circuit-name {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .track-circuit-meta {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: #93c5fd;
+  }
+
+  .track-svg-wrap {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.14), transparent 68%),
+      #09101f;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    overflow: hidden;
+  }
+
+  .track-svg-wrap svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .cockpit-hud-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .hud-mini-box {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    padding: 8px 8px;
+    text-align: center;
+  }
+
+  .hud-mini-box span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+  }
+
+  .hud-mini-box strong {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-top: 2px;
+  }
+
+  .tracked-karts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tracked-kart-row {
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 14px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .tracked-kart-row.is-target {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .tracked-kart-main {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .tracked-kart-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .tracked-kart-sub {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .tracked-kart-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
+<!-- SÉQUENCE D'OUVERTURE PRO -->
 <div id="splash-overlay" aria-hidden="true">
+  <div class="splash-ring"></div>
+  <div class="splash-scanline"></div>
+  <div class="boot-tag">RACE CONTROL // ENDURANCE TELEMETRY</div>
   <div class="start-lights-gantry">
     <div class="race-light" id="rl1"></div>
     <div class="race-light" id="rl2"></div>
@@ -911,309 +2024,929 @@
     <div class="race-light" id="rl4"></div>
     <div class="race-light" id="rl5"></div>
   </div>
-  <div class="splash-badge">EG7</div>
-  <h2 class="splash-title">Stint Calculator</h2>
-  <p class="splash-subtitle">Endurance Pit-Wall Suite</p>
-  <div class="splash-bar">
-    <div class="splash-bar-fill" id="splashFill"></div>
+  <div class="splash-hero">
+    <div class="splash-badge">EG7</div>
+    <div class="splash-title-wrap">
+      <h2 class="splash-title">Stint Calculator</h2>
+      <p class="splash-subtitle">Pit-Wall • Quick Change • Live • Track Map</p>
+    </div>
+  </div>
+  <div class="splash-status-line" id="splashStatus">Initialisation des moteurs de stratégie...</div>
+  <div class="splash-progress-wrap">
+    <div class="splash-bar">
+      <div class="splash-bar-fill" id="splashFill"></div>
+    </div>
+    <div class="splash-pct" id="splashPct">0%</div>
+  </div>
+</div>
+
+<!-- ALERTE PLEIN ÉCRAN (1 JOKER / 0 JOKER) -->
+<div id="fullscreen-joker-alert" class="mode-zero hidden" role="alertdialog" aria-modal="true">
+  <div class="fs-alert-card">
+    <div class="fs-code-tag" id="fsAlertTag">CRITICAL-00 // ZÉRO JOKER</div>
+    <div class="fs-giant-count" id="fsAlertCount">0 JOKER</div>
+    <h2 class="fs-alert-title" id="fsAlertTitle">Aucune marge d'erreur restante</h2>
+    <p class="fs-alert-desc" id="fsAlertDesc">
+      Le dernier joker est consommé. Chaque relais doit respecter les fenêtres de stands et les plafonds pour éviter toute pénalité.
+    </p>
+    <div class="fs-stats-row">
+      <div class="fs-stat-box">
+        <span>Stint Min. Immédiat</span>
+        <strong id="fsAlertMinNext">0m 00s</strong>
+      </div>
+      <div class="fs-stat-box">
+        <span>Marge Globale</span>
+        <strong id="fsAlertMargin">0m 00s</strong>
+      </div>
+    </div>
+    <button type="button" class="fs-ack-btn" onclick="acknowledgeFullscreenJokerAlert()">
+      ✓ Acquitter et revenir au Pit-Wall
+    </button>
   </div>
 </div>
 
 <div class="app-shell">
-  <header>
-    <div class="brand">
-      <div class="brand-badge">EG7</div>
-      <div class="brand-text">
-        <h1>Stint Calculator</h1>
-        <p id="headerClock">--:--:--</p>
+  <div class="top-header-panel">
+    <div class="header-top-row">
+      <div class="brand">
+        <div class="brand-badge">EG7</div>
+        <div class="brand-text">
+          <h1>Stint Calculator <span class="pro-pill">PIT-WALL PRO</span></h1>
+        </div>
       </div>
+      <div class="live-clock-badge" id="headerClock">--:--:--</div>
     </div>
-    <div class="header-actions">
-      <button type="button" class="btn-header" id="nightBtn" onclick="toggleNightMode()">🌙 Nuit</button>
-      <button type="button" class="btn-header" onclick="resetCurrentTab()">Reset</button>
+
+    <div class="utility-toolbar">
+      <button type="button" class="btn-utility active" id="soundBtn" onclick="toggleSoundAlert()" title="Activer ou couper l'alerte sonore 0 Joker">
+        <span id="soundIcon">🔔</span>
+        <span id="soundLabel">Sonnerie ON</span>
+      </button>
+      <button type="button" class="btn-utility reset-btn" id="resetBtn" onclick="handleResetClick()" title="Réinitialiser l'onglet actif">
+        <span>↺</span>
+        <span id="resetLabel">Reset</span>
+      </button>
     </div>
-  </header>
+  </div>
 
   <div class="view-tabs-wrap">
     <div class="view-tabs">
       <button type="button" class="view-tab-btn active" id="tabBtnStint" onclick="switchTab(0)">
-        🏁 Stratégie & Stints
+        <span>🏁</span>
+        <span>Stratégie</span>
       </button>
       <button type="button" class="view-tab-btn" id="tabBtnQuick" onclick="switchTab(1)">
-        ⚡ Quick Change Karts
+        <span>⚡</span>
+        <span>Quick Chg</span>
+      </button>
+      <button type="button" class="view-tab-btn" id="tabBtnRank" onclick="switchTab(2)">
+        <span>📊</span>
+        <span>Classement</span>
+      </button>
+      <button type="button" class="view-tab-btn" id="tabBtnCompare" onclick="switchTab(3)">
+        <span>⚖️</span>
+        <span>Compare</span>
+      </button>
+      <button type="button" class="view-tab-btn" id="tabBtnTrack" onclick="switchTab(4)">
+        <span>🗺️</span>
+        <span>Track Map</span>
       </button>
     </div>
-    <div class="swipe-hint">← Glisse horizontalement (swipe) entre Stratégie et Quick Change →</div>
   </div>
 
-  <div class="pager-viewport" id="pagerViewport">
-    <div class="pager-track" id="pagerTrack">
+  <div id="pagesContainer">
 
-      <!-- PAGE 0 : STINT CALCULATOR -->
-      <div class="pager-page" id="pageStint">
-        <div id="alert-banner" class="status-warning">
-          <span>⏱️</span> Renseigne les paramètres du règlement pour démarrer
+    <!-- PAGE 0 : STINT CALCULATOR COMPLET -->
+    <div class="tab-page" id="pageStint">
+
+      <div id="alert-banner" class="status-warning">
+        <span>⏱️</span> Renseigne les paramètres du règlement pour démarrer
+      </div>
+
+      <div class="tranche-box-card hidden" id="trancheBoxCard">
+        <div class="tranche-top">
+          <span class="tranche-title" id="trancheTitle">🎯 Tranche box</span>
+          <span class="tranche-pill" id="trancheStatusPill">0 / 0</span>
         </div>
-
-        <div class="tranche-box-card hidden" id="trancheBoxCard">
-          <div class="tranche-top">
-            <span class="tranche-title" id="trancheTitle">🎯 Tranche box</span>
-            <span class="tranche-pill" id="trancheStatusPill">0 / 0</span>
-          </div>
-          <div class="tranche-sub">
-            <span id="trancheDeadlineTxt">Limite : —</span>
-            <strong id="trancheRemTxt">Reste —</strong>
-          </div>
+        <div class="tranche-sub">
+          <span id="trancheDeadlineTxt">Limite : —</span>
+          <strong id="trancheRemTxt">Reste —</strong>
         </div>
+      </div>
 
-        <div class="metrics-grid">
-          <div class="metric-box accent-highlight" id="jokerBox">
-            <span class="metric-label">Jokers Globaux</span>
-            <span class="metric-val" id="jokersVal">0</span>
-            <span class="metric-sub" id="pitsLeftSub">0 arrêt restant</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-label">Marge Globale</span>
-            <span class="metric-val" id="marginVal">0m 00s</span>
-            <span class="metric-sub">Avant stint max</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-label">Stint Min. Immédiat</span>
-            <span class="metric-val" id="minNextVal">0m 00s</span>
-            <span class="metric-sub">Relais actuel</span>
-          </div>
-          <div class="metric-box">
-            <span class="metric-label">Stint Moyen Requis</span>
-            <span class="metric-val" id="minAvgVal">0m 00s</span>
-            <span class="metric-sub">Avant fermeture pits</span>
-          </div>
+      <div class="metrics-grid">
+        <div class="metric-box accent-highlight" id="jokerBox">
+          <span class="metric-label">Jokers Globaux</span>
+          <span class="metric-val" id="jokersVal">0</span>
+          <span class="metric-sub" id="pitsLeftSub">0 arrêt restant</span>
         </div>
-
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Module Chrono & Arrêts</h2>
-            <span class="collapse-arrow">▼</span>
-          </div>
-          <div class="module-body">
-            <div class="input-group row-2">
-              <div>
-                <label for="startTime">Heure de départ</label>
-                <input type="time" id="startTime" onchange="calculateStint()">
-              </div>
-              <div>
-                <label for="totalHours">Durée course (h)</label>
-                <input type="number" id="totalHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="syncHoursChips(this.value); calculateStint();">
-              </div>
-            </div>
-
-            <div class="input-group">
-              <div class="preset-chips">
-                <button type="button" class="chip-btn" onclick="setHours(1)">1h</button>
-                <button type="button" class="chip-btn" onclick="setHours(2)">2h</button>
-                <button type="button" class="chip-btn" onclick="setHours(4)">4h</button>
-                <button type="button" class="chip-btn" onclick="setHours(6)">6h</button>
-                <button type="button" class="chip-btn" onclick="setHours(12)">12h</button>
-                <button type="button" class="chip-btn" onclick="setHours(24)">24h</button>
-              </div>
-            </div>
-
-            <div class="live-clock-box">
-              <div class="metric-label">Temps restant estimé</div>
-              <div class="live-countdown" id="liveRemClock">00:00:00</div>
-            </div>
-
-            <div class="input-group">
-              <label for="donePits">Arrêts déjà effectués</label>
-              <div class="pit-stepper">
-                <button type="button" class="btn-step" onclick="stepDonePits(-1)">−</button>
-                <input type="number" id="donePits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-                <button type="button" class="btn-step plus" onclick="stepDonePits(1)">+</button>
-              </div>
-            </div>
-          </div>
+        <div class="metric-box">
+          <span class="metric-label">Marge Globale</span>
+          <span class="metric-val" id="marginVal">0m 00s</span>
+          <span class="metric-sub">Avant stint max</span>
         </div>
+        <div class="metric-box">
+          <span class="metric-label">Stint Min. Immédiat</span>
+          <span class="metric-val" id="minNextVal">0m 00s</span>
+          <span class="metric-sub">Relais actuel</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Stint Moyen Requis</span>
+          <span class="metric-val" id="minAvgVal">0m 00s</span>
+          <span class="metric-sub">Avant fermeture pits</span>
+        </div>
+      </div>
 
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Module Règlement</h2>
-            <span class="collapse-arrow">▼</span>
+      <!-- SIMULATEUR : ET SI ON S'ARRÊTE MAINTENANT ? -->
+      <div class="module-card whatif-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Et si on s'arrête maintenant ?</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="whatif-grid">
+            <div class="whatif-tile">
+              <span>Durée relais en cours</span>
+              <strong id="whatIfCurrentStint">0m 00s</strong>
+            </div>
+            <div class="whatif-tile">
+              <span>Jokers après cet arrêt</span>
+              <strong id="whatIfJokersAfter">—</strong>
+            </div>
+            <div class="whatif-tile">
+              <span>Nouveau stint moyen</span>
+              <strong id="whatIfNewAvg">—</strong>
+            </div>
+            <div class="whatif-tile">
+              <span>Nouvelle marge globale</span>
+              <strong id="whatIfNewMargin">—</strong>
+            </div>
           </div>
-          <div class="module-body">
-            <div class="input-group row-3">
-              <div>
-                <label for="reqPits">Pits requis</label>
-                <input type="number" id="reqPits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="minStint">Min stint (m)</label>
-                <input type="number" id="minStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="maxStint">Max stint (m)</label>
-                <input type="number" id="maxStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-            </div>
 
-            <div class="input-group row-3">
-              <div>
-                <label for="pitMin">Arrêt pit (m)</label>
-                <input type="number" id="pitMin" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="pitSec">Arrêt pit (s)</label>
-                <input type="number" id="pitSec" value="0" min="0" max="59" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="pitOpen">Ouvert. après dép. (m)</label>
-                <input type="number" id="pitOpen" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-            </div>
+          <div class="whatif-verdict status-warning" id="whatIfVerdictBanner">
+            Renseigne l'heure de départ et le règlement pour simuler un arrêt immédiat.
+          </div>
 
-            <div class="input-group row-3">
-              <div>
-                <label for="pitClose">Fermet. avant arr. (m)</label>
-                <input type="number" id="pitClose" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="tranchePits">Tranche : X box</label>
-                <input type="number" id="tranchePits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
-              </div>
-              <div>
-                <label for="trancheHours">Dans X 1ères heures</label>
-                <input type="number" id="trancheHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="calculateStint()">
-              </div>
-            </div>
+          <button type="button" class="btn-primary-action" onclick="recordPitStopNow()">
+            🛑 Enregistrer un arrêt maintenant (avec heure)
+          </button>
+        </div>
+      </div>
 
-            <button type="button" class="btn-primary-action" id="copyBtn" onclick="copyStrategySummary()">
-              📋 Copier le point stratégie équipe
+      <!-- CHRONO & DÉPART -->
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Chrono & Départ</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="input-group">
+            <button type="button" class="btn-launch-now" onclick="launchRaceNow()">
+              🚀 Lancer maintenant (fixer l'heure de départ)
             </button>
+          </div>
+
+          <div class="input-group row-2">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="startTime">Heure départ</label>
+                <span class="input-unit-pill">24h</span>
+              </div>
+              <input type="time" id="startTime" onchange="calculateStint()">
+            </div>
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="totalHours">Durée course</label>
+                <span class="input-unit-pill">h</span>
+              </div>
+              <input type="number" id="totalHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="syncHoursChips(this.value); calculateStint();">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="preset-chips">
+              <button type="button" class="chip-btn" onclick="setHours(1)">1h</button>
+              <button type="button" class="chip-btn" onclick="setHours(2)">2h</button>
+              <button type="button" class="chip-btn" onclick="setHours(4)">4h</button>
+              <button type="button" class="chip-btn" onclick="setHours(6)">6h</button>
+              <button type="button" class="chip-btn" onclick="setHours(12)">12h</button>
+              <button type="button" class="chip-btn" onclick="setHours(24)">24h</button>
+            </div>
+          </div>
+
+          <div class="live-clock-box">
+            <div class="metric-label">Temps restant estimé</div>
+            <div class="live-countdown" id="liveRemClock">00:00:00</div>
+          </div>
+
+          <div class="input-group">
+            <div class="pit-stepper">
+              <button type="button" class="btn-step" onclick="stepDonePits(-1)">−</button>
+              <div class="input-box" style="text-align:center;">
+                <div class="input-box-top" style="justify-content:center;">
+                  <label for="donePits">Arrêts effectués</label>
+                </div>
+                <input type="number" id="donePits" value="0" min="0" inputmode="numeric" style="text-align:center;" oninput="syncDonePitsCount(this.value)">
+              </div>
+              <button type="button" class="btn-step plus" onclick="stepDonePits(1)">+</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- PAGE 1 : QUICK CHANGE -->
-      <div class="pager-page" id="pageQuickChange">
-
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Flux Quick Change</h2>
-            <span class="collapse-arrow">▼</span>
-          </div>
-          <div class="module-body">
-
-            <div class="step-block">
-              <div class="step-badge">1. Numéro de l'équipe qui rentre</div>
-              <input type="text" id="qcTeamInput" list="qcTeamSuggestions" placeholder="Ex: 7, 14, 22..." oninput="renderQuickChange()">
-              <datalist id="qcTeamSuggestions"></datalist>
+      <!-- HISTORIQUE DES ARRÊTS AUX STANDS -->
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Historique & Heures des Box (Dernier en haut)</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div id="pitHistoryContainer" class="pit-history-list">
+            <div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">
+              Aucun arrêt enregistré. Utilise « + » ou « Enregistrer un arrêt maintenant ».
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="step-block">
-              <div class="step-badge">2. Où elle box</div>
-              <div class="three-way-btns">
-                <button type="button" class="pos-btn selected" id="entryBtnLeft" onclick="setBoxSide('left')">
+      <!-- MODULE RÈGLEMENT DÉVELOPPÉ -->
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Paramètres du règlement</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+
+          <div class="reg-section-block">
+            <div class="reg-section-label">1. Quota d'arrêts & durées de relais</div>
+            <div class="reg-stack">
+              <div class="reg-row-card">
+                <div class="reg-row-info">
+                  <label class="reg-row-title" for="reqPits">Arrêts obligatoires (Pits requis)</label>
+                  <span class="reg-row-desc">Nombre total de passages aux stands imposés sur la course</span>
+                </div>
+                <div class="reg-control-group">
+                  <div class="reg-input-wrap">
+                    <input type="number" id="reqPits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                    <span class="reg-unit-tag">box</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reg-row-card">
+                <div class="reg-row-info">
+                  <label class="reg-row-title" for="minStint">Durée minimale d'un relais (Stint min)</label>
+                  <span class="reg-row-desc">Temps minimum en piste avant qu'un arrêt soit validé</span>
+                </div>
+                <div class="reg-control-group">
+                  <div class="reg-input-wrap">
+                    <input type="number" id="minStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                    <span class="reg-unit-tag">min</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reg-row-card">
+                <div class="reg-row-info">
+                  <label class="reg-row-title" for="maxStint">Durée maximale d'un relais (Stint max)</label>
+                  <span class="reg-row-desc">Plafond par relais : détermine les jokers et la marge globale</span>
+                </div>
+                <div class="reg-control-group">
+                  <div class="reg-input-wrap">
+                    <input type="number" id="maxStint" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                    <span class="reg-unit-tag">min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reg-section-block">
+            <div class="reg-section-label">2. Durée forfaitaire d'un arrêt aux stands</div>
+            <div class="reg-split-2">
+              <div class="reg-split-card">
+                <label class="reg-row-title" for="pitMin">Minutes d'arrêt</label>
+                <span class="reg-row-desc">Temps passé dans la voie des stands</span>
+                <div class="reg-split-input-box">
+                  <input type="number" id="pitMin" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                  <span class="reg-unit-tag">min</span>
+                </div>
+              </div>
+              <div class="reg-split-card">
+                <label class="reg-row-title" for="pitSec">Secondes d'arrêt</label>
+                <span class="reg-row-desc">Complément en secondes (0–59)</span>
+                <div class="reg-split-input-box">
+                  <input type="number" id="pitSec" value="0" min="0" max="59" inputmode="numeric" oninput="calculateStint()">
+                  <span class="reg-unit-tag">sec</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reg-section-block">
+            <div class="reg-section-label">3. Fenêtre d'ouverture & fermeture des stands</div>
+            <div class="reg-stack">
+              <div class="reg-row-card">
+                <div class="reg-row-info">
+                  <label class="reg-row-title" for="pitOpen">Ouverture des stands après le départ</label>
+                  <span class="reg-row-desc">Délai de course avant autorisation du premier arrêt</span>
+                </div>
+                <div class="reg-control-group">
+                  <div class="reg-input-wrap">
+                    <input type="number" id="pitOpen" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                    <span class="reg-unit-tag">min</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reg-row-card">
+                <div class="reg-row-info">
+                  <label class="reg-row-title" for="pitClose">Fermeture des stands avant l'arrivée</label>
+                  <span class="reg-row-desc">Dernières minutes de course où les stands sont fermés</span>
+                </div>
+                <div class="reg-control-group">
+                  <div class="reg-input-wrap">
+                    <input type="number" id="pitClose" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                    <span class="reg-unit-tag">min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reg-section-block">
+            <div class="reg-section-label">4. Quota intermédiaire par tranche horaire (optionnel)</div>
+            <div class="reg-split-2">
+              <div class="reg-split-card">
+                <label class="reg-row-title" for="tranchePits">Arrêts dans la tranche</label>
+                <span class="reg-row-desc">Nombre de box exigés sur la période</span>
+                <div class="reg-split-input-box">
+                  <input type="number" id="tranchePits" value="0" min="0" inputmode="numeric" oninput="calculateStint()">
+                  <span class="reg-unit-tag">box</span>
+                </div>
+              </div>
+              <div class="reg-split-card">
+                <label class="reg-row-title" for="trancheHours">Sur les X premières heures</label>
+                <span class="reg-row-desc">Fenêtre horaire depuis le départ</span>
+                <div class="reg-split-input-box">
+                  <input type="number" id="trancheHours" value="0" step="0.5" min="0" inputmode="decimal" oninput="calculateStint()">
+                  <span class="reg-unit-tag">h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-primary-action" id="copyBtn" onclick="copyStrategySummary()">
+            📋 Copier le point stratégie équipe
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 1 : QUICK CHANGE STRATKART + SEUILS VERDICT + COULEURS LIGNES -->
+    <div class="tab-page hidden" id="pageQuickChange">
+
+      <div class="verdict-threshold-card">
+        <div class="vt-header">
+          <div>
+            <h2 class="vt-title">Seuils du verdict Q&C</h2>
+            <div class="vt-summary" id="vtHeaderSummary">BON ≤ +0,5 s · MOYEN ≤ +1,5 s · MAUVAIS ≤ +3,0 s</div>
+          </div>
+        </div>
+        <p class="vt-sub">Écart vs les meilleurs du plateau. Modifiable à tout moment en course.</p>
+
+        <div class="vt-row">
+          <span class="vt-label-good">BON</span>
+          <input type="range" id="threshGoodSlider" class="vt-slider" min="0.1" max="1.5" step="0.1" value="0.5" oninput="onVerdictThresholdsChange()">
+          <span class="vt-pill-val good" id="threshGoodPill">≤ +0,5 s</span>
+        </div>
+
+        <div class="vt-row">
+          <span class="vt-label-mid">MOYEN</span>
+          <input type="range" id="threshMidSlider" class="vt-slider mid" min="0.6" max="3.0" step="0.1" value="1.5" oninput="onVerdictThresholdsChange()">
+          <span class="vt-pill-val mid" id="threshMidPill">≤ +1,5 s</span>
+        </div>
+
+        <div class="vt-row">
+          <span class="vt-label-bad">MAUVAIS</span>
+          <input type="range" id="threshBadSlider" class="vt-slider bad" min="1.5" max="6.0" step="0.1" value="3.0" oninput="onVerdictThresholdsChange()">
+          <span class="vt-pill-val bad" id="threshBadPill">≤ +3,0 s</span>
+        </div>
+
+        <div class="vt-poor-line" id="threshPoorLine">
+          <span>🔴</span>
+          <span id="threshPoorText">POURRI &gt; +3,0 s</span>
+          <span>💀</span>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Flux Quick Change (Clic Entrée)</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+
+          <div class="step-block">
+            <div class="step-badge">1. Équipe & pilote qui rentrent</div>
+            <div class="row-2" style="gap:8px;">
+              <div class="input-box" style="background:var(--card-bg);margin-bottom:0;">
+                <div class="input-box-top">
+                  <label for="qcTeamInput">N° Équipe / Kart</label>
+                  <span class="input-unit-pill">#</span>
+                </div>
+                <input type="text" id="qcTeamInput" list="qcTeamSuggestions" placeholder="Ex: 7, 14..." oninput="renderQuickChange()">
+              </div>
+              <div class="input-box" style="background:var(--card-bg);margin-bottom:0;">
+                <div class="input-box-top">
+                  <label for="qcDriverInput">Pilote (opt.)</label>
+                  <span class="input-unit-pill">PIL</span>
+                </div>
+                <input type="text" id="qcDriverInput" list="qcDriverSuggestions" placeholder="Ex: Enzo, Max..." oninput="saveAll()">
+              </div>
+            </div>
+            <datalist id="qcTeamSuggestions"></datalist>
+            <datalist id="qcDriverSuggestions"></datalist>
+          </div>
+
+          <div class="step-block">
+            <div class="step-badge">2. Clique sur la colonne où rentre le kart</div>
+            <div class="three-way-btns">
+              <button type="button" class="entry-click-btn selected" id="entryBtnLeft" onclick="quickClickEntry('left')">
+                ⬅️ Entrée Gauche
+              </button>
+              <button type="button" class="entry-click-btn" id="entryBtnMid" onclick="quickClickEntry('mid')">
+                ⏺️ Entrée Milieu
+              </button>
+              <button type="button" class="entry-click-btn" id="entryBtnRight" onclick="quickClickEntry('right')">
+                ➡️ Entrée Droite
+              </button>
+            </div>
+          </div>
+
+          <div class="step-block">
+            <div class="step-badge">3. Côté de sortie</div>
+            <label class="toggle-option-row" for="customExitToggle">
+              <div class="toggle-option-text">
+                <strong>Choisir un côté de sortie différent</strong>
+                <span id="exitModeHint">Désactivé : repart du même côté où elle box</span>
+              </div>
+              <input type="checkbox" id="customExitToggle" class="sr-switch" onchange="toggleCustomExitOption()">
+              <span class="switch-pill"></span>
+            </label>
+
+            <div class="exit-extra-panel hidden" id="customExitPanel">
+              <label style="margin-bottom:6px;display:block;font-size:0.72rem;color:var(--text-muted);font-weight:700;">Côté où elle ressort :</label>
+              <div class="three-way-btns" style="margin-bottom:10px;">
+                <button type="button" class="pos-btn selected" id="exitBtnLeft" onclick="setExitSide('left')">
                   ⬅️ Gauche
                 </button>
-                <button type="button" class="pos-btn" id="entryBtnMid" onclick="setBoxSide('mid')">
+                <button type="button" class="pos-btn" id="exitBtnMid" onclick="setExitSide('mid')">
                   ⏺️ Milieu
                 </button>
-                <button type="button" class="pos-btn" id="entryBtnRight" onclick="setBoxSide('right')">
+                <button type="button" class="pos-btn" id="exitBtnRight" onclick="setExitSide('right')">
                   ➡️ Droite
                 </button>
               </div>
-            </div>
 
-            <div class="step-block">
-              <div class="step-badge">3. Côté de sortie</div>
-              <label class="toggle-option-row" for="customExitToggle">
-                <div class="toggle-option-text">
-                  <strong>Choisir un côté de sortie différent</strong>
-                  <span id="exitModeHint">Désactivé : repart du même côté où elle box</span>
+              <div class="input-box" style="background:var(--card-bg);">
+                <div class="input-box-top">
+                  <label for="qcExitRowSelect">Ligne de sortie</label>
+                  <span class="input-unit-pill">pos</span>
                 </div>
-                <input type="checkbox" id="customExitToggle" class="sr-switch" onchange="toggleCustomExitOption()">
-                <span class="switch-pill"></span>
-              </label>
-
-              <div class="exit-extra-panel hidden" id="customExitPanel">
-                <label style="margin-bottom:6px;">Côté où elle ressort :</label>
-                <div class="three-way-btns" style="margin-bottom:10px;">
-                  <button type="button" class="pos-btn selected" id="exitBtnLeft" onclick="setExitSide('left')">
-                    ⬅️ Gauche
-                  </button>
-                  <button type="button" class="pos-btn" id="exitBtnMid" onclick="setExitSide('mid')">
-                    ⏺️ Milieu
-                  </button>
-                  <button type="button" class="pos-btn" id="exitBtnRight" onclick="setExitSide('right')">
-                    ➡️ Droite
-                  </button>
-                </div>
-
-                <label for="qcExitRowSelect">Ligne (position) dans la colonne de sortie</label>
                 <select id="qcExitRowSelect" onchange="renderQuickChange()"></select>
               </div>
             </div>
-
-            <div class="qc-summary-line" id="qcFlowSummary"></div>
-
-            <button type="button" class="btn-primary-action" onclick="validateTeamQuickChange()">
-              ⚡ Valider le passage aux stands
-            </button>
           </div>
+
+          <div class="qc-summary-line" id="qcFlowSummary"></div>
         </div>
-
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Colonnes & Karts</h2>
-            <span class="collapse-arrow">▼</span>
-          </div>
-          <div class="module-body">
-            <div class="input-group row-2">
-              <div>
-                <label for="qcNumLanes">Nombre de colonnes</label>
-                <input type="number" id="qcNumLanes" value="3" min="1" max="6" inputmode="numeric" oninput="onQcSizeChange()">
-              </div>
-              <div>
-                <label for="qcKartsPerLane">Karts initiaux / col.</label>
-                <input type="number" id="qcKartsPerLane" value="3" min="0" max="15" inputmode="numeric" oninput="onQcSizeChange()">
-              </div>
-            </div>
-            <button type="button" class="btn-secondary-light" onclick="regenerateOffCodes()">
-              🎲 Régénérer IDs internes (en off)
-            </button>
-          </div>
-        </div>
-
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Karts (Drag & Drop)</h2>
-            <span class="collapse-arrow">▼</span>
-          </div>
-          <div class="module-body">
-            <div class="qc-lanes-grid" id="qcLanesContainer"></div>
-          </div>
-        </div>
-
-        <div class="module-card">
-          <div class="module-header" onclick="toggleModule(this)">
-            <h2 class="module-title"><span class="accent-dot"></span> Historique Quick Change</h2>
-            <span class="collapse-arrow">▼</span>
-          </div>
-          <div class="module-body" id="qcActivityLog">
-            <div style="font-size:0.74rem;color:var(--text-muted);">Aucun passage enregistré.</div>
-          </div>
-        </div>
-
       </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Colonnes, Karts & Couleurs des Lignes</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="input-group row-2">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="qcNumLanes">Colonnes</label>
+                <span class="input-unit-pill">col</span>
+              </div>
+              <input type="number" id="qcNumLanes" value="3" min="1" max="6" inputmode="numeric" oninput="onQcSizeChange()">
+            </div>
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="qcKartsPerLane">Lignes / col.</label>
+                <span class="input-unit-pill">lignes</span>
+              </div>
+              <input type="number" id="qcKartsPerLane" value="3" min="0" max="15" inputmode="numeric" oninput="onQcSizeChange()">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="reg-section-label">Couleur par ligne (Bleu, Rouge, Blanc, Vert, Orange...)</div>
+            <div class="row-color-grid" id="rowColorConfigGrid"></div>
+          </div>
+
+          <button type="button" class="btn-secondary-light" onclick="regenerateOffCodes()">
+            🎲 Régénérer IDs internes (en off)
+          </button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Grille Karts Stratkart (Drag & Drop)</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="stratkart-banner">
+            <span>⚡ Score /100, Verdict Écart & Potentiel Kart</span>
+            <span class="stratkart-pill" id="bestKartBadge">Meilleur : —</span>
+          </div>
+          <div class="qc-lanes-grid" id="qcLanesContainer"></div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Historique Quick Change & Alertes Rythme</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body" id="qcActivityLog">
+          <div style="font-size:0.74rem;color:var(--text-muted);">Aucun passage enregistré.</div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- PAGE 2 : CLASSEMENT APEX TIMING EN DIRECT -->
+    <div class="tab-page hidden" id="pageStandings">
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Connexion Classement Apex Timing</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="live-status-bar">
+            <div>
+              <span class="live-dot" id="apexStatusDot"></span>
+              <span id="apexStatusText">Colle le lien Apex puis lance Auto</span>
+            </div>
+            <span id="apexRefInfo" style="font-family:var(--font-mono);color:var(--accent);">Réf: —</span>
+          </div>
+
+          <div class="input-group">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="apexLinkInput">Lien Apex Timing Live ou JSON</label>
+                <span class="input-unit-pill">URL</span>
+              </div>
+              <input type="url" id="apexLinkInput" placeholder="https://... (Apex Timing live ou JSON)" oninput="saveAll()">
+            </div>
+          </div>
+
+          <div class="input-group row-2">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="pollIntervalSec">Actualisation</label>
+                <span class="input-unit-pill">sec</span>
+              </div>
+              <input type="number" id="pollIntervalSec" value="3" min="1" max="30" inputmode="numeric" oninput="restartAutoIfActive(); saveAll();">
+            </div>
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="apexFilterInput">Filtrer kart / pilote</label>
+                <span class="input-unit-pill">🔍</span>
+              </div>
+              <input type="text" id="apexFilterInput" placeholder="Ex: 7 ou Enzo..." oninput="renderStandingsTab()">
+            </div>
+          </div>
+
+          <div class="input-group row-2">
+            <button type="button" class="btn-secondary-light" id="autoApexBtn" onclick="toggleAutoFromLink()">
+              ▶ Auto : OFF
+            </button>
+            <button type="button" class="btn-secondary-light" onclick="syncFromApexLinkOnce()">
+              ⚡ Lire maintenant
+            </button>
+          </div>
+
+          <div class="input-group">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="manualApexJson">Import JSON Apex / Télémétrie (optionnel)</label>
+                <span class="input-unit-pill">JSON</span>
+              </div>
+              <textarea id="manualApexJson" placeholder='[{"kart":"7","driver":"Enzo","last_lap":62.45,"laps":[62.9,62.6,62.45]}]' oninput="importJsonFromTextarea()"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Classement en Direct</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="standings-table-wrap">
+            <table class="standings-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Kart / Pilote</th>
+                  <th>Dernier</th>
+                  <th>Moy.</th>
+                  <th>Écart</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="standingsTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center;color:var(--text-muted);padding:16px;">
+                    Aucune donnée live chargée. Connecte un lien Apex, importe un JSON ou ajoute des chronos dans Quick Change.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE 3 : COMPARE -->
+    <div class="tab-page hidden" id="pageCompare">
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Karts à comparer (Max 5)</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="compare-slots-grid">
+            <div class="input-box">
+              <div class="input-box-top"><label for="cmpSlot0">#1</label></div>
+              <select id="cmpSlot0" onchange="onCompareSelectionChange()"></select>
+            </div>
+            <div class="input-box">
+              <div class="input-box-top"><label for="cmpSlot1">#2</label></div>
+              <select id="cmpSlot1" onchange="onCompareSelectionChange()"></select>
+            </div>
+            <div class="input-box">
+              <div class="input-box-top"><label for="cmpSlot2">#3</label></div>
+              <select id="cmpSlot2" onchange="onCompareSelectionChange()"></select>
+            </div>
+            <div class="input-box">
+              <div class="input-box-top"><label for="cmpSlot3">#4</label></div>
+              <select id="cmpSlot3" onchange="onCompareSelectionChange()"></select>
+            </div>
+            <div class="input-box compare-slot-5">
+              <div class="input-box-top"><label for="cmpSlot4">#5</label></div>
+              <select id="cmpSlot4" onchange="onCompareSelectionChange()"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Fenêtre de tours valides</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="input-box" style="margin-bottom:8px;">
+            <div class="input-box-top">
+              <label for="compareLapCountInput">Nb derniers tours valides</label>
+              <span class="input-unit-pill">tours</span>
+            </div>
+            <input type="number" id="compareLapCountInput" value="10" min="1" max="100" inputmode="numeric" oninput="syncCompareLapChips(); renderCompareTab(); saveAll();">
+          </div>
+
+          <div class="lap-count-chips">
+            <button type="button" class="lap-chip-btn active" onclick="setCompareLapCount(10)">10</button>
+            <button type="button" class="lap-chip-btn" onclick="setCompareLapCount(15)">15</button>
+            <button type="button" class="lap-chip-btn" onclick="setCompareLapCount(20)">20</button>
+            <button type="button" class="lap-chip-btn" onclick="setCompareLapCount(30)">30</button>
+            <button type="button" class="lap-chip-btn" onclick="setCompareLapCount(50)">50</button>
+          </div>
+
+          <p class="compare-rule-note">
+            On remonte jusqu'à trouver N tours valides (peut chevaucher plusieurs relais). Les 2 premiers tours après chaque pit + inlap (entrée pit) sont exclus automatiquement.
+          </p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Comparatif & Écarts</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="standings-table-wrap">
+            <table class="standings-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Kart / Pilote</th>
+                  <th>Tours</th>
+                  <th>Dernier</th>
+                  <th>Moy.</th>
+                  <th>Écart</th>
+                </tr>
+              </thead>
+              <tbody id="compareTableBody">
+                <tr>
+                  <td colspan="6" style="text-align:center;color:var(--text-muted);padding:14px;">
+                    Sélectionne au moins une équipe ci-dessus pour comparer.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE 4 : TRACK MAP & SUIVI KARTS PAR CIRCUIT -->
+    <div class="tab-page hidden" id="pageTrackMap">
+
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Choix du circuit & kart suivi</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="input-group row-2">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="trackCircuitSelect">Circuit</label>
+                <span class="input-unit-pill">MAP</span>
+              </div>
+              <select id="trackCircuitSelect" onchange="onCircuitChange()">
+                <option value="brignoles">Brignoles Karting Loisirs</option>
+                <option value="paul_ricard">Karting Circuit Paul Ricard (964 m)</option>
+                <option value="le_luc">Circuit du Luc</option>
+                <option value="ales">Pôle Mécanique Alès</option>
+                <option value="laval">12H de Laval</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="trackedFocusKartSelect">Kart ciblé (Vue Pilote)</label>
+                <span class="input-unit-pill">CAM</span>
+              </div>
+              <select id="trackedFocusKartSelect" onchange="onTrackedFocusChange()"></select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-box">
+              <div class="input-box-top">
+                <label for="trackProgressionSlider">Progression manuelle du kart ciblé sur le circuit</label>
+                <span class="input-unit-pill" id="trackProgPctLabel">0%</span>
+              </div>
+              <input type="range" id="trackProgressionSlider" min="0" max="100" step="1" value="15" oninput="onManualTrackProgress(this.value)">
+            </div>
+          </div>
+
+          <div class="input-group row-2">
+            <button type="button" class="btn-secondary-light" id="trackSimBtn" onclick="toggleTrackSimulation()">
+              ▶ Simulation piste : OFF
+            </button>
+            <button type="button" class="btn-secondary-light" onclick="promptAddTrackedKart()">
+              + Ajouter / positionner un kart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACK MAP & MINI-CARTE -->
+      <div class="track-stage-card">
+        <div class="track-stage-top">
+          <div>
+            <h2 class="track-circuit-name" id="trackCircuitTitle">Brignoles Karting Loisirs</h2>
+            <div class="track-circuit-meta" id="trackCircuitSubtitle">Tracé karting • Sens horaire • Ligne de départ/arrivée</div>
+          </div>
+          <span class="stratkart-pill" id="trackActiveCountBadge">0 kart</span>
+        </div>
+
+        <div class="track-svg-wrap">
+          <svg id="trackMapSvg" viewBox="0 0 520 230" preserveAspectRatio="xMidYMid meet">
+            <path id="trackOutlinePath" d="" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="trackAsphaltPath" d="" fill="none" stroke="#334155" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="trackCenterLine" d="" fill="none" stroke="rgba(248,250,252,0.35)" stroke-width="1.5" stroke-dasharray="5 6" stroke-linecap="round" stroke-linejoin="round" />
+            <g id="trackStartLineGroup"></g>
+            <g id="trackKartsLayer"></g>
+          </svg>
+        </div>
+
+        <div class="cockpit-hud-bar">
+          <div class="hud-mini-box">
+            <span>Kart Ciblé</span>
+            <strong id="hudTargetKart">—</strong>
+          </div>
+          <div class="hud-mini-box">
+            <span>Chrono Tour</span>
+            <strong id="hudTargetLap">—</strong>
+          </div>
+          <div class="hud-mini-box">
+            <span>Écart Devant / Derrière</span>
+            <strong id="hudTargetGap">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- LISTE DES KARTS SUIVIS SUR LE CIRCUIT -->
+      <div class="module-card">
+        <div class="module-header" onclick="toggleModule(this)">
+          <h2 class="module-title"><span class="accent-dot"></span> Karts sur le tracé</h2>
+          <span class="collapse-arrow">▼</span>
+        </div>
+        <div class="module-body">
+          <div class="tracked-karts-list" id="trackedKartsList">
+            <div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">
+              Aucun kart positionné. Clique sur « + Ajouter / positionner un kart » ou ajoute un kart dans Quick Change / Classement.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
 
 <script>
+const TOTAL_TABS = 5;
 let currentTab = 0;
-let nightMode = false;
+let soundAlertEnabled = true;
+let resetArmed = false;
+let resetTimer = null;
+let lastKnownJokers = null;
+let dismissedAlertState = null;
+let splashFinished = false;
 const internalCodesSet = new Set();
+
+const ROW_COLOR_OPTIONS = [
+  { id: 'blue',   label: 'Bleu',   hex: '#2563eb' },
+  { id: 'red',    label: 'Rouge',  hex: '#dc2626' },
+  { id: 'white',  label: 'Blanc',  hex: '#f8fafc' },
+  { id: 'green',  label: 'Vert',   hex: '#16a34a' },
+  { id: 'orange', label: 'Orange', hex: '#ea580c' },
+  { id: 'yellow', label: 'Jaune',  hex: '#eab308' },
+  { id: 'purple', label: 'Violet', hex: '#7c3aed' },
+  { id: 'cyan',   label: 'Cyan',   hex: '#0891b2' }
+];
+
+const CIRCUITS_DATA = {
+  brignoles: {
+    name: 'Brignoles Karting Loisirs',
+    meta: 'Provence • Tracé technique endurance • SWS',
+    pathD: 'M 95,165 C 55,165 50,95 95,70 L 185,55 C 225,48 235,95 275,92 C 325,88 335,45 395,52 C 455,58 465,125 425,155 C 385,185 335,135 285,155 C 245,172 215,185 165,172 Z',
+    startPos: { x: 145, y: 168, angle: 0 }
+  },
+  paul_ricard: {
+    name: 'Karting Circuit Paul Ricard (964 m)',
+    meta: 'Le Castellet • Configuration 964 m • Virages rapides',
+    pathD: 'M 80,150 L 190,150 C 230,150 235,70 285,62 L 415,48 C 455,45 468,105 435,135 L 365,175 C 325,195 285,130 230,175 C 185,205 110,192 80,150 Z',
+    startPos: { x: 135, y: 150, angle: 0 }
+  },
+  le_luc: {
+    name: 'Circuit du Luc',
+    meta: 'Var • Enchaînement fluide & freinages appuyés',
+    pathD: 'M 85,65 L 410,65 C 455,65 460,120 415,135 L 250,145 C 210,148 215,182 170,182 L 95,182 C 55,182 55,65 85,65 Z',
+    startPos: { x: 165, y: 65, angle: 0 }
+  },
+  ales: {
+    name: 'Pôle Mécanique Alès',
+    meta: 'Gard • Développé karting & relances',
+    pathD: 'M 90,170 L 140,65 C 155,42 205,45 220,75 L 265,165 C 280,188 330,185 345,155 L 415,65 C 445,42 475,90 445,145 L 395,188 L 90,170 Z',
+    startPos: { x: 150, y: 170, angle: 0 }
+  },
+  laval: {
+    name: '12H de Laval',
+    meta: 'Mayenne • Endurance • Épingles & courbes rapides',
+    pathD: 'M 85,160 C 50,155 52,55 115,52 L 245,52 C 285,52 275,115 320,115 L 420,115 C 460,115 462,175 415,180 L 210,180 C 175,180 175,130 135,160 Z',
+    startPos: { x: 140, y: 180, angle: 0 }
+  }
+};
 
 let dragSrc = null;
 let touchDragKart = null;
+let apexTimer = null;
+let apexAutoActive = false;
+let apexLiveMap = {};
+let pitStops = [];
+let trackSimTimer = null;
+let trackSimActive = false;
 
 let qcState = {
   numLanes: 3,
@@ -1221,7 +2954,15 @@ let qcState = {
   boxSide: 'left',
   customExitEnabled: false,
   exitSide: 'left',
+  thresholds: { good: 0.5, mid: 1.5, bad: 3.0 },
+  rowColors: ['blue', 'red', 'white'],
+  compareSlots: ['', '', '', '', ''],
+  compareLapCount: 10,
+  circuitId: 'brignoles',
+  focusKart: '',
+  trackPositions: {}, // { [kartNum]: progress0To100 }
   knownTeams: [],
+  knownDrivers: [],
   lanes: [],
   logs: []
 };
@@ -1246,101 +2987,195 @@ function createKartObj() {
     offCode: generateOffCode(),
     used: false,
     teamNumber: '',
+    driverName: '',
     pickedAtMs: null,
-    stintDurationsMin: []
+    stintDurationsMin: [],
+    liveLapSec: null,
+    baselineLapSec: null,
+    highPotential: false
   };
+}
+
+function playJokerBeep(mode) {
+  if (!soundAlertEnabled) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = mode === 'zero'
+      ? [
+          { offset: 0, freq: 980, dur: 0.16 },
+          { offset: 0.2, freq: 980, dur: 0.16 },
+          { offset: 0.4, freq: 1180, dur: 0.22 }
+        ]
+      : [
+          { offset: 0, freq: 740, dur: 0.16 },
+          { offset: 0.22, freq: 740, dur: 0.16 }
+        ];
+
+    notes.forEach((n) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = mode === 'zero' ? 'sawtooth' : 'triangle';
+      osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.offset);
+      gain.gain.setValueAtTime(mode === 'zero' ? 0.12 : 0.14, ctx.currentTime + n.offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.offset + n.dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + n.offset);
+      osc.stop(ctx.currentTime + n.offset + n.dur + 0.02);
+    });
+  } catch (e) {}
+}
+
+function triggerFullscreenJokerAlert(mode, minNextText, marginText) {
+  if (!splashFinished) return;
+  if (dismissedAlertState === mode) return;
+
+  const overlay = document.getElementById('fullscreen-joker-alert');
+  if (!overlay) return;
+
+  overlay.classList.remove('hidden', 'mode-one', 'mode-zero');
+  if (mode === 'zero') {
+    overlay.classList.add('mode-zero');
+    document.getElementById('fsAlertTag').innerText = 'CRITICAL-00 // ZÉRO JOKER';
+    document.getElementById('fsAlertCount').innerText = '0 JOKER';
+    document.getElementById('fsAlertTitle').innerText = 'Aucune marge d\'erreur restante';
+    document.getElementById('fsAlertDesc').innerText =
+      'Le dernier joker est consommé. Chaque relais doit respecter les fenêtres de stands et les plafonds pour éviter toute pénalité.';
+  } else {
+    overlay.classList.add('mode-one');
+    document.getElementById('fsAlertTag').innerText = 'WARNING-01 // DERNIER JOKER';
+    document.getElementById('fsAlertCount').innerText = '1 JOKER';
+    document.getElementById('fsAlertTitle').innerText = 'Plus qu\'un seul joker disponible';
+    document.getElementById('fsAlertDesc').innerText =
+      'La stratégie n\'autorise plus qu\'un seul joker sur le reste de la course. Anticipe le prochain arrêt et surveille la marge globale.';
+  }
+
+  document.getElementById('fsAlertMinNext').innerText = minNextText;
+  document.getElementById('fsAlertMargin').innerText = marginText;
+}
+
+function hideFullscreenJokerAlert() {
+  const overlay = document.getElementById('fullscreen-joker-alert');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+function acknowledgeFullscreenJokerAlert() {
+  const overlay = document.getElementById('fullscreen-joker-alert');
+  if (overlay?.classList.contains('mode-zero')) {
+    dismissedAlertState = 'zero';
+  } else if (overlay?.classList.contains('mode-one')) {
+    dismissedAlertState = 'one';
+  }
+  hideFullscreenJokerAlert();
+}
+
+function syncHeaderUtilityUI() {
+  const sBtn = document.getElementById('soundBtn');
+  const sIcon = document.getElementById('soundIcon');
+  const sLabel = document.getElementById('soundLabel');
+  if (sBtn && sIcon && sLabel) {
+    sBtn.classList.toggle('active', soundAlertEnabled);
+    sBtn.classList.toggle('muted-state', !soundAlertEnabled);
+    sIcon.innerText = soundAlertEnabled ? '🔔' : '🔕';
+    sLabel.innerText = soundAlertEnabled ? 'Sonnerie ON' : 'Sonnerie OFF';
+  }
+}
+
+function toggleSoundAlert() {
+  soundAlertEnabled = !soundAlertEnabled;
+  syncHeaderUtilityUI();
+  saveAll();
+}
+
+function setSplashProgress(pct, statusText) {
+  const fill = document.getElementById('splashFill');
+  const pctEl = document.getElementById('splashPct');
+  const statusEl = document.getElementById('splashStatus');
+  if (fill) fill.style.width = `${pct}%`;
+  if (pctEl) pctEl.innerText = `${pct}%`;
+  if (statusEl && statusText) statusEl.innerText = statusText;
 }
 
 function runSplash() {
   const lights = [1, 2, 3, 4, 5].map(i => document.getElementById('rl' + i));
-  const fill = document.getElementById('splashFill');
   const overlay = document.getElementById('splash-overlay');
 
-  lights.forEach((el, idx) => {
+  const steps = [
+    { delay: 140, lightIdx: 0, pct: 20, msg: 'Calibrage fenêtre des stands...' },
+    { delay: 300, lightIdx: 1, pct: 42, msg: 'Chargement historique des box...' },
+    { delay: 460, lightIdx: 2, pct: 64, msg: 'Initialisation Quick Change & Classement...' },
+    { delay: 620, lightIdx: 3, pct: 82, msg: 'Chargement Track Map & Comparateur...' },
+    { delay: 780, lightIdx: 4, pct: 95, msg: 'Grille verrouillée — Prêt' }
+  ];
+
+  steps.forEach((s) => {
     setTimeout(() => {
-      if (el) el.classList.add('lit-red');
-      if (fill) fill.style.width = `${(idx + 1) * 18}%`;
-    }, 140 + idx * 130);
+      if (lights[s.lightIdx]) lights[s.lightIdx].classList.add('lit-red');
+      setSplashProgress(s.pct, s.msg);
+    }, s.delay);
   });
 
   setTimeout(() => {
     lights.forEach(el => {
       if (el) { el.classList.remove('lit-red'); el.classList.add('lit-green'); }
     });
-    if (fill) fill.style.width = '100%';
-  }, 900);
+    setSplashProgress(100, 'FEUX VERTS — PIT-WALL ACTIF');
+  }, 1020);
 
-  setTimeout(() => { if (overlay) overlay.classList.add('splash-exit'); }, 1200);
-  setTimeout(() => { if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }, 1650);
+  setTimeout(() => {
+    splashFinished = true;
+    if (overlay) overlay.classList.add('splash-exit');
+    calculateStint();
+  }, 1340);
+
+  setTimeout(() => {
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+  }, 1920);
 }
+
+const PAGE_IDS = ['pageStint', 'pageQuickChange', 'pageStandings', 'pageCompare', 'pageTrackMap'];
+const TAB_BTN_IDS = ['tabBtnStint', 'tabBtnQuick', 'tabBtnRank', 'tabBtnCompare', 'tabBtnTrack'];
 
 function switchTab(tabIndex) {
-  currentTab = Math.max(0, Math.min(1, tabIndex));
-  document.getElementById('pagerTrack').style.transform = `translateX(-${currentTab * 50}%)`;
-  document.getElementById('tabBtnStint').classList.toggle('active', currentTab === 0);
-  document.getElementById('tabBtnQuick').classList.toggle('active', currentTab === 1);
-  saveAll();
-}
-
-function initSwipe() {
-  const viewport = document.getElementById('pagerViewport');
-  const track = document.getElementById('pagerTrack');
-  let startX = 0, startY = 0, deltaX = 0, isHorizontalSwipe = false, tracking = false;
-
-  viewport.addEventListener('touchstart', (e) => {
-    if (touchDragKart || e.touches.length !== 1) return;
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    deltaX = 0;
-    isHorizontalSwipe = false;
-    tracking = true;
-    track.classList.add('dragging');
-  }, { passive: true });
-
-  viewport.addEventListener('touchmove', (e) => {
-    if (touchDragKart || !tracking || e.touches.length !== 1) return;
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-
-    if (!isHorizontalSwipe && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
-      isHorizontalSwipe = Math.abs(dx) > Math.abs(dy) * 1.25;
-      if (!isHorizontalSwipe) {
-        tracking = false;
-        track.classList.remove('dragging');
-        return;
-      }
-    }
-
-    if (isHorizontalSwipe) {
-      deltaX = dx;
-      const basePercent = -currentTab * 50;
-      const dragPercent = (deltaX / viewport.clientWidth) * 50;
-      const clamped = Math.max(-58, Math.min(8, basePercent + dragPercent));
-      track.style.transform = `translateX(${clamped}%)`;
-    }
-  }, { passive: true });
-
-  viewport.addEventListener('touchend', () => {
-    if (!tracking) return;
-    tracking = false;
-    track.classList.remove('dragging');
-    if (isHorizontalSwipe && Math.abs(deltaX) > 65) {
-      if (deltaX < 0 && currentTab === 0) { switchTab(1); return; }
-      if (deltaX > 0 && currentTab === 1) { switchTab(0); return; }
-    }
-    switchTab(currentTab);
+  currentTab = Math.max(0, Math.min(TOTAL_TABS - 1, tabIndex));
+  PAGE_IDS.forEach((pageId, idx) => {
+    document.getElementById(pageId)?.classList.toggle('hidden', idx !== currentTab);
   });
+  TAB_BTN_IDS.forEach((btnId, idx) => {
+    document.getElementById(btnId)?.classList.toggle('active', idx === currentTab);
+  });
+
+  if (currentTab === 2) renderStandingsTab();
+  if (currentTab === 3) renderCompareTab();
+  if (currentTab === 4) renderTrackMapTab();
+  saveAll();
 }
 
 function toggleModule(headerEl) {
   headerEl.parentElement.classList.toggle('collapsed');
 }
 
-function toggleNightMode() {
-  nightMode = !nightMode;
-  document.body.classList.toggle('night-mode', nightMode);
-  document.getElementById('nightBtn').classList.toggle('active', nightMode);
-  saveAll();
+function handleResetClick() {
+  const btn = document.getElementById('resetBtn');
+  const label = document.getElementById('resetLabel');
+  if (!resetArmed) {
+    resetArmed = true;
+    btn.classList.add('reset-confirm');
+    label.innerText = 'Confirmer ?';
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      resetArmed = false;
+      btn.classList.remove('reset-confirm');
+      label.innerText = 'Reset';
+    }, 3000);
+    return;
+  }
+
+  resetArmed = false;
+  clearTimeout(resetTimer);
+  btn.classList.remove('reset-confirm');
+  label.innerText = 'Reset';
+  resetCurrentTab();
 }
 
 function resetCurrentTab() {
@@ -1349,16 +3184,44 @@ function resetCurrentTab() {
       document.getElementById(id).value = '0';
     });
     document.getElementById('startTime').value = '';
+    pitStops = [];
+    lastKnownJokers = null;
+    dismissedAlertState = null;
+    hideFullscreenJokerAlert();
     syncHoursChips(0);
+    renderPitStopsHistory();
     calculateStint();
+  } else if (currentTab === 4) {
+    qcState.trackPositions = {};
+    qcState.focusKart = '';
+    renderTrackMapTab();
+    saveAll();
   } else {
     internalCodesSet.clear();
+    apexLiveMap = {};
     qcState.logs = [];
     qcState.knownTeams = [];
+    qcState.knownDrivers = [];
+    qcState.compareSlots = ['', '', '', '', ''];
+    qcState.trackPositions = {};
     buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
     renderQuickChange();
+    renderStandingsTab();
+    renderCompareTab();
+    renderTrackMapTab();
     saveAll();
   }
+}
+
+function nowHHMM() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function launchRaceNow() {
+  document.getElementById('startTime').value = nowHHMM();
+  renderPitStopsHistory();
+  calculateStint();
 }
 
 function setHours(h) {
@@ -1376,8 +3239,136 @@ function syncHoursChips(val) {
 
 function stepDonePits(delta) {
   const el = document.getElementById('donePits');
-  el.value = Math.max(0, (parseInt(el.value || 0, 10) || 0) + delta);
+  const current = parseInt(el.value || 0, 10) || 0;
+  const next = Math.max(0, current + delta);
+  el.value = next;
+  syncDonePitsCount(next);
+}
+
+function syncDonePitsCount(val) {
+  const target = Math.max(0, parseInt(val || 0, 10) || 0);
+  while (pitStops.length < target) {
+    pitStops.push({ id: 'ps_' + Math.random().toString(36).slice(2, 8), timeStr: nowHHMM() });
+  }
+  while (pitStops.length > target) {
+    pitStops.pop();
+  }
+  renderPitStopsHistory();
   calculateStint();
+}
+
+function recordPitStopNow() {
+  const el = document.getElementById('donePits');
+  const next = (parseInt(el.value || 0, 10) || 0) + 1;
+  el.value = next;
+  pitStops.push({ id: 'ps_' + Math.random().toString(36).slice(2, 8), timeStr: nowHHMM() });
+  renderPitStopsHistory();
+  calculateStint();
+}
+
+function shiftPitStopMinutes(idx, deltaMin) {
+  const ps = pitStops[idx];
+  if (!ps || !ps.timeStr || !ps.timeStr.includes(':')) return;
+  const [h, m] = ps.timeStr.split(':').map(Number);
+  if (!isFinite(h) || !isFinite(m)) return;
+  let total = (h * 60 + m + deltaMin) % 1440;
+  if (total < 0) total += 1440;
+  const nh = Math.floor(total / 60);
+  const nm = total % 60;
+  ps.timeStr = `${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+  renderPitStopsHistory();
+  calculateStint();
+}
+
+function setPitStopNow(idx) {
+  if (!pitStops[idx]) return;
+  pitStops[idx].timeStr = nowHHMM();
+  renderPitStopsHistory();
+  calculateStint();
+}
+
+function updatePitStopTime(idx, newTime) {
+  if (!pitStops[idx] || !newTime) return;
+  pitStops[idx].timeStr = newTime;
+  renderPitStopsHistory();
+  calculateStint();
+}
+
+function deletePitStop(idx) {
+  if (!pitStops[idx]) return;
+  pitStops.splice(idx, 1);
+  document.getElementById('donePits').value = pitStops.length;
+  renderPitStopsHistory();
+  calculateStint();
+}
+
+function parseTimeToDateRelative(hhmm, baseStartDate) {
+  if (!hhmm || !hhmm.includes(':')) return null;
+  const [h, m] = hhmm.split(':').map(Number);
+  if (!isFinite(h) || !isFinite(m)) return null;
+  const ref = baseStartDate || new Date();
+  let d = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate(), h, m, 0, 0);
+  if (baseStartDate && d.getTime() < baseStartDate.getTime() - 3600000) {
+    d = new Date(d.getTime() + 86400000);
+  }
+  return d;
+}
+
+function renderPitStopsHistory() {
+  const container = document.getElementById('pitHistoryContainer');
+  if (!pitStops || pitStops.length === 0) {
+    container.innerHTML = `
+      <div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">
+        Aucun arrêt enregistré. Utilise « + » ou « Enregistrer un arrêt maintenant ».
+      </div>`;
+    return;
+  }
+
+  const timing = getCourseTiming();
+  const durByIdx = pitStops.map((ps, idx) => {
+    const prevDate = idx === 0
+      ? timing.startDate
+      : parseTimeToDateRelative(pitStops[idx - 1].timeStr, timing.startDate);
+    const curDate = parseTimeToDateRelative(ps.timeStr, timing.startDate);
+    if (prevDate && curDate) {
+      const diffMin = Math.max(0, (curDate.getTime() - prevDate.getTime()) / 60000);
+      return `Relais ${fmtMinSec(diffMin)}`;
+    }
+    return '—';
+  });
+
+  const reversedItems = [];
+  for (let idx = pitStops.length - 1; idx >= 0; idx--) {
+    const ps = pitStops[idx];
+    const isLatest = idx === pitStops.length - 1;
+    reversedItems.push(`
+      <div class="pit-stop-card ${isLatest ? 'latest-pit' : ''}">
+        <div class="pit-stop-top">
+          <div class="pit-stop-left">
+            <span class="pit-stop-badge">BOX #${idx + 1}${isLatest ? ' • DERNIER' : ''}</span>
+            <span class="pit-stop-clock-pill">${ps.timeStr}</span>
+          </div>
+          <span class="pit-stop-dur">${durByIdx[idx]}</span>
+        </div>
+
+        <div class="pit-stop-controls">
+          <button type="button" class="pit-adj-btn" onclick="shiftPitStopMinutes(${idx}, -5)">−5m</button>
+          <button type="button" class="pit-adj-btn" onclick="shiftPitStopMinutes(${idx}, -1)">−1m</button>
+          <button type="button" class="pit-adj-btn" onclick="shiftPitStopMinutes(${idx}, 1)">+1m</button>
+          <button type="button" class="pit-adj-btn" onclick="shiftPitStopMinutes(${idx}, 5)">+5m</button>
+          <button type="button" class="pit-now-btn" onclick="setPitStopNow(${idx})">Maintenant</button>
+          <button type="button" class="pit-del-btn" title="Supprimer" onclick="deletePitStop(${idx})">✕</button>
+        </div>
+
+        <div class="pit-exact-row">
+          <span>Heure précise :</span>
+          <input type="time" class="pit-exact-input" value="${ps.timeStr}" onchange="updatePitStopTime(${idx}, this.value)">
+        </div>
+      </div>
+    `);
+  }
+
+  container.innerHTML = reversedItems.join('');
 }
 
 function fmtMinSec(mins) {
@@ -1462,6 +3453,73 @@ function updateTrancheBoxUI(timing, P_done) {
   }
 }
 
+function updateWhatIfUI(timing, P_rem, S_min, S_max, P_dur, T_close_before_end) {
+  const curStintEl = document.getElementById('whatIfCurrentStint');
+  const jokersAfterEl = document.getElementById('whatIfJokersAfter');
+  const newAvgEl = document.getElementById('whatIfNewAvg');
+  const newMarginEl = document.getElementById('whatIfNewMargin');
+  const verdictEl = document.getElementById('whatIfVerdictBanner');
+
+  let lastReferenceDate = timing.startDate;
+  if (pitStops.length > 0) {
+    const lastStopDate = parseTimeToDateRelative(pitStops[pitStops.length - 1].timeStr, timing.startDate);
+    if (lastStopDate) lastReferenceDate = lastStopDate;
+  }
+
+  let currentStintMin = 0;
+  if (lastReferenceDate) {
+    currentStintMin = Math.max(0, (Date.now() - lastReferenceDate.getTime()) / 60000);
+    curStintEl.innerText = fmtMinSec(currentStintMin);
+  } else {
+    curStintEl.innerText = 'Départ non fixé';
+  }
+
+  if (S_max <= 0 || timing.remMin <= 0) {
+    jokersAfterEl.innerText = '—';
+    newAvgEl.innerText = '—';
+    newMarginEl.innerText = '—';
+    verdictEl.className = 'whatif-verdict status-warning';
+    verdictEl.innerText = 'Renseigne l’heure de départ, la durée et le stint max pour simuler.';
+    return;
+  }
+
+  const T_after_pit = Math.max(0, timing.remMin - P_dur);
+  const P_rem_after = Math.max(0, P_rem - 1);
+  const N_stints_after = P_rem_after + 1;
+  const T_track_after = Math.max(0, T_after_pit - P_rem_after * P_dur);
+  const newMargin = N_stints_after * S_max - T_track_after;
+
+  let jokersAfter = 0;
+  if (P_rem_after > 0) {
+    const minPitsAfter = Math.max(1, Math.ceil((T_after_pit - S_max) / (S_max + P_dur)));
+    jokersAfter = Math.max(0, P_rem_after - minPitsAfter);
+  }
+
+  const openWindowAfter = Math.max(0, T_after_pit - T_close_before_end);
+  const newAvg = P_rem_after > 0
+    ? Math.max(S_min, Math.max(0, openWindowAfter - P_rem_after * P_dur) / P_rem_after)
+    : T_track_after;
+
+  jokersAfterEl.innerText = `${jokersAfter}`;
+  newAvgEl.innerText = fmtMinSec(newAvg);
+  newMarginEl.innerText = newMargin >= 0 ? fmtMinSec(newMargin) : `-${fmtMinSec(Math.abs(newMargin))}`;
+
+  if (lastReferenceDate && S_min > 0 && currentStintMin < S_min) {
+    const missing = S_min - currentStintMin;
+    verdictEl.className = 'whatif-verdict status-danger';
+    verdictEl.innerText = `⛔ Trop tôt : relais actuel ${fmtMinSec(currentStintMin)} < min ${S_min}m (attends encore ${fmtMinSec(missing)})`;
+  } else if (newMargin < 0) {
+    verdictEl.className = 'whatif-verdict status-danger';
+    verdictEl.innerText = `🚨 Impossible sans dépasser le stint max : il manquerait ${fmtMinSec(Math.abs(newMargin))} de capacité`;
+  } else if (P_rem > 0 && jokersAfter === 0) {
+    verdictEl.className = 'whatif-verdict status-warning';
+    verdictEl.innerText = `⚠️ Arrêt faisable mais 0 JOKER restant après ce box (moyenne requise : ${fmtMinSec(newAvg)})`;
+  } else {
+    verdictEl.className = 'whatif-verdict status-safe';
+    verdictEl.innerText = `✅ Arrêt validé : il restera ${jokersAfter} joker(s) et ${fmtMinSec(newMargin)} de marge`;
+  }
+}
+
 function calculateStint() {
   const timing = getCourseTiming();
   const T_rem = timing.remMin;
@@ -1481,6 +3539,7 @@ function calculateStint() {
   document.getElementById('pitsLeftSub').innerText = `${P_rem} arrêt${P_rem > 1 ? 's' : ''} restant${P_rem > 1 ? 's' : ''}`;
 
   updateTrancheBoxUI(timing, P_done);
+  updateWhatIfUI(timing, P_rem, S_min, S_max, P_dur, T_close_before_end);
 
   const banner = document.getElementById('alert-banner');
   const jokerBox = document.getElementById('jokerBox');
@@ -1493,6 +3552,9 @@ function calculateStint() {
     document.getElementById('marginVal').innerText = '0m 00s';
     document.getElementById('minNextVal').innerText = '0m 00s';
     document.getElementById('minAvgVal').innerText = '0m 00s';
+    lastKnownJokers = null;
+    dismissedAlertState = null;
+    hideFullscreenJokerAlert();
     saveAll();
     return;
   }
@@ -1512,10 +3574,32 @@ function calculateStint() {
   const minNext = Math.max(S_min, Math.max(0, T_track - P_rem * S_max));
   const minAvg = P_rem > 0 ? Math.max(S_min, Math.max(0, T_open_window - P_rem * P_dur) / P_rem) : T_track;
 
+  const minNextStr = fmtMinSec(minNext);
+  const marginStr = fmtMinSec(margin);
+
   document.getElementById('jokersVal').innerText = jokers;
-  document.getElementById('marginVal').innerText = fmtMinSec(margin);
-  document.getElementById('minNextVal').innerText = fmtMinSec(minNext);
+  document.getElementById('marginVal').innerText = marginStr;
+  document.getElementById('minNextVal').innerText = minNextStr;
   document.getElementById('minAvgVal').innerText = fmtMinSec(minAvg);
+
+  if (P_rem > 0 && jokers === 0) {
+    if (lastKnownJokers !== 0) {
+      dismissedAlertState = null;
+      playJokerBeep('zero');
+    }
+    triggerFullscreenJokerAlert('zero', minNextStr, marginStr);
+  } else if (P_rem > 0 && jokers === 1) {
+    if (lastKnownJokers !== 1) {
+      dismissedAlertState = null;
+      playJokerBeep('one');
+    }
+    triggerFullscreenJokerAlert('one', minNextStr, marginStr);
+  } else {
+    dismissedAlertState = null;
+    hideFullscreenJokerAlert();
+  }
+
+  lastKnownJokers = P_rem > 0 ? jokers : null;
 
   const pitsClosedNow = P_rem > 0 && T_close_before_end > 0 && T_rem <= T_close_before_end;
   const pitsNotOpenedYet = P_rem > 0 && T_open_after_start > 0 && timing.elapsedMin < T_open_after_start;
@@ -1533,11 +3617,11 @@ function calculateStint() {
   } else if (jokers === 0) {
     jokerBox.classList.add('joker-zero');
     banner.className = 'status-danger';
-    banner.innerHTML = '<span>🚨</span> 0 JOKER : Respecte strictement les temps minimums';
+    banner.innerHTML = `<span>🚨</span> ALERTE 0 JOKER : Plus aucune marge d'erreur (${minNextStr} min immédiat)`;
   } else if (jokers === 1) {
     jokerBox.classList.add('joker-low');
     banner.className = 'status-warning';
-    banner.innerHTML = '<span>⚠️</span> PLUS QUE 1 JOKER disponible';
+    banner.innerHTML = '<span>⚠️</span> ATTENTION : Plus que 1 JOKER disponible';
   } else {
     banner.className = 'status-safe';
     banner.innerHTML = `<span>🟢</span> STRATÉGIE OK : ${jokers} jokers disponibles`;
@@ -1548,7 +3632,7 @@ function calculateStint() {
 
 function copyStrategySummary() {
   const txt = [
-    `🏁 *Point Stratégie EG7*`,
+    `🏁 *Point Stratégie EG7 PRO*`,
     `• Restant : ${document.getElementById('liveRemClock').innerText}`,
     `• Jokers : *${document.getElementById('jokersVal').innerText}*`,
     `• Stint min immédiat : *${document.getElementById('minNextVal').innerText}*`,
@@ -1563,6 +3647,111 @@ function copyStrategySummary() {
   });
 }
 
+/* =========================================================
+   SEUILS DU VERDICT Q&C + COULEURS LIGNES
+   ========================================================= */
+function fmtSecSigned(val) {
+  return `+${Number(val).toFixed(1).replace('.', ',')} s`;
+}
+
+function syncVerdictThresholdsUI() {
+  const good = qcState.thresholds.good;
+  const mid = qcState.thresholds.mid;
+  const bad = qcState.thresholds.bad;
+
+  const sGood = document.getElementById('threshGoodSlider');
+  const sMid = document.getElementById('threshMidSlider');
+  const sBad = document.getElementById('threshBadSlider');
+
+  if (sGood) sGood.value = good;
+  if (sMid) sMid.value = mid;
+  if (sBad) sBad.value = bad;
+
+  document.getElementById('threshGoodPill').innerText = `≤ ${fmtSecSigned(good)}`;
+  document.getElementById('threshMidPill').innerText = `≤ ${fmtSecSigned(mid)}`;
+  document.getElementById('threshBadPill').innerText = `≤ ${fmtSecSigned(bad)}`;
+  document.getElementById('threshPoorText').innerText = `POURRI > ${fmtSecSigned(bad)}`;
+  document.getElementById('vtHeaderSummary').innerText =
+    `BON ≤ ${good.toFixed(1).replace('.', ',')} s · MOYEN ≤ ${mid.toFixed(1).replace('.', ',')} s · MAUVAIS ≤ ${bad.toFixed(1).replace('.', ',')} s`;
+}
+
+function onVerdictThresholdsChange() {
+  let good = parseFloat(document.getElementById('threshGoodSlider').value || 0.5);
+  let mid = parseFloat(document.getElementById('threshMidSlider').value || 1.5);
+  let bad = parseFloat(document.getElementById('threshBadSlider').value || 3.0);
+
+  if (mid < good) mid = good;
+  if (bad < mid) bad = mid;
+
+  qcState.thresholds = {
+    good: Number(good.toFixed(1)),
+    mid: Number(mid.toFixed(1)),
+    bad: Number(bad.toFixed(1))
+  };
+
+  syncVerdictThresholdsUI();
+  renderQuickChange();
+  renderStandingsTab();
+  saveAll();
+}
+
+function ensureRowColorsLength() {
+  const rowsCount = Math.max(0, qcState.kartsPerLane);
+  if (!Array.isArray(qcState.rowColors)) qcState.rowColors = [];
+  const palette = ROW_COLOR_OPTIONS.map(c => c.id);
+  while (qcState.rowColors.length < rowsCount) {
+    qcState.rowColors.push(palette[qcState.rowColors.length % palette.length]);
+  }
+}
+
+function getRowColorObj(rowIdx) {
+  ensureRowColorsLength();
+  const id = qcState.rowColors[rowIdx] || ROW_COLOR_OPTIONS[rowIdx % ROW_COLOR_OPTIONS.length].id;
+  return ROW_COLOR_OPTIONS.find(c => c.id === id) || ROW_COLOR_OPTIONS[0];
+}
+
+function setRowColor(rowIdx, colorId) {
+  ensureRowColorsLength();
+  qcState.rowColors[rowIdx] = colorId;
+  renderRowColorConfig();
+  renderQuickChange();
+  saveAll();
+}
+
+function renderRowColorConfig() {
+  const grid = document.getElementById('rowColorConfigGrid');
+  if (!grid) return;
+  const rowsCount = Math.max(0, qcState.kartsPerLane);
+  if (rowsCount === 0) {
+    grid.innerHTML = `<div style="font-size:0.7rem;color:var(--text-muted);">Aucune ligne active.</div>`;
+    return;
+  }
+
+  let html = '';
+  for (let r = 0; r < rowsCount; r++) {
+    const colObj = getRowColorObj(r);
+    const optionsHtml = ROW_COLOR_OPTIONS.map(opt =>
+      `<option value="${opt.id}" ${opt.id === colObj.id ? 'selected' : ''}>${opt.label}</option>`
+    ).join('');
+
+    html += `
+      <div class="row-color-item">
+        <span class="row-color-label">
+          <span class="color-swatch-dot" style="background:${colObj.hex};"></span>
+          Ligne ${r + 1}
+        </span>
+        <select class="row-color-select" onchange="setRowColor(${r}, this.value)">
+          ${optionsHtml}
+        </select>
+      </div>
+    `;
+  }
+  grid.innerHTML = html;
+}
+
+/* =========================================================
+   QUICK CHANGE & STRATKART
+   ========================================================= */
 function buildInitialLanes(numLanes, kartsPerLane) {
   qcState.lanes = [];
   for (let l = 0; l < numLanes; l++) {
@@ -1572,6 +3761,7 @@ function buildInitialLanes(numLanes, kartsPerLane) {
     }
     qcState.lanes.push(col);
   }
+  ensureRowColorsLength();
 }
 
 function sideToLaneIndex(side) {
@@ -1587,14 +3777,13 @@ function sideLabel(side) {
   return 'Milieu';
 }
 
-function setBoxSide(side) {
+function quickClickEntry(side) {
   qcState.boxSide = side;
   if (!qcState.customExitEnabled) {
     qcState.exitSide = side;
   }
   updateSideButtonsUI();
-  renderQuickChange();
-  saveAll();
+  validateTeamQuickChange();
 }
 
 function setExitSide(side) {
@@ -1635,6 +3824,7 @@ function onQcSizeChange() {
 
   qcState.numLanes = nLanes;
   qcState.kartsPerLane = nKarts;
+  ensureRowColorsLength();
 
   while (qcState.lanes.length < nLanes) {
     const col = [];
@@ -1648,6 +3838,7 @@ function onQcSizeChange() {
     while (qcState.lanes[l].length > nKarts) qcState.lanes[l].pop();
   }
 
+  renderRowColorConfig();
   renderQuickChange();
   saveAll();
 }
@@ -1824,11 +4015,18 @@ function addQcLog(msg) {
 
 function validateTeamQuickChange() {
   const teamNum = document.getElementById('qcTeamInput').value.trim();
-  const teamLabel = teamNum ? `#${teamNum.replace(/^#/, '')}` : `Équipe ${qcState.logs.length + 1}`;
+  const driverName = (document.getElementById('qcDriverInput')?.value || '').trim();
+  const teamLabel = teamNum ? `#${teamNumClean(teamNum)}` : `Équipe ${qcState.logs.length + 1}`;
+  const driverSuffix = driverName ? ` (${driverName})` : '';
 
   if (teamNum && !qcState.knownTeams.includes(teamNum)) {
     qcState.knownTeams.unshift(teamNum);
     if (qcState.knownTeams.length > 20) qcState.knownTeams.pop();
+  }
+
+  if (driverName && !qcState.knownDrivers.includes(driverName)) {
+    qcState.knownDrivers.unshift(driverName);
+    if (qcState.knownDrivers.length > 20) qcState.knownDrivers.pop();
   }
 
   const nowMs = Date.now();
@@ -1854,8 +4052,16 @@ function validateTeamQuickChange() {
     const takenKart = exitCol[safeRow];
     if (takenKart) {
       takenKart.teamNumber = teamNum;
+      if (driverName) takenKart.driverName = driverName;
       takenKart.used = true;
       takenKart.pickedAtMs = nowMs;
+      const cleanNum = teamNumClean(teamNum);
+      if (cleanNum && apexLiveMap[cleanNum]) {
+        takenKart.liveLapSec = apexLiveMap[cleanNum].lapSec;
+      }
+      if (cleanNum && qcState.trackPositions[cleanNum] === undefined) {
+        qcState.trackPositions[cleanNum] = 10;
+      }
       exitInfo = ` → ${sideLabel(effectiveExitSide)} L${safeRow + 1}`;
     }
   }
@@ -1863,12 +4069,19 @@ function validateTeamQuickChange() {
   if (!qcState.lanes[boxColIdx]) qcState.lanes[boxColIdx] = [];
   const arrivedKart = createKartObj();
   arrivedKart.teamNumber = teamNum;
+  arrivedKart.driverName = driverName;
   arrivedKart.used = true;
+  const cleanNum = teamNumClean(teamNum);
+  if (cleanNum && apexLiveMap[cleanNum]) {
+    arrivedKart.liveLapSec = apexLiveMap[cleanNum].lapSec;
+  }
   qcState.lanes[boxColIdx].push(arrivedKart);
 
-  addQcLog(`<strong>${teamLabel}</strong> box <strong>${sideLabel(qcState.boxSide)}</strong>${exitInfo}`);
+  addQcLog(`<strong>${teamLabel}${driverSuffix}</strong> box <strong>${sideLabel(qcState.boxSide)}</strong>${exitInfo}`);
   document.getElementById('qcTeamInput').value = '';
   renderQuickChange();
+  renderCompareTab();
+  renderTrackMapTab();
   saveAll();
 }
 
@@ -1882,6 +4095,50 @@ function logManualStintDuration(laneIdx, kartIdx) {
   kart.stintDurationsMin.push(Number(val.toFixed(1)));
   addQcLog(`Relais ${val.toFixed(1)}m (C${laneIdx + 1} L${kartIdx + 1})`);
   renderQuickChange();
+  saveAll();
+}
+
+function logLiveLapForKart(laneIdx, kartIdx) {
+  const kart = qcState.lanes[laneIdx]?.[kartIdx];
+  if (!kart) return;
+  const defaultVal = typeof kart.liveLapSec === 'number' ? kart.liveLapSec.toFixed(2) : '62.50';
+  const input = prompt(`Chrono tour (en secondes, ex: 62.45) :`, defaultVal);
+  if (input === null) return;
+  const sec = parseLapToSec(input);
+  if (!sec) return;
+
+  if (typeof kart.liveLapSec === 'number' && kart.liveLapSec > 0) {
+    if (!kart.baselineLapSec || kart.liveLapSec > kart.baselineLapSec) {
+      kart.baselineLapSec = kart.liveLapSec;
+    }
+  }
+  kart.liveLapSec = sec;
+
+  const kNum = teamNumClean(kart.teamNumber);
+  if (kNum) {
+    const existing = apexLiveMap[kNum] || { laps: [] };
+    const lapsArr = Array.isArray(existing.laps) ? existing.laps.slice() : [];
+    lapsArr.push(sec);
+    apexLiveMap[kNum] = {
+      kart: kNum,
+      driver: kart.driverName || existing.driver || '',
+      lapSec: sec,
+      laps: lapsArr
+    };
+  }
+
+  if (typeof kart.baselineLapSec === 'number' && kart.baselineLapSec - sec >= 0.25) {
+    kart.highPotential = true;
+    const gain = (kart.baselineLapSec - sec).toFixed(2);
+    addQcLog(`🚀 <strong>Boost rythme</strong> C${laneIdx + 1} L${kartIdx + 1} : <strong>-${gain}s</strong> vs réf (${sec.toFixed(2)}s)`);
+  } else {
+    addQcLog(`Chrono ${sec.toFixed(2)}s enregistré (C${laneIdx + 1} L${kartIdx + 1})`);
+  }
+
+  renderQuickChange();
+  renderStandingsTab();
+  renderCompareTab();
+  renderTrackMapTab();
   saveAll();
 }
 
@@ -1899,21 +4156,305 @@ function toggleKartUsed(laneIdx, kartIdx) {
   saveAll();
 }
 
+function parseLapToSec(val) {
+  if (typeof val === 'number' && isFinite(val) && val > 0) return val;
+  if (typeof val !== 'string') return null;
+  const clean = val.trim().replace(',', '.');
+  if (!clean) return null;
+  if (clean.includes(':')) {
+    const parts = clean.split(':').map(Number);
+    if (parts.length === 2 && parts.every(isFinite)) return parts[0] * 60 + parts[1];
+  }
+  const num = parseFloat(clean);
+  return isFinite(num) && num > 0 ? num : null;
+}
+
+function applyRecordsToMap(records) {
+  let count = 0;
+  records.forEach((row) => {
+    const keyRaw = String(row.kart ?? row.kart_num ?? row.num ?? row.team ?? row.number ?? '').replace(/^#/, '').trim();
+    const lapSec = parseLapToSec(row.avg_lap ?? row.last_lap ?? row.best_lap ?? row.lap_time ?? row.lap ?? row.time);
+    const driver = String(row.driver ?? row.pilote ?? row.name ?? '').trim();
+    const lapsRaw = Array.isArray(row.laps)
+      ? row.laps.map(parseLapToSec).filter(Boolean)
+      : (lapSec ? [lapSec] : []);
+    const posPct = typeof row.progress === 'number' ? Math.max(0, Math.min(100, row.progress)) : null;
+
+    if (keyRaw && (lapSec || lapsRaw.length > 0 || posPct !== null)) {
+      const effectiveLap = lapSec || lapsRaw[lapsRaw.length - 1] || null;
+      const prevEntry = apexLiveMap[keyRaw];
+      const mergedLaps = lapsRaw.length > 0
+        ? lapsRaw
+        : (prevEntry?.laps ? [...prevEntry.laps, ...(effectiveLap ? [effectiveLap] : [])] : (effectiveLap ? [effectiveLap] : []));
+
+      apexLiveMap[keyRaw] = {
+        kart: keyRaw,
+        driver: driver || prevEntry?.driver || '',
+        lapSec: effectiveLap || prevEntry?.lapSec || null,
+        laps: mergedLaps
+      };
+      if (posPct !== null) {
+        qcState.trackPositions[keyRaw] = posPct;
+      } else if (qcState.trackPositions[keyRaw] === undefined) {
+        qcState.trackPositions[keyRaw] = (count * 17) % 100;
+      }
+      if (keyRaw && !qcState.knownTeams.includes(keyRaw)) {
+        qcState.knownTeams.push(keyRaw);
+      }
+      if (driver && !qcState.knownDrivers.includes(driver)) {
+        qcState.knownDrivers.push(driver);
+      }
+      count++;
+    }
+  });
+
+  qcState.lanes.forEach((col, cIdx) => {
+    col.forEach((kart, kIdx) => {
+      const kNum = teamNumClean(kart.teamNumber);
+      if (kNum && apexLiveMap[kNum]) {
+        const prevLap = kart.liveLapSec;
+        const nextLap = apexLiveMap[kNum].lapSec;
+        if (typeof prevLap === 'number' && prevLap > 0 && typeof nextLap === 'number' && prevLap - nextLap >= 0.25) {
+          kart.baselineLapSec = Math.max(kart.baselineLapSec || prevLap, prevLap);
+          kart.highPotential = true;
+          addQcLog(`🚀 <strong>Amélioration nette</strong> #${kNum} (C${cIdx + 1} L${kIdx + 1}) : -${(prevLap - nextLap).toFixed(2)}s`);
+        }
+        if (typeof nextLap === 'number') kart.liveLapSec = nextLap;
+        if (apexLiveMap[kNum].driver && !kart.driverName) {
+          kart.driverName = apexLiveMap[kNum].driver;
+        }
+      }
+    });
+  });
+
+  return count;
+}
+
+function importJsonFromTextarea() {
+  const txt = (document.getElementById('manualApexJson')?.value || '').trim();
+  if (!txt) return;
+  try {
+    const parsed = JSON.parse(txt);
+    const list = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.standings) ? parsed.standings : []);
+    const count = applyRecordsToMap(list);
+    if (count > 0) {
+      document.getElementById('apexStatusDot').classList.add('connected');
+      document.getElementById('apexStatusText').innerText = `JSON chargé (${count} karts)`;
+      renderQuickChange();
+      renderStandingsTab();
+      renderCompareTab();
+      renderTrackMapTab();
+      saveAll();
+    }
+  } catch (e) {}
+}
+
+function parseHtmlStandings(htmlText) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, 'text/html');
+  const rows = Array.from(doc.querySelectorAll('table tr'));
+  const extracted = [];
+
+  rows.forEach((tr) => {
+    const cells = Array.from(tr.querySelectorAll('td, th')).map(c => c.textContent.trim());
+    if (cells.length < 2) return;
+    let kartOrNum = '';
+    let foundLap = null;
+
+    for (const cell of cells) {
+      if (!kartOrNum && /^\s*#?\d{1,3}\s*$/.test(cell)) {
+        kartOrNum = cell.replace('#', '').trim();
+      }
+      const sec = parseLapToSec(cell);
+      if (sec && sec >= 15 && sec <= 300 && !foundLap) {
+        foundLap = sec;
+      }
+    }
+
+    if (kartOrNum && foundLap) {
+      extracted.push({ kart: kartOrNum, last_lap: foundLap });
+    }
+  });
+
+  return extracted;
+}
+
+async function syncFromApexLinkOnce() {
+  const rawUrl = (document.getElementById('apexLinkInput').value || '').trim();
+  const dot = document.getElementById('apexStatusDot');
+  const txt = document.getElementById('apexStatusText');
+
+  if (!rawUrl) {
+    dot.classList.remove('connected');
+    txt.innerText = 'Colle un lien Apex Timing d’abord';
+    return;
+  }
+
+  const sep = rawUrl.includes('?') ? '&' : '?';
+  const targetUrl = `${rawUrl}${sep}_t=${Date.now()}`;
+
+  try {
+    const res = await fetch(targetUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const contentType = res.headers.get('content-type') || '';
+    const bodyText = await res.text();
+
+    let count = 0;
+    if (contentType.includes('application/json') || bodyText.trim().startsWith('{') || bodyText.trim().startsWith('[')) {
+      const jsonData = JSON.parse(bodyText);
+      const list = Array.isArray(jsonData) ? jsonData : (Array.isArray(jsonData?.standings) ? jsonData.standings : []);
+      count = applyRecordsToMap(list);
+    } else {
+      const parsedRows = parseHtmlStandings(bodyText);
+      count = applyRecordsToMap(parsedRows);
+    }
+
+    if (count > 0) {
+      dot.classList.add('connected');
+      txt.innerText = `Live OK (${count} karts) • ${new Date().toLocaleTimeString('fr-FR')}`;
+      renderQuickChange();
+      renderStandingsTab();
+      renderCompareTab();
+      renderTrackMapTab();
+    } else {
+      dot.classList.remove('connected');
+      txt.innerText = 'Page lue mais aucun chrono trouvé (CORS ou rendu JS)';
+    }
+  } catch (e) {
+    dot.classList.remove('connected');
+    txt.innerText = 'Accès direct bloqué (CORS) — utilise JSON ou script local';
+  }
+}
+
+function toggleAutoFromLink() {
+  apexAutoActive = !apexAutoActive;
+  const btn = document.getElementById('autoApexBtn');
+  btn.classList.toggle('active', apexAutoActive);
+  btn.innerText = apexAutoActive ? '⏸ Auto : ON' : '▶ Auto : OFF';
+
+  if (apexTimer) {
+    clearInterval(apexTimer);
+    apexTimer = null;
+  }
+
+  if (apexAutoActive) {
+    const sec = Math.max(1, parseInt(document.getElementById('pollIntervalSec').value || 3, 10));
+    syncFromApexLinkOnce();
+    apexTimer = setInterval(syncFromApexLinkOnce, sec * 1000);
+  }
+}
+
+function restartAutoIfActive() {
+  if (apexAutoActive) {
+    toggleAutoFromLink();
+    toggleAutoFromLink();
+  }
+}
+
+function computeVerdictsForAllKarts() {
+  const thGood = qcState.thresholds.good;
+  const thMid = qcState.thresholds.mid;
+  const thBad = qcState.thresholds.bad;
+
+  const laps = [];
+  qcState.lanes.forEach((col) => {
+    col.forEach((kart) => {
+      if (typeof kart.liveLapSec === 'number' && kart.liveLapSec > 0) {
+        laps.push(kart.liveLapSec);
+      }
+    });
+  });
+
+  const refSec = laps.length > 0 ? Math.min(...laps) : null;
+  const refEl = document.getElementById('apexRefInfo');
+  if (refEl) {
+    refEl.innerText = refSec ? `Réf: ${refSec.toFixed(2)}s` : 'Réf: —';
+  }
+
+  let bestScore = -1;
+  let bestLabel = '—';
+
+  const gridVerdicts = qcState.lanes.map((col, lIdx) =>
+    col.map((kart, kIdx) => {
+      const avg = getKartAvg(kart);
+      let score = 65;
+
+      if (refSec && typeof kart.liveLapSec === 'number' && kart.liveLapSec > 0) {
+        const delta = kart.liveLapSec - refSec;
+        const sign = delta >= 0 ? '+' : '';
+        const denom = Math.max(0.5, thBad);
+        score = Math.round(Math.max(5, Math.min(99, 98 - (delta / denom) * 65)));
+        if (kart.highPotential) score = Math.min(99, score + 4);
+        if (kart.used) score = Math.max(5, score - 12);
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestLabel = `C${lIdx + 1}·L${kIdx + 1} (${score}/100)`;
+        }
+
+        if (delta <= thGood) {
+          return { level: 'good', label: `BON (${sign}${delta.toFixed(2)}s)`, badgeClass: 'verdict-badge-good', lapText: `${kart.liveLapSec.toFixed(2)}s`, score };
+        }
+        if (delta <= thMid) {
+          return { level: 'mid', label: `MOY (${sign}${delta.toFixed(2)}s)`, badgeClass: 'verdict-badge-mid', lapText: `${kart.liveLapSec.toFixed(2)}s`, score };
+        }
+        if (delta <= thBad) {
+          return { level: 'bad', label: `MAUV (${sign}${delta.toFixed(2)}s)`, badgeClass: 'verdict-badge-bad', lapText: `${kart.liveLapSec.toFixed(2)}s`, score };
+        }
+        return { level: 'poor', label: `POURRI (${sign}${delta.toFixed(2)}s)`, badgeClass: 'verdict-badge-poor', lapText: `${kart.liveLapSec.toFixed(2)}s`, score };
+      }
+
+      if (avg !== null) {
+        score = Math.round(Math.max(25, Math.min(90, 95 - avg * 1.4)));
+        if (kart.used) score = Math.max(10, score - 12);
+        if (score > bestScore) {
+          bestScore = score;
+          bestLabel = `C${lIdx + 1}·L${kIdx + 1} (${score}/100)`;
+        }
+        return { level: 'mid', label: `MOY ${avg.toFixed(1)}m`, badgeClass: 'verdict-badge-mid', lapText: `Relais ${avg.toFixed(1)}m`, score };
+      }
+
+      if (kart.used) score = 35;
+      return { level: 'none', label: 'EN ATTENTE', badgeClass: 'verdict-badge-none', lapText: '—', score };
+    })
+  );
+
+  const bestBadge = document.getElementById('bestKartBadge');
+  if (bestBadge) {
+    bestBadge.innerText = `Meilleur : ${bestLabel}`;
+  }
+
+  return gridVerdicts;
+}
+
 function renderQuickChange() {
+  syncVerdictThresholdsUI();
   syncExitRowOptions();
   updateSideButtonsUI();
+  renderRowColorConfig();
 
-  const dl = document.getElementById('qcTeamSuggestions');
-  dl.innerHTML = (qcState.knownTeams || []).map(t => `<option value="${t}">`).join('');
+  const dlTeams = document.getElementById('qcTeamSuggestions');
+  if (dlTeams) {
+    dlTeams.innerHTML = (qcState.knownTeams || []).map(t => `<option value="${t}">`).join('');
+  }
+
+  const dlDrivers = document.getElementById('qcDriverSuggestions');
+  if (dlDrivers) {
+    dlDrivers.innerHTML = (qcState.knownDrivers || []).map(d => `<option value="${d}">`).join('');
+  }
 
   const teamVal = document.getElementById('qcTeamInput').value.trim();
-  const teamText = teamVal ? `Équipe #${teamVal.replace(/^#/, '')}` : 'Équipe';
+  const driverVal = (document.getElementById('qcDriverInput')?.value || '').trim();
+  const teamText = teamVal ? `Équipe #${teamNumClean(teamVal)}` : 'Équipe';
+  const driverText = driverVal ? ` • ${driverVal}` : '';
   const activeExitSide = qcState.customExitEnabled ? qcState.exitSide : qcState.boxSide;
   const exitRow = (parseInt(document.getElementById('qcExitRowSelect').value || '0', 10) || 0) + 1;
 
   document.getElementById('qcFlowSummary').innerHTML = qcState.customExitEnabled
-    ? `${teamText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(activeExitSide)} (Ligne ${exitRow})</span>`
-    : `${teamText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(qcState.boxSide)}</span>`;
+    ? `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(activeExitSide)} (L${exitRow})</span>`
+    : `Clic Entrée valide : ${teamText}${driverText} → Box <span>${sideLabel(qcState.boxSide)}</span> → Sortie <span>${sideLabel(qcState.boxSide)}</span>`;
+
+  const verdictsGrid = computeVerdictsForAllKarts();
 
   const gridEl = document.getElementById('qcLanesContainer');
   gridEl.style.gridTemplateColumns = `repeat(${Math.max(1, qcState.lanes.length)}, minmax(0, 1fr))`;
@@ -1935,15 +4476,19 @@ function renderQuickChange() {
     `;
 
     if (col.length === 0) {
-      html += `<div style="font-size:0.62rem;color:var(--text-muted);text-align:center;padding:10px 3px;border:1px dashed var(--border-color);border-radius:7px;">Vide</div>`;
+      html += `<div style="font-size:0.62rem;color:var(--text-muted);text-align:center;padding:10px 3px;border:1px dashed var(--input-border);border-radius:7px;">Vide</div>`;
     }
 
     col.forEach((kart, kIdx) => {
+      const verdict = verdictsGrid[lIdx]?.[kIdx] || { label: 'EN ATTENTE', badgeClass: 'verdict-badge-none', lapText: '—', score: 65 };
       const avg = getKartAvg(kart);
-      const avgStr = avg !== null ? `Moy ${avg.toFixed(1)}m` : '—';
+      const stintInfo = avg !== null ? `Relais ${avg.toFixed(1)}m` : verdict.lapText;
+      const driverLabel = kart.driverName ? `Pilote: <strong>${kart.driverName}</strong>` : `ID: <strong>${kart.offCode}</strong>`;
+      const rowColor = getRowColorObj(kIdx);
 
       html += `
         <div class="qc-kart-item"
+          style="border-left: 4px solid ${rowColor.hex};"
           draggable="true"
           data-lane="${lIdx}"
           data-kart="${kIdx}"
@@ -1955,18 +4500,25 @@ function renderQuickChange() {
           ontouchmove="onTouchMoveKart(event)"
           ontouchend="onTouchEndKart(event)">
           <div class="qc-kart-top">
-            <span class="qc-kart-pos">⋮⋮ L${kIdx + 1}${kart.teamNumber ? ' #' + kart.teamNumber : ''}</span>
+            <span class="qc-kart-pos">⋮⋮ L${kIdx + 1} (${rowColor.label})${kart.teamNumber ? ' #' + kart.teamNumber : ''}</span>
+            <span class="qc-score-chip">${verdict.score}</span>
             <button type="button" class="qc-used-btn ${kart.used ? 'used' : ''}" onclick="toggleKartUsed(${lIdx}, ${kIdx})">
               ${kart.used ? '✓ Eu' : 'Eu?'}
             </button>
           </div>
 
-          <div class="qc-avg-line">${avgStr}</div>
+          <div class="qc-verdict-badge ${verdict.badgeClass}">${verdict.label}</div>
+          <div class="qc-avg-line">${stintInfo}</div>
+          <div class="qc-driver-meta">${driverLabel}</div>
+          ${kart.highPotential ? `<span class="qc-potential-tag">★ HAUT POTENTIEL</span>` : ''}
 
           <div class="qc-stint-row">
             ${(kart.stintDurationsMin || []).map((d, i) => `<span class="qc-pill">R${i + 1}:${d}m</span>`).join('')}
           </div>
-          <button type="button" class="qc-mini-btn" onclick="logManualStintDuration(${lIdx}, ${kIdx})">+ Relais</button>
+          <div class="qc-btn-pair">
+            <button type="button" class="qc-mini-btn" onclick="logManualStintDuration(${lIdx}, ${kIdx})">+ Relais</button>
+            <button type="button" class="qc-mini-btn" onclick="logLiveLapForKart(${lIdx}, ${kIdx})">+ Chrono</button>
+          </div>
         </div>
       `;
     });
@@ -1989,10 +4541,485 @@ function renderQuickChange() {
   }
 }
 
+/* =========================================================
+   ONGLET CLASSEMENT APEX TIMING
+   ========================================================= */
+function collectAllKartEntries() {
+  const map = new Map();
+
+  Object.values(apexLiveMap).forEach((entry) => {
+    const k = teamNumClean(entry.kart);
+    if (!k) return;
+    const laps = Array.isArray(entry.laps) && entry.laps.length > 0
+      ? entry.laps
+      : (typeof entry.lapSec === 'number' ? [entry.lapSec] : []);
+    const lastLap = typeof entry.lapSec === 'number' ? entry.lapSec : (laps[laps.length - 1] || null);
+    const avgLap = laps.length > 0 ? laps.reduce((a, b) => a + b, 0) / laps.length : lastLap;
+
+    map.set(k, { kart: k, driver: entry.driver || '', lastLap, avgLap, laps });
+  });
+
+  qcState.lanes.forEach((col) => {
+    col.forEach((kart) => {
+      const k = teamNumClean(kart.teamNumber);
+      if (!k) return;
+      const existing = map.get(k) || { kart: k, driver: kart.driverName || '', lastLap: null, avgLap: null, laps: [] };
+      if (kart.driverName) existing.driver = kart.driverName;
+      if (typeof kart.liveLapSec === 'number' && kart.liveLapSec > 0) {
+        existing.lastLap = kart.liveLapSec;
+        if (!existing.laps.length) existing.laps = [kart.liveLapSec];
+        existing.avgLap = existing.laps.reduce((a, b) => a + b, 0) / existing.laps.length;
+      }
+      map.set(k, existing);
+    });
+  });
+
+  return Array.from(map.values()).sort((a, b) => {
+    const timeA = a.lastLap || a.avgLap || 999999;
+    const timeB = b.lastLap || b.avgLap || 999999;
+    return timeA - timeB;
+  });
+}
+
+function selectKartIntoQuickChange(kartNum, driverName) {
+  document.getElementById('qcTeamInput').value = kartNum;
+  if (driverName && document.getElementById('qcDriverInput')) {
+    document.getElementById('qcDriverInput').value = driverName;
+  }
+  switchTab(1);
+  renderQuickChange();
+  saveAll();
+}
+
+function renderStandingsTab() {
+  const tbody = document.getElementById('standingsTableBody');
+  if (!tbody) return;
+
+  const filterRaw = (document.getElementById('apexFilterInput')?.value || '').trim().toLowerCase();
+  let rows = collectAllKartEntries();
+  const refLap = rows.length > 0 && rows[0].lastLap ? rows[0].lastLap : null;
+
+  if (filterRaw) {
+    rows = rows.filter(r =>
+      r.kart.toLowerCase().includes(filterRaw) ||
+      (r.driver && r.driver.toLowerCase().includes(filterRaw))
+    );
+  }
+
+  if (rows.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;color:var(--text-muted);padding:16px;">
+          Aucune donnée live chargée. Connecte un lien Apex, importe un JSON ou ajoute des chronos dans Quick Change.
+        </td>
+      </tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map((r, idx) => {
+    const gapText = (refLap && r.lastLap)
+      ? (idx === 0 && !filterRaw ? 'RÉF' : `+${(r.lastLap - refLap).toFixed(2)}s`)
+      : '—';
+    const safeDriver = (r.driver || '').replace(/'/g, "\\'");
+
+    return `
+      <tr>
+        <td class="mono-num">${idx + 1}</td>
+        <td>
+          <span class="mono-num">#${r.kart}</span>
+          ${r.driver ? `<div style="font-size:0.65rem;color:var(--text-muted);">${r.driver}</div>` : ''}
+        </td>
+        <td class="mono-num">${r.lastLap ? r.lastLap.toFixed(2) + 's' : '—'}</td>
+        <td class="mono-num">${r.avgLap ? r.avgLap.toFixed(2) + 's' : '—'}</td>
+        <td class="mono-num" style="color:${gapText === 'RÉF' ? 'var(--success)' : 'var(--text-main)'};">${gapText}</td>
+        <td>
+          <button type="button" class="pick-qc-btn" onclick="selectKartIntoQuickChange('${r.kart}', '${safeDriver}')">
+            Box Q&C
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+/* =========================================================
+   ONGLET COMPARE
+   ========================================================= */
+function syncCompareLapChips() {
+  const n = parseInt(document.getElementById('compareLapCountInput')?.value || '10', 10) || 10;
+  qcState.compareLapCount = Math.max(1, Math.min(100, n));
+  document.querySelectorAll('.lap-chip-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.innerText, 10) === qcState.compareLapCount);
+  });
+}
+
+function setCompareLapCount(n) {
+  const inp = document.getElementById('compareLapCountInput');
+  if (inp) inp.value = n;
+  syncCompareLapChips();
+  renderCompareTab();
+  saveAll();
+}
+
+function populateCompareDropdowns() {
+  const allEntries = collectAllKartEntries();
+  const knownSet = new Set(allEntries.map(e => e.kart));
+  (qcState.knownTeams || []).forEach(t => {
+    const c = teamNumClean(t);
+    if (c) knownSet.add(c);
+  });
+
+  const optionsList = Array.from(knownSet).map(k => {
+    const found = allEntries.find(e => e.kart === k);
+    return {
+      val: k,
+      label: found && found.driver ? `${k} - ${found.driver}` : `#${k}`
+    };
+  });
+
+  for (let s = 0; s < 5; s++) {
+    const sel = document.getElementById(`cmpSlot${s}`);
+    if (!sel) continue;
+    const currentVal = qcState.compareSlots[s] || '';
+    let opts = `<option value="">— vide —</option>`;
+    optionsList.forEach(o => {
+      opts += `<option value="${o.val}" ${o.val === currentVal ? 'selected' : ''}>${o.label}</option>`;
+    });
+    sel.innerHTML = opts;
+  }
+}
+
+function onCompareSelectionChange() {
+  for (let s = 0; s < 5; s++) {
+    const sel = document.getElementById(`cmpSlot${s}`);
+    qcState.compareSlots[s] = sel ? sel.value : '';
+  }
+  renderCompareTab();
+  saveAll();
+}
+
+function computeValidLapsAverage(rawLaps, nTarget) {
+  if (!Array.isArray(rawLaps) || rawLaps.length === 0) {
+    return { validCount: 0, avg: null, last: null };
+  }
+
+  const validPool = [];
+  let postPitSkip = 0;
+
+  for (let i = 0; i < rawLaps.length; i++) {
+    const lap = rawLaps[i];
+    if (typeof lap !== 'number' || !isFinite(lap) || lap <= 0) continue;
+    if (lap > 140) {
+      postPitSkip = 2;
+      continue;
+    }
+    if (postPitSkip > 0) {
+      postPitSkip--;
+      continue;
+    }
+    validPool.push(lap);
+  }
+
+  const slice = validPool.slice(-nTarget);
+  const avg = slice.length > 0 ? slice.reduce((a, b) => a + b, 0) / slice.length : null;
+  const last = rawLaps[rawLaps.length - 1] || null;
+  return { validCount: slice.length, avg, last };
+}
+
+function renderCompareTab() {
+  populateCompareDropdowns();
+  syncCompareLapChips();
+
+  const tbody = document.getElementById('compareTableBody');
+  if (!tbody) return;
+
+  const nLaps = qcState.compareLapCount || 10;
+  const allEntries = collectAllKartEntries();
+
+  const selectedItems = [];
+  (qcState.compareSlots || []).forEach((slotVal) => {
+    if (!slotVal) return;
+    const found = allEntries.find(e => e.kart === slotVal);
+    const calc = computeValidLapsAverage(found?.laps || (found?.lastLap ? [found.lastLap] : []), nLaps);
+    const avgVal = calc.avg ?? found?.avgLap ?? null;
+    const lastVal = calc.last ?? found?.lastLap ?? null;
+
+    selectedItems.push({
+      kart: slotVal,
+      driver: found?.driver || '',
+      validCount: calc.validCount,
+      lastLap: lastVal,
+      avgLap: avgVal
+    });
+  });
+
+  if (selectedItems.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;color:var(--text-muted);padding:14px;">
+          Sélectionne au moins une équipe ci-dessus pour comparer.
+        </td>
+      </tr>`;
+    return;
+  }
+
+  const validAvgs = selectedItems.map(i => i.avgLap).filter(v => typeof v === 'number' && v > 0);
+  const bestAvg = validAvgs.length > 0 ? Math.min(...validAvgs) : null;
+
+  tbody.innerHTML = selectedItems.map((item, idx) => {
+    let gapStr = '—';
+    if (bestAvg && typeof item.avgLap === 'number') {
+      const diff = item.avgLap - bestAvg;
+      gapStr = diff <= 0.001 ? 'RÉF' : `+${diff.toFixed(2)}s`;
+    }
+
+    return `
+      <tr>
+        <td class="mono-num">${idx + 1}</td>
+        <td>
+          <span class="mono-num">#${item.kart}</span>
+          ${item.driver ? `<div style="font-size:0.65rem;color:var(--text-muted);">${item.driver}</div>` : ''}
+        </td>
+        <td class="mono-num">${item.validCount}</td>
+        <td class="mono-num">${item.lastLap ? item.lastLap.toFixed(2) + 's' : '—'}</td>
+        <td class="mono-num">${item.avgLap ? item.avgLap.toFixed(2) + 's' : '—'}</td>
+        <td class="mono-num" style="color:${gapStr === 'RÉF' ? 'var(--success)' : 'var(--text-main)'};">${gapStr}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+/* =========================================================
+   TRACK MAP & SUIVI KARTS PAR CIRCUIT
+   ========================================================= */
+function getTrackedKartNumbers() {
+  const set = new Set(Object.keys(qcState.trackPositions || {}));
+  collectAllKartEntries().forEach(e => set.add(e.kart));
+  return Array.from(set).filter(Boolean);
+}
+
+function onCircuitChange() {
+  const sel = document.getElementById('trackCircuitSelect');
+  if (sel) qcState.circuitId = sel.value;
+  renderTrackMapTab();
+  saveAll();
+}
+
+function onTrackedFocusChange() {
+  const sel = document.getElementById('trackedFocusKartSelect');
+  qcState.focusKart = sel ? sel.value : '';
+  const prog = qcState.trackPositions[qcState.focusKart] ?? 15;
+  const slider = document.getElementById('trackProgressionSlider');
+  if (slider) slider.value = prog;
+  const lbl = document.getElementById('trackProgPctLabel');
+  if (lbl) lbl.innerText = `${Math.round(prog)}%`;
+  renderTrackMapTab();
+  saveAll();
+}
+
+function onManualTrackProgress(val) {
+  const pct = Math.max(0, Math.min(100, parseFloat(val || 0)));
+  if (qcState.focusKart) {
+    qcState.trackPositions[qcState.focusKart] = pct;
+  }
+  const lbl = document.getElementById('trackProgPctLabel');
+  if (lbl) lbl.innerText = `${Math.round(pct)}%`;
+  renderTrackMapTab();
+  saveAll();
+}
+
+function promptAddTrackedKart() {
+  const numRaw = prompt('Numéro de kart / équipe à suivre sur la carte (ex: 7) :', '7');
+  if (!numRaw) return;
+  const k = teamNumClean(numRaw);
+  if (!k) return;
+  const posRaw = prompt('Position sur le tour en % (0 à 100) :', String(qcState.trackPositions[k] ?? 25));
+  const pct = posRaw !== null ? Math.max(0, Math.min(100, parseFloat(posRaw.replace(',', '.')) || 0)) : 25;
+  qcState.trackPositions[k] = pct;
+  qcState.focusKart = k;
+  if (!qcState.knownTeams.includes(k)) qcState.knownTeams.push(k);
+  renderTrackMapTab();
+  saveAll();
+}
+
+function setKartTrackPos(k, deltaPct) {
+  const cur = qcState.trackPositions[k] ?? 0;
+  let next = (cur + deltaPct) % 100;
+  if (next < 0) next += 100;
+  qcState.trackPositions[k] = Number(next.toFixed(1));
+  if (qcState.focusKart === k) {
+    const slider = document.getElementById('trackProgressionSlider');
+    if (slider) slider.value = qcState.trackPositions[k];
+    const lbl = document.getElementById('trackProgPctLabel');
+    if (lbl) lbl.innerText = `${Math.round(qcState.trackPositions[k])}%`;
+  }
+  renderTrackMapTab();
+  saveAll();
+}
+
+function toggleTrackSimulation() {
+  trackSimActive = !trackSimActive;
+  const btn = document.getElementById('trackSimBtn');
+  if (btn) {
+    btn.classList.toggle('active', trackSimActive);
+    btn.innerText = trackSimActive ? '⏸ Simulation piste : ON' : '▶ Simulation piste : OFF';
+  }
+  if (trackSimTimer) {
+    clearInterval(trackSimTimer);
+    trackSimTimer = null;
+  }
+  if (trackSimActive) {
+    trackSimTimer = setInterval(() => {
+      const karts = getTrackedKartNumbers();
+      karts.forEach((k, idx) => {
+        const step = 1.6 + (idx % 3) * 0.35;
+        const cur = qcState.trackPositions[k] ?? ((idx * 18) % 100);
+        qcState.trackPositions[k] = Number(((cur + step) % 100).toFixed(1));
+      });
+      if (qcState.focusKart && qcState.trackPositions[qcState.focusKart] !== undefined) {
+        const p = qcState.trackPositions[qcState.focusKart];
+        const slider = document.getElementById('trackProgressionSlider');
+        if (slider) slider.value = p;
+        const lbl = document.getElementById('trackProgPctLabel');
+        if (lbl) lbl.innerText = `${Math.round(p)}%`;
+      }
+      renderTrackMapTab();
+    }, 250);
+  }
+}
+
+function renderTrackMapTab() {
+  const cData = CIRCUITS_DATA[qcState.circuitId] || CIRCUITS_DATA.brignoles;
+  const cSel = document.getElementById('trackCircuitSelect');
+  if (cSel) cSel.value = qcState.circuitId;
+
+  document.getElementById('trackCircuitTitle').innerText = cData.name;
+  document.getElementById('trackCircuitSubtitle').innerText = cData.meta;
+
+  const outlinePath = document.getElementById('trackOutlinePath');
+  const asphaltPath = document.getElementById('trackAsphaltPath');
+  const centerPath = document.getElementById('trackCenterLine');
+  const startGroup = document.getElementById('trackStartLineGroup');
+  const kartsLayer = document.getElementById('trackKartsLayer');
+
+  if (!outlinePath || !asphaltPath || !centerPath || !kartsLayer) return;
+
+  outlinePath.setAttribute('d', cData.pathD);
+  asphaltPath.setAttribute('d', cData.pathD);
+  centerPath.setAttribute('d', cData.pathD);
+
+  const totalLen = asphaltPath.getTotalLength();
+  const startPt = asphaltPath.getPointAtLength(0);
+  startGroup.innerHTML = `
+    <circle cx="${startPt.x.toFixed(1)}" cy="${startPt.y.toFixed(1)}" r="8" fill="none" stroke="#10b981" stroke-width="2.5" />
+    <text x="${(startPt.x + 11).toFixed(1)}" y="${(startPt.y - 6).toFixed(1)}" fill="#6ee7b7" font-family="JetBrains Mono, monospace" font-size="9" font-weight="800">START/FINISH</text>
+  `;
+
+  const allEntries = collectAllKartEntries();
+  const trackedNums = getTrackedKartNumbers();
+
+  if (!qcState.focusKart && trackedNums.length > 0) {
+    qcState.focusKart = trackedNums[0];
+  }
+
+  const focusSel = document.getElementById('trackedFocusKartSelect');
+  if (focusSel) {
+    if (trackedNums.length === 0) {
+      focusSel.innerHTML = `<option value="">Aucun kart</option>`;
+    } else {
+      focusSel.innerHTML = trackedNums.map(k => {
+        const entry = allEntries.find(e => e.kart === k);
+        return `<option value="${k}" ${k === qcState.focusKart ? 'selected' : ''}>#${k}${entry?.driver ? ' • ' + entry.driver : ''}</option>`;
+      }).join('');
+    }
+  }
+
+  document.getElementById('trackActiveCountBadge').innerText = `${trackedNums.length} kart${trackedNums.length > 1 ? 's' : ''}`;
+
+  let svgMarkers = '';
+  const listHtml = [];
+
+  trackedNums.forEach((k, idx) => {
+    if (qcState.trackPositions[k] === undefined) {
+      qcState.trackPositions[k] = (idx * 19) % 100;
+    }
+    const pct = qcState.trackPositions[k];
+    const dist = (pct / 100) * totalLen;
+    const pt = asphaltPath.getPointAtLength(dist);
+    const isTarget = k === qcState.focusKart;
+    const entry = allEntries.find(e => e.kart === k);
+    const fillCol = isTarget ? '#38bdf8' : (idx === 0 ? '#10b981' : '#f59e0b');
+
+    svgMarkers += `
+      <g transform="translate(${pt.x.toFixed(1)}, ${pt.y.toFixed(1)})">
+        ${isTarget ? `<circle r="14" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="1.5" />` : ''}
+        <circle r="8.5" fill="${fillCol}" stroke="#060b16" stroke-width="2" />
+        <text y="3" text-anchor="middle" fill="#060b16" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="800">${k}</text>
+      </g>
+    `;
+
+    listHtml.push(`
+      <div class="tracked-kart-row ${isTarget ? 'is-target' : ''}">
+        <div class="tracked-kart-main">
+          <div class="tracked-kart-title">#${k} ${entry?.driver ? '• ' + entry.driver : ''} ${isTarget ? '(CIBLÉ)' : ''}</div>
+          <div class="tracked-kart-sub">
+            Position tour : <strong>${Math.round(pct)}%</strong> • Chrono : <strong>${entry?.lastLap ? entry.lastLap.toFixed(2) + 's' : '—'}</strong>
+          </div>
+        </div>
+        <div class="tracked-kart-actions">
+          <button type="button" class="qc-mini-btn" onclick="setKartTrackPos('${k}', -5)">−5%</button>
+          <button type="button" class="qc-mini-btn" onclick="setKartTrackPos('${k}', 5)">+5%</button>
+          <button type="button" class="pick-qc-btn" onclick="qcState.focusKart='${k}'; renderTrackMapTab(); saveAll();">Cibler</button>
+        </div>
+      </div>
+    `);
+  });
+
+  kartsLayer.innerHTML = svgMarkers;
+
+  const listEl = document.getElementById('trackedKartsList');
+  if (listEl) {
+    listEl.innerHTML = listHtml.length > 0
+      ? listHtml.join('')
+      : `<div style="font-size:0.74rem;color:var(--text-muted);text-align:center;padding:8px;">Aucun kart positionné. Clique sur « + Ajouter / positionner un kart » ou ajoute un kart dans Quick Change / Classement.</div>`;
+  }
+
+  const targetEntry = allEntries.find(e => e.kart === qcState.focusKart);
+  const targetPos = qcState.trackPositions[qcState.focusKart];
+  document.getElementById('hudTargetKart').innerText = qcState.focusKart ? `#${qcState.focusKart}` : '—';
+  document.getElementById('hudTargetLap').innerText = targetEntry?.lastLap ? `${targetEntry.lastLap.toFixed(2)}s` : '—';
+
+  if (qcState.focusKart && typeof targetPos === 'number' && trackedNums.length > 1) {
+    let minAhead = 100;
+    let minBehind = 100;
+    trackedNums.forEach((other) => {
+      if (other === qcState.focusKart) return;
+      const oPos = qcState.trackPositions[other] ?? 0;
+      const ahead = (oPos - targetPos + 100) % 100;
+      const behind = (targetPos - oPos + 100) % 100;
+      if (ahead > 0 && ahead < minAhead) minAhead = ahead;
+      if (behind > 0 && behind < minBehind) minBehind = behind;
+    });
+    const secPerPct = (targetEntry?.lastLap || 65) / 100;
+    document.getElementById('hudTargetGap').innerText =
+      `+${(minAhead * secPerPct).toFixed(1)}s / -${(minBehind * secPerPct).toFixed(1)}s`;
+  } else {
+    document.getElementById('hudTargetGap').innerText = '—';
+  }
+}
+
+function teamNumClean(val) {
+  return String(val || '').replace(/^#/, '').trim();
+}
+
 function saveAll() {
   const payload = {
     currentTab,
-    nightMode,
+    soundAlertEnabled,
+    pitStops,
+    apexLink: document.getElementById('apexLinkInput')?.value || '',
+    pollIntervalSec: document.getElementById('pollIntervalSec')?.value || '3',
+    activeDriverInput: document.getElementById('qcDriverInput')?.value || '',
     stint: {
       startTime: document.getElementById('startTime').value,
       totalHours: document.getElementById('totalHours').value,
@@ -2007,20 +5034,35 @@ function saveAll() {
       tranchePits: document.getElementById('tranchePits').value,
       trancheHours: document.getElementById('trancheHours').value
     },
-    qc: qcState
+    qc: qcState,
+    apexLiveMap
   };
-  localStorage.setItem('eg7_slate_pro_v8', JSON.stringify(payload));
+  localStorage.setItem('eg7_pro_v21', JSON.stringify(payload));
 }
 
 function loadAll() {
   try {
-    const raw = localStorage.getItem('eg7_slate_pro_v8');
+    const raw = localStorage.getItem('eg7_pro_v21') || localStorage.getItem('eg7_pro_v20') || localStorage.getItem('eg7_pro_v19');
     if (raw) {
       const data = JSON.parse(raw);
-      if (data.nightMode) {
-        nightMode = true;
-        document.body.classList.add('night-mode');
-        document.getElementById('nightBtn').classList.add('active');
+      if (typeof data.soundAlertEnabled === 'boolean') {
+        soundAlertEnabled = data.soundAlertEnabled;
+      }
+      syncHeaderUtilityUI();
+      if (Array.isArray(data.pitStops)) {
+        pitStops = data.pitStops;
+      }
+      if (data.apexLink && document.getElementById('apexLinkInput')) {
+        document.getElementById('apexLinkInput').value = data.apexLink;
+      }
+      if (data.pollIntervalSec && document.getElementById('pollIntervalSec')) {
+        document.getElementById('pollIntervalSec').value = data.pollIntervalSec;
+      }
+      if (data.activeDriverInput && document.getElementById('qcDriverInput')) {
+        document.getElementById('qcDriverInput').value = data.activeDriverInput;
+      }
+      if (data.apexLiveMap && typeof data.apexLiveMap === 'object') {
+        apexLiveMap = data.apexLiveMap;
       }
       if (data.stint) {
         Object.entries(data.stint).forEach(([id, val]) => {
@@ -2029,15 +5071,35 @@ function loadAll() {
         });
         syncHoursChips(document.getElementById('totalHours').value);
       }
+      const doneCount = parseInt(document.getElementById('donePits').value || 0, 10) || 0;
+      if (pitStops.length !== doneCount) {
+        syncDonePitsCount(doneCount);
+      } else {
+        renderPitStopsHistory();
+      }
       if (data.qc && Array.isArray(data.qc.lanes) && data.qc.lanes.length > 0) {
         qcState = Object.assign({}, qcState, data.qc);
+        if (!Array.isArray(qcState.knownDrivers)) qcState.knownDrivers = [];
+        if (!qcState.thresholds) qcState.thresholds = { good: 0.5, mid: 1.5, bad: 3.0 };
+        if (!Array.isArray(qcState.rowColors)) qcState.rowColors = ['blue', 'red', 'white'];
+        if (!Array.isArray(qcState.compareSlots)) qcState.compareSlots = ['', '', '', '', ''];
+        if (!qcState.compareLapCount) qcState.compareLapCount = 10;
+        if (!qcState.circuitId) qcState.circuitId = 'brignoles';
+        if (!qcState.trackPositions || typeof qcState.trackPositions !== 'object') qcState.trackPositions = {};
+        if (qcState.focusKart === undefined) qcState.focusKart = '';
+
         qcState.lanes.forEach(col => col.forEach(k => {
           if (k.offCode) internalCodesSet.add(k.offCode);
           else k.offCode = generateOffCode();
           if (!Array.isArray(k.stintDurationsMin)) k.stintDurationsMin = [];
+          if (k.driverName === undefined) k.driverName = '';
+          if (k.baselineLapSec === undefined) k.baselineLapSec = null;
+          if (k.highPotential === undefined) k.highPotential = false;
         }));
         document.getElementById('qcNumLanes').value = qcState.numLanes;
         document.getElementById('qcKartsPerLane').value = qcState.kartsPerLane;
+        document.getElementById('compareLapCountInput').value = qcState.compareLapCount;
+        document.getElementById('trackCircuitSelect').value = qcState.circuitId;
         document.getElementById('customExitToggle').checked = !!qcState.customExitEnabled;
         document.getElementById('customExitPanel').classList.toggle('hidden', !qcState.customExitEnabled);
         document.getElementById('exitModeHint').innerText = qcState.customExitEnabled
@@ -2050,22 +5112,29 @@ function loadAll() {
         switchTab(data.currentTab);
       }
     } else {
+      syncHeaderUtilityUI();
       buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+      renderPitStopsHistory();
     }
   } catch (e) {
+    syncHeaderUtilityUI();
     buildInitialLanes(qcState.numLanes, qcState.kartsPerLane);
+    renderPitStopsHistory();
   }
 }
 
 function tick() {
   document.getElementById('headerClock').innerText = new Date().toLocaleTimeString('fr-FR');
+  renderPitStopsHistory();
   calculateStint();
 }
 
 runSplash();
 loadAll();
-initSwipe();
 renderQuickChange();
+renderStandingsTab();
+renderCompareTab();
+renderTrackMapTab();
 calculateStint();
 setInterval(tick, 1000);
 tick();
